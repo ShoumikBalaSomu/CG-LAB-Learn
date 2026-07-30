@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CG LAB Learn - Computer Graphics Lab Practice</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --primary: #6c63ff; --bg-dark: #1a1a2e; --bg-card: #16213e; --bg-code: #0f3460; --text: #e0e0e0; --text-light: #a0a0a0; --accent-green: #00e676; --accent-yellow: #ffea00; --accent-cyan: #00bcd4; }
+body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background: var(--bg-dark); color: var(--text); line-height: 1.6; }
+.header { background: linear-gradient(135deg, var(--bg-dark), var(--bg-card)); padding: 60px 20px; text-align: center; border-bottom: 3px solid var(--primary); }
+.header h1 { font-size: 3em; background: linear-gradient(90deg, var(--primary), var(--accent-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 10px; }
+.header p { font-size: 1.2em; color: var(--text-light); }
+.header .badge { display: inline-block; margin-top: 15px; padding: 5px 15px; background: var(--primary); border-radius: 20px; font-size: 0.9em; color: white; }
+.nav { background: var(--bg-card); padding: 15px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+.nav ul { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+.nav a { color: var(--text); text-decoration: none; padding: 8px 16px; border-radius: 5px; transition: all 0.3s; }
+.nav a:hover { background: var(--primary); color: white; }
+.container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+.section { margin-bottom: 60px; }
+.section-title { font-size: 2em; color: var(--accent-cyan); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--bg-code); }
+.section-title span { color: var(--primary); }
+.card { background: var(--bg-card); border-radius: 12px; padding: 30px; margin-bottom: 30px; border: 1px solid rgba(108,99,255,0.2); }
+.card h3 { color: var(--accent-green); margin-bottom: 15px; font-size: 1.4em; }
+.card p { color: var(--text-light); margin-bottom: 15px; }
+.theory { background: rgba(0,230,118,0.05); border-left: 4px solid var(--accent-green); padding: 15px; margin: 15px 0; border-radius: 0 8px 8px 0; }
+.compile-cmd { background: var(--bg-code); padding: 10px 15px; border-radius: 6px; font-family: monospace; color: var(--accent-yellow); margin: 10px 0; overflow-x: auto; }
+.code-block { background: #0d1b2a; border-radius: 8px; padding: 20px; overflow-x: auto; margin: 15px 0; border: 1px solid rgba(108,99,255,0.3); }
+.code-block pre { font-family: "Fira Code", "Courier New", monospace; font-size: 0.85em; line-height: 1.5; color: #e0e0e0; white-space: pre; }
+.topic-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 20px 0; }
+.topic-item { background: var(--bg-code); padding: 20px; border-radius: 10px; border-left: 4px solid var(--primary); }
+.topic-item h4 { color: var(--accent-yellow); margin-bottom: 8px; }
+.setup-steps .step { padding: 20px; margin: 15px 0; background: var(--bg-code); border-radius: 8px; }
+.footer { background: var(--bg-card); padding: 30px; text-align: center; border-top: 2px solid var(--primary); color: var(--text-light); }
+.footer a { color: var(--primary); text-decoration: none; }
+@media (max-width: 768px) { .header h1 { font-size: 2em; } .nav ul { flex-direction: column; align-items: center; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>&#127912; CG LAB Learn</h1>
+<p>Computer Graphics Laboratory - Complete Practice Guide</p>
+<p style="margin-top:5px;font-size:0.9em;color:var(--text-light);">OpenGL | C Programming | Line Drawing | Transformations | Animation | 3D</p>
+<span class="badge">&#128218; Daffodil International University</span>
+</div>
+
+<nav class="nav"><ul>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#dda">DDA</a></li>
+<li><a href="#bresenham">Bresenham</a></li>
+<li><a href="#midpoint">Mid Point</a></li>
+<li><a href="#transformation">2D Transform</a></li>
+<li><a href="#animation">Animation</a></li>
+<li><a href="#shapes">Shapes &amp; 3D</a></li>
+</ul></nav>
+
+<div class="container">
+
+<div class="section">
+<h2 class="section-title"><span>#</span> Topics Covered</h2>
+<div class="topic-grid">
+<div class="topic-item"><h4>1. DDA Algorithm</h4><p>Digital Differential Analyzer for line drawing using incremental calculation.</p></div>
+<div class="topic-item"><h4>2. Bresenham Algorithm</h4><p>Integer-only line drawing with decision parameter optimization.</p></div>
+<div class="topic-item"><h4>3. Mid Point Algorithm</h4><p>Circle and ellipse drawing using mid-point decision parameter.</p></div>
+<div class="topic-item"><h4>4. 2D Transformation</h4><p>Translation, Rotation, and Scaling of 2D objects.</p></div>
+<div class="topic-item"><h4>5. Animation</h4><p>Timer-based animation and keyboard-controlled movement.</p></div>
+<div class="topic-item"><h4>6. Shapes &amp; 3D</h4><p>Polygon drawing, 3D room rendering, and first-person navigation.</p></div>
+</div></div>
+
+<div class="section" id="setup">
+<h2 class="section-title"><span>#</span> Environment Setup</h2>
+<div class="card">
+<h3>Windows Setup (MSYS2 + MinGW)</h3>
+<div class="setup-steps">
+<div class="step"><strong>Step 1:</strong> Install MSYS2 from <a href="https://www.msys2.org/" style="color:var(--accent-cyan)">msys2.org</a></div>
+<div class="step"><strong>Step 2:</strong> Install packages<div class="compile-cmd">pacman -S mingw-w64-x86_64-gcc<br>pacman -S mingw-w64-x86_64-freeglut</div></div>
+<div class="step"><strong>Step 3:</strong> Add to PATH<div class="compile-cmd">C:\msys64\mingw64\bin</div></div>
+<div class="step"><strong>Step 4:</strong> Verify<div class="compile-cmd">gcc --version<br>ls /mingw64/lib | grep glut</div></div>
+<div class="step"><strong>Step 5:</strong> Compile &amp; Run<div class="compile-cmd">gcc main.c -o app -lfreeglut -lopengl32 -lglu32<br>./app</div></div>
+</div></div></div>
+
+<div class="section" id="dda">
+<h2 class="section-title"><span>#</span> DDA Line Drawing Algorithm</h2>
+<div class="card"><h3>Theory</h3>
+<div class="theory">
+<p><strong>DDA (Digital Differential Analyzer)</strong> uses incremental calculation:</p>
+<p>1. dx = x2-x1, dy = y2-y1</p>
+<p>2. steps = max(|dx|, |dy|)</p>
+<p>3. x_inc = dx/steps, y_inc = dy/steps</p>
+<p>4. Loop: plot(round(x), round(y)), x += x_inc, y += y_inc</p>
+</div></div>
+<div class="card"><h3>Code: DDA Line</h3>
+<div class="compile-cmd">gcc dda_line.c -o dda_line -lfreeglut -lopengl32 -lglu32</div>
+<div class="code-block"><pre>#include &lt;GL/gl.h&gt;
+#include &lt;GL/glut.h&gt;
+#include &lt;math.h&gt;
+
+void DDA(float x1, float y1, float x2, float y2)
+{
+    float dx = fabs(x2 - x1);
+    float dy = fabs(y2 - y1);
+    float steps = fmax(dx, dy);
+    float x_inc = (x2 - x1) / steps;
+    float y_inc = (y2 - y1) / steps;
+
+    glColor3f(1.0f, 1.0f, 1.0f);
+    glBegin(GL_POINTS);
+    float x = x1, y = y1;
+    for (int i = 0; i &lt;= steps; i++)
+    {
+        glVertex2f(round(x), round(y));
+        x += x_inc;
+        y += y_inc;
+    }
+    glEnd();
+}
+
+void display(void)
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    DDA(100.0f, 100.0f, 200.0f, 200.0f);
+    glutSwapBuffers();
+}
+
+void init(void)
+{
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0.0, 300.0, 0.0, 300.0, -100.0, 1.0);
+}
+
+int main(int argc, char **argv)
+{
+    glutInit(&amp;argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+    glutInitWindowSize(500, 500);
+    glutCreateWindow("DDA Line Drawing");
+    init();
+    glutDisplayFunc(display);
+    glutMainLoop();
+    return 0;
+}</pre></div></div>
+
+<div class="card"><h3>Code: DDA Triangle</h3>
+<div class="compile-cmd">gcc dda_triangle.c -o dda_triangle -lfreeglut -lopengl32 -lglu32</div>
+<div class="code-block"><pre>void display(void)
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    DDA(50.0f, 50.0f, 250.0f, 50.0f);   // Base
+    DDA(250.0f, 50.0f, 150.0f, 250.0f);  // Right
+    DDA(150.0f, 250.0f, 50.0f, 50.0f);   // Left
+    glutSwapBuffers();
+}</pre></div></div>
+</div>
+
+<div class="section" id="bresenham">
+<h2 class="section-title"><span>#</span> Bresenham Line Algorithm</h2>
+<div class="card"><h3>Theory</h3>
+<div class="theory">
+<p><strong>Bresenham</strong> uses integer arithmetic only (faster than DDA):</p>
+<p>1. p = 2*dy - dx (initial decision parameter)</p>
+<p>2. x always increments by 1</p>
+<p>3. If p &lt; 0: p = p + 2*dy</p>
+<p>4. If p &gt;= 0: p = p + 2*dy - 2*dx, y++</p>
+<p><strong>General:</strong> Uses x_change/y_change for all quadrants, switches axis if dy &gt; dx</p>
+</div></div>
+<div class="card"><h3>Code: Bresenham (slope &lt; 1)</h3>
+<div class="compile-cmd">gcc bresenham_line.c -o bresenham_line -lfreeglut -lopengl32 -lglu32</div>
+<div class="code-block"><pre>void Bresenham(float x1, float y1, float x2, float y2)
+{
+    float dx = fabs(x2 - x1);
+    float dy = fabs(y2 - y1);
+    float p = 2 * dy - dx;
+
+    glColor3f(1.0f, 1.0f, 1.0f);
+    glBegin(GL_POINTS);
+    glVertex2f(x1, y1);
+    while (x1 &lt; x2)
+    {
+        x1++;
+        if (p &lt; 0)
+            p = p + 2 * dy;
+        else
+        {
+            y1++;
+            p = p + 2 * dy - 2 * dx;
+        }
+        glVertex2f(x1, y1);
+    }
+    glEnd();
+}</pre></div></div>
+
+<div class="card"><h3>Code: Bresenham General (All Quadrants)</h3>
+<div class="compile-cmd">gcc bresenham_general.c -o bresenham_general -lfreeglut -lopengl32 -lglu32</div>
+<div class="code-block"><pre>void Bresenham_General(float x1, float y1, float x2, float y2)
+{
+    float dx = fabs(x2 - x1);
+    float dy = fabs(y2 - y1);
+    float p;
+    float x_change = (x1 &gt; x2) ? -1 : 1;
+    float y_change = (y1 &gt; y2) ? -1 : 1;
+
+    glBegin(GL_POINTS);
+    glVertex2f(x1, y1);
+    if (dx &gt; dy)
+    {
+        p = 2 * dy - dx;
+        while (1) {
+            x1 += x_change;
+            if (p &lt; 0) p += 2 * dy;
+            else { y1 += y_change; p += 2*dy - 2*dx; }
+            glVertex2f(x1, y1);
+            if (x1 == x2) break;
+        }
+    }
+    else
+    {
+        p = 2 * dx - dy;
+        while (1) {
+            y1 += y_change;
+            if (p &lt; 0) p += 2 * dx;
+            else { x1 += x_change; p += 2*dx - 2*dy; }
+            glVertex2f(x1, y1);
+            if (y1 == y2) break;
+        }
+    }
+    glEnd();
+}</pre></div></div>
+</div>
+
+<div class="section" id="midpoint">
+<h2 class="section-title"><span>#</span> Mid Point Circle &amp; Ellipse</h2>
+<div class="card"><h3>Theory</h3>
+<div class="theory">
+<p><strong>Mid Point Circle:</strong> Start at (0,r), p = 1-r, use 8-way symmetry</p>
+<p>If p &lt; 0: p = p + 2x + 3 | If p &gt;= 0: p = p + 2(x-y) + 5, y--</p>
+</div></div>
+<div class="card"><h3>Code: Mid Point Circle</h3>
+<div class="compile-cmd">gcc midpoint_circle.c -o midpoint_circle -lfreeglut -lopengl32 -lglu32</div>
+<div class="code-block"><pre>void plotCirclePoints(int cx, int cy, int x, int y)
+{
+    glVertex2f(cx+x, cy+y); glVertex2f(cx-x, cy+y);
+    glVertex2f(cx+x, cy-y); glVertex2f(cx-x, cy-y);
+    glVertex2f(cx+y, cy+x); glVertex2f(cx-y, cy+x);
+    glVertex2f(cx+y, cy-x); glVertex2f(cx-y, cy-x);
+}
+
+void MidPointCircle(int cx, int cy, int r)
+{
+    int x = 0, y = r;
+    float p = 1 - r;
+    glColor3f(1.0f, 1.0f, 0.0f);
+    glBegin(GL_POINTS);
+    plotCirclePoints(cx, cy, x, y);
+    while (x &lt; y)
+    {
+        x++;
+        if (p &lt; 0) p = p + 2*x + 1;
+        else { y--; p = p + 2*(x-y) + 1; }
+        plotCirclePoints(cx, cy, x, y);
+    }
+    glEnd();
+}</pre></div></div>
+</div>
+
+<div class="section" id="transformation">
+<h2 class="section-title"><span>#</span> 2D Transformation</h2>
+<div class="card"><h3>Theory</h3>
+<div class="theory">
+<p><strong>Translation:</strong> Add (tx,ty) to vertices</p>
+<p><strong>Rotation:</strong> glRotatef(angle, 0, 0, 1)</p>
+<p><strong>Scaling:</strong> glScalef(sx, sy, sz)</p>
+<p>Use glPushMatrix()/glPopMatrix() to isolate transforms</p>
+</div>
+<p><strong>Controls:</strong> Arrows=Move | l=Rotate | k=Stop | WASD=Move</p>
+</div>
+<div class="card"><h3>Code: Translation + Rotation</h3>
+<div class="compile-cmd">gcc transformation_2d.c -o transformation_2d -lfreeglut -lopengl32 -lglu32</div>
+<div class="code-block"><pre>float px = -8, py = 2, speed = 0.5, angle = 1;
+
+void display(void)
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(0.25, 0.25, 1.0);
+    glBegin(GL_POLYGON);
+    glVertex2f(px, py); glVertex2f(px+4, py);
+    glVertex2f(px+4, py-4); glVertex2f(px, py-4);
+    glEnd();
+
+    glPushMatrix();
+    glRotatef(angle, 0, 0, 1);
+    glColor3f(1.0, 0.0, 0.0);
+    glRectf(-2, -2, 2, 2);
+    glPopMatrix();
+    glutSwapBuffers();
+}
+
+void RotateLeft() { angle += 10; glutPostRedisplay(); }
+
+void mykeyboardcontrol2(unsigned char key, int x, int y)
+{
+    switch (key) {
+    case 'w': py += speed; glutPostRedisplay(); break;
+    case 's': py -= speed; glutPostRedisplay(); break;
+    case 'a': px -= speed; glutPostRedisplay(); break;
+    case 'd': px += speed; glutPostRedisplay(); break;
+    case 'l': glutIdleFunc(RotateLeft); break;
+    case 'k': glutIdleFunc(NULL); break;
+    }
+}</pre></div></div>
+</div>
+
+<div class="section" id="animation">
+<h2 class="section-title"><span>#</span> Animation</h2>
+<div class="card"><h3>Theory</h3>
+<div class="theory">
+<p><strong>Timer:</strong> glutTimerFunc(ms, callback, val) + glutPostRedisplay()</p>
+<p><strong>Keyboard:</strong> glutSpecialFunc() for arrows, glutKeyboardFunc() for WASD</p>
+</div></div>
+<div class="card"><h3>Code: Bouncing Animation</h3>
+<div class="compile-cmd">gcc animation_timer.c -o animation_timer -lfreeglut -lopengl32 -lglu32</div>
+<div class="code-block"><pre>float p = -8, speed = 0.1;
+
+void update()
+{
+    p = p + speed;
+    if (p &gt;= 6 || p &lt;= -10) speed = -speed;
+    glutPostRedisplay();
+}
+
+void myTimer(int val)
+{
+    update();
+    glutTimerFunc(100, myTimer, 0);
+}
+
+// In main:
+glutTimerFunc(100, myTimer, 0);</pre></div></div>
+</div>
+
+<div class="section" id="shapes">
+<h2 class="section-title"><span>#</span> Shapes &amp; 3D Rendering</h2>
+<div class="card"><h3>Theory</h3>
+<div class="theory">
+<p><strong>Primitives:</strong> GL_POINTS, GL_LINES, GL_POLYGON, GL_QUADS</p>
+<p><strong>3D:</strong> gluPerspective(), gluLookAt(), GL_DEPTH_TEST, glutSolidCube()</p>
+</div></div>
+<div class="card"><h3>Code: 3D VR Room (WASD navigation)</h3>
+<div class="compile-cmd">gcc vr_room.c -o vr_room -lfreeglut -lopengl32 -lglu32</div>
+<div class="code-block"><pre>#include &lt;GL/glut.h&gt;
+#include &lt;math.h&gt;
+
+float angle = 0.0, lx = 0.0, lz = -1.0, x = 0.0, z = 5.0;
+
+void drawRoom() {
+    glColor3f(0.6,0.6,0.6);
+    glBegin(GL_QUADS);
+    glVertex3f(-10,0,-10); glVertex3f(-10,0,10);
+    glVertex3f(10,0,10); glVertex3f(10,0,-10);
+    glEnd();
+    glColor3f(0.8,0.7,0.5);
+    glBegin(GL_QUADS);
+    glVertex3f(-10,0,-10); glVertex3f(-10,8,-10);
+    glVertex3f(10,8,-10); glVertex3f(10,0,-10);
+    glEnd();
+}
+
+void drawTable() {
+    glPushMatrix(); glTranslatef(0,1,-3);
+    glColor3f(0.5,0.2,0.1);
+    glPushMatrix(); glScalef(2,0.2,1); glutSolidCube(1); glPopMatrix();
+    float leg[4][2]={{0.8,0.4},{-0.8,0.4},{0.8,-0.4},{-0.8,-0.4}};
+    for(int i=0;i&lt;4;i++){
+        glPushMatrix(); glTranslatef(leg[i][0],-0.6,leg[i][1]);
+        glScalef(0.1,1.2,0.1); glutSolidCube(1); glPopMatrix();
+    }
+    glPopMatrix();
+}
+
+void display() {
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+    gluLookAt(x,2,z, x+lx,2,z+lz, 0,1,0);
+    drawRoom(); drawTable();
+    glutSwapBuffers();
+}
+
+void keyboard(unsigned char key, int xx, int yy) {
+    float f=0.3;
+    switch(key){
+    case 'w': x+=lx*f; z+=lz*f; break;
+    case 's': x-=lx*f; z-=lz*f; break;
+    case 'a': angle-=0.05; lx=sin(angle); lz=-cos(angle); break;
+    case 'd': angle+=0.05; lx=sin(angle); lz=-cos(angle); break;
+    case 27: exit(0);
+    }
+    glutPostRedisplay();
+}
+
+int main(int argc, char **argv) {
+    glutInit(&amp;argc,argv);
+    glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
+    glutInitWindowSize(800,600);
+    glutCreateWindow("VR Room");
+    glEnable(GL_DEPTH_TEST);
+    glClearColor(0.5,0.8,1.0,1.0);
+    glutDisplayFunc(display);
+    glutReshapeFunc(reshape);
+    glutKeyboardFunc(keyboard);
+    glutMainLoop();
+    return 0;
+}</pre></div></div>
+</div>
+
+</div>
+
+<div class="footer">
+<p><strong>CG LAB Learn</strong> - Computer Graphics Laboratory Practice</p>
+<p style="margin-top:10px;">Made with &#10084; for students | <a href="https://github.com/ShoumikBalaSomu/CG-LAB-Learn">GitHub Repository</a></p>
+<p style="margin-top:5px;font-size:0.85em;">OpenGL | FreeGLUT | C Programming | Daffodil International University</p>
+</div>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();document.querySelector(this.getAttribute('href')).scrollIntoView({behavior:'smooth'});});});
+</script>
+</body>
+</html>
