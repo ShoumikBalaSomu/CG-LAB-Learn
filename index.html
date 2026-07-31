@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CG LAB Learn | Computer Graphics Lab Practice</title>
+<meta name="description" content="Learn CG lab codes - DDA, Bresenham, Midpoint, 2D Transform, Animation. Bangla + English.">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+</head>
+<body>
+<div class="bg-animation" id="bgAnim"></div>
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="navbar" id="navbar">
+<div class="nav-container">
+<a href="#home" class="nav-logo"><span class="logo-icon">🎨</span> CG LAB Learn</a>
+<ul class="nav-links" id="navLinks">
+<li><a href="#home" class="active">Home</a></li>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#topics">Topics</a></li>
+<li><a href="#dda">DDA</a></li>
+<li><a href="#bresenham">Bresenham</a></li>
+<li><a href="#midpoint">Midpoint</a></li>
+<li><a href="#transformation">2D Transform</a></li>
+<li><a href="#animation">Animation</a></li>
+<li><a href="#shapes">Shapes & 3D</a></li>
+<li><a href="#contributors">Team</a></li>
+</ul>
+<div class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')"><span></span><span></span><span></span></div>
+</div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+<div class="hero-content">
+<div class="hero-badge">📐 Computer Graphics Lab — DIU</div>
+<h1>Learn <span class="gradient-text">Computer Graphics</span><br>Lab Codes Deeply</h1>
+<p>কম্পিউটার গ্রাফিক্স ল্যাবের সব কোড শেখো — বাংলা ও ইংরেজি ব্যাখ্যা সহ।<br>From DDA to 3D VR — everything explained step by step.</p>
+<div class="hero-buttons">
+<a href="#topics" class="btn btn-primary">🚀 Start Learning</a>
+<a href="#setup" class="btn btn-outline">⚙️ Setup Guide</a>
+</div>
+<div class="hero-stats">
+<div class="hero-stat"><div class="number">6+</div><div class="label">Topics</div></div>
+<div class="hero-stat"><div class="number">15+</div><div class="label">Code Examples</div></div>
+<div class="hero-stat"><div class="number">2</div><div class="label">বাংলা + English</div></div>
+</div>
+</div>
+</section>
+<div class="section-divider"></div>
+
+<!-- ===== SETUP ===== -->
+<section class="section" id="setup">
+<div class="section-header animate-on-scroll">
+<div class="section-tag">⚙️ Setup</div>
+<h2>OpenGL সেটআপ / Setup Guide</h2>
+<p>কোড রান করার আগে OpenGL ও GLUT ইনস্টল করতে হবে</p>
+</div>
+<div class="content-block animate-on-scroll">
+<h3>🖥️ Windows (MSYS2 + MinGW)</h3>
+<div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span>
+<p><b>ধাপ ১:</b> <a href="https://www.msys2.org/" target="_blank" style="color:var(--secondary)">MSYS2</a> ইনস্টল করো।</p>
+<p><b>ধাপ ২:</b> টার্মিনালে কমান্ড দাও।</p>
+<p><b>ধাপ ৩:</b> PATH এ <code class="inline">C:\msys64\mingw64\bin</code> যোগ করো।</p>
+<p><b>ধাপ ৪:</b> কম্পাইল ও রান করো।</p>
+</div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span>
+<p><b>Step 1:</b> Install <a href="https://www.msys2.org/" target="_blank" style="color:var(--primary-light)">MSYS2</a>.</p>
+<p><b>Step 2:</b> Run commands in terminal.</p>
+<p><b>Step 3:</b> Add <code class="inline">C:\msys64\mingw64\bin</code> to PATH.</p>
+<p><b>Step 4:</b> Compile & run.</p>
+</div>
+</div>
+<div class="code-container">
+<div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="file-name">📋 Terminal</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div>
+<pre class="code-block"><code><span class="cm"># Install GCC / GCC ইনস্টল</span>
+pacman -S mingw-w64-x86_64-gcc
+
+<span class="cm"># Install FreeGLUT / FreeGLUT ইনস্টল</span>
+pacman -S mingw-w64-x86_64-freeglut
+
+<span class="cm"># Add to PATH / PATH এ যোগ</span>
+<span class="st">C:\msys64\mingw64\bin</span>
+
+<span class="cm"># Verify / ভেরিফাই</span>
+gcc --version
+ls /mingw64/lib | grep glut
+
+<span class="cm"># Compile & Run / কম্পাইল ও রান</span>
+gcc main.c -o app -lfreeglut -lopengl32 -lglu32
+./app</code></pre>
+</div>
+<div class="note-box info"><span>💡</span><div>প্রতিবার কম্পাইল: <code class="inline">gcc main.c -o app -lfreeglut -lopengl32 -lglu32</code></div></div>
+</div>
+
+<div class="content-block animate-on-scroll">
+<h3>📁 First Program / প্রথম প্রোগ্রাম</h3>
+<div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span><p>সবচেয়ে বেসিক OpenGL প্রোগ্রাম — নীল ত্রিভুজ আঁকে। <b>init()</b>, <b>display()</b>, <b>main()</b> বোঝো।</p></div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span><p>Most basic OpenGL program — draws a blue triangle. Understand <b>init()</b>, <b>display()</b>, <b>main()</b>.</p></div>
+</div>
+<div class="code-container">
+<div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="file-name">📄 hello_opengl.c</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div>
+<pre class="code-block"><code><span class="pp">#include</span> <span class="st">&lt;GL/gl.h&gt;</span>      <span class="bc">// OpenGL মূল লাইব্রেরি</span>
+<span class="pp">#include</span> <span class="st">&lt;GL/glut.h&gt;</span>    <span class="bc">// GLUT উইন্ডো ম্যানেজমেন্ট</span>
+
+<span class="bc">// display() - স্ক্রিনে আঁকে / Draws on screen</span>
+<span class="ty">void</span> <span class="fn">display</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClear</span>(GL_COLOR_BUFFER_BIT);  <span class="bc">// স্ক্রিন ক্লিয়ার</span>
+    <span class="fn">glColor3f</span>(<span class="nu">.25</span>,<span class="nu">0.25</span>,<span class="nu">1.0</span>);     <span class="bc">// রং = নীলচে</span>
+    <span class="fn">glBegin</span>(GL_POLYGON);           <span class="bc">// পলিগন শুরু</span>
+        <span class="fn">glVertex3f</span>(<span class="nu">0.25</span>,<span class="nu">0.25</span>,<span class="nu">0.0</span>); <span class="bc">// বিন্দু ১</span>
+        <span class="fn">glVertex3f</span>(<span class="nu">0.75</span>,<span class="nu">0.25</span>,<span class="nu">0.0</span>); <span class="bc">// বিন্দু ২</span>
+        <span class="fn">glVertex3f</span>(<span class="nu">0.75</span>,<span class="nu">0.75</span>,<span class="nu">0.0</span>); <span class="bc">// বিন্দু ৩</span>
+    <span class="fn">glEnd</span>();                       <span class="bc">// পলিগন শেষ</span>
+    <span class="fn">glutSwapBuffers</span>();            <span class="bc">// বাফার সোয়াপ</span>
+}
+
+<span class="bc">// init() - সেটিংস / Settings</span>
+<span class="ty">void</span> <span class="fn">init</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClearColor</span>(<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>);       <span class="bc">// কালো ব্যাকগ্রাউন্ড</span>
+    <span class="fn">glMatrixMode</span>(GL_PROJECTION);
+    <span class="fn">glLoadIdentity</span>();
+    <span class="fn">glOrtho</span>(<span class="nu">0</span>,<span class="nu">1</span>,<span class="nu">0</span>,<span class="nu">1</span>,<span class="nu">-100</span>,<span class="nu">1</span>);   <span class="bc">// কোঅর্ডিনেট 0-1</span>
+}
+
+<span class="bc">// main() - এন্ট্রি পয়েন্ট</span>
+<span class="ty">int</span> <span class="fn">main</span>(<span class="ty">int</span> argc, <span class="ty">char</span>** argv)
+{
+    <span class="fn">glutInit</span>(&amp;argc, argv);
+    <span class="fn">glutInitDisplayMode</span>(GLUT_DOUBLE | GLUT_RGB);
+    <span class="fn">glutInitWindowSize</span>(<span class="nu">500</span>,<span class="nu">500</span>);
+    <span class="fn">glutInitWindowPosition</span>(<span class="nu">100</span>,<span class="nu">100</span>);
+    <span class="fn">glutCreateWindow</span>(<span class="st">"Hello OpenGL"</span>);
+    <span class="fn">init</span>();
+    <span class="fn">glutDisplayFunc</span>(display);
+    <span class="fn">glutMainLoop</span>();
+    <span class="kw">return</span> <span class="nu">0</span>;
+}</code></pre>
+</div>
+<h4>🔑 Key Functions</h4>
+<table class="info-table">
+<thead><tr><th>Function</th><th>কাজ / Purpose</th></tr></thead>
+<tbody>
+<tr><td><code class="inline">glClear()</code></td><td>স্ক্রিন ক্লিয়ার / Clears screen</td></tr>
+<tr><td><code class="inline">glColor3f(r,g,b)</code></td><td>রং সেট / Sets color (0-1)</td></tr>
+<tr><td><code class="inline">glBegin/glEnd</code></td><td>আঁকা শুরু/শেষ / Drawing start/end</td></tr>
+<tr><td><code class="inline">glVertex2f(x,y)</code></td><td>বিন্দু বসাও / Place vertex</td></tr>
+<tr><td><code class="inline">glOrtho()</code></td><td>কোঅর্ডিনেট সিস্টেম / Coordinate system</td></tr>
+<tr><td><code class="inline">glutSwapBuffers()</code></td><td>বাফার সোয়াপ / Swap buffers</td></tr>
+<tr><td><code class="inline">glutMainLoop()</code></td><td>ইভেন্ট লুপ / Event loop (blocks)</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<div class="section-divider"></div>
+
+<!-- ===== TOPICS ===== -->
+<section class="section" id="topics">
+<div class="section-header animate-on-scroll">
+<div class="section-tag">📚 Topics</div>
+<h2>যা শিখবে / What You'll Learn</h2>
+<p>ল্যাবের সব টপিক — থিওরি, কোড, বাংলা ব্যাখ্যা সহ</p>
+</div>
+<div class="topics-grid">
+<div class="topic-card animate-on-scroll"><div class="card-icon" style="background:rgba(108,92,231,.12)">📏</div><h3>1. DDA Line Drawing</h3><p>Digital Differential Analyzer — সবচেয়ে সহজ লাইন অ্যালগরিদম।</p><a href="#dda" class="card-link">শেখো →</a></div>
+<div class="topic-card animate-on-scroll"><div class="card-icon" style="background:rgba(0,206,201,.12)">📐</div><h3>2. Bresenham's Algorithm</h3><p>Integer-only ফাস্ট লাইন অ্যালগরিদম। General version সহ।</p><a href="#bresenham" class="card-link">শেখো →</a></div>
+<div class="topic-card animate-on-scroll"><div class="card-icon" style="background:rgba(253,121,168,.12)">⭕</div><h3>3. Midpoint Circle</h3><p>Decision parameter দিয়ে সার্কেল আঁকা।</p><a href="#midpoint" class="card-link">শেখো →</a></div>
+<div class="topic-card animate-on-scroll"><div class="card-icon" style="background:rgba(253,203,110,.12)">🔄</div><h3>4. 2D Transformation</h3><p>Translation, Rotation, Scaling ম্যাট্রিক্স।</p><a href="#transformation" class="card-link">শেখো →</a></div>
+<div class="topic-card animate-on-scroll"><div class="card-icon" style="background:rgba(0,184,148,.12)">🎬</div><h3>5. Animation</h3><p>Timer ও Keyboard control দিয়ে অ্যানিমেশন।</p><a href="#animation" class="card-link">শেখো →</a></div>
+<div class="topic-card animate-on-scroll"><div class="card-icon" style="background:rgba(225,112,85,.12)">🏠</div><h3>6. Shapes & 3D VR</h3><p>বিভিন্ন শেপ ও 3D রুম — gluLookAt সহ।</p><a href="#shapes" class="card-link">শেখো →</a></div>
+</div>
+</section>
+<div class="section-divider"></div>
+
+<!-- ===== DDA ===== -->
+<section class="section" id="dda">
+<div class="section-header animate-on-scroll">
+<div class="section-tag">📏 Topic 01</div>
+<h2>DDA Line Drawing Algorithm</h2>
+<p>Digital Differential Analyzer — লাইন আঁকার সবচেয়ে সহজ উপায়</p>
+</div>
+<div class="content-block animate-on-scroll">
+<h3>📖 Theory / তত্ত্ব</h3>
+<div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span>
+<p><b>DDA</b> দুটি বিন্দুর মধ্যে লাইন আঁকে।</p>
+<ul>
+<li>dx = |x2-x1|, dy = |y2-y1| বের করো</li>
+<li>steps = max(dx, dy)</li>
+<li>x_inc = dx/steps, y_inc = dy/steps</li>
+<li>লুপে round() করে পিক্সেল বসাও</li>
+</ul>
+<p><b>সমস্যা:</b> float + round() = ধীর।</p>
+</div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span>
+<p><b>DDA</b> draws a line between two points.</p>
+<ul>
+<li>Calculate dx = |x2-x1|, dy = |y2-y1|</li>
+<li>steps = max(dx, dy)</li>
+<li>x_inc = dx/steps, y_inc = dy/steps</li>
+<li>Loop and plot pixels with round()</li>
+</ul>
+<p><b>Drawback:</b> float + round() = slower.</p>
+</div>
+</div>
+<div class="formula">steps = max(|dx|,|dy|) | x_inc = dx/steps | y_inc = dy/steps<br>Loop: plot(round(x),round(y)); x+=x_inc; y+=y_inc;</div>
+</div>
+
+<div class="content-block animate-on-scroll">
+<h3>💻 Code: DDA Line + Triangle</h3>
+<div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span><p>DDA দিয়ে লাইন ও ত্রিভুজ আঁকা। <code class="inline">x_inc=(x2-x1)/steps</code> (signed) দিলে যেকোনো দিকে আঁকা যায়।</p></div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span><p>Line and triangle with DDA. Using <code class="inline">x_inc=(x2-x1)/steps</code> (signed) allows any direction.</p></div>
+</div>
+<div class="code-container">
+<div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="file-name">📄 dda.c</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div>
+<pre class="code-block"><code><span class="pp">#include</span> <span class="st">&lt;GL/gl.h&gt;</span>
+<span class="pp">#include</span> <span class="st">&lt;GL/glut.h&gt;</span>
+<span class="pp">#include</span> <span class="st">&lt;math.h&gt;</span>  <span class="bc">// fabs, fmax, round</span>
+
+<span class="bc">// DDA: দুটি বিন্দুর মধ্যে লাইন আঁকে</span>
+<span class="ty">void</span> <span class="fn">DDA</span>(<span class="ty">float</span> x1,<span class="ty">float</span> y1,<span class="ty">float</span> x2,<span class="ty">float</span> y2)
+{
+    <span class="ty">float</span> dx=<span class="fn">fabs</span>(x2-x1);   <span class="bc">// x দূরত্ব</span>
+    <span class="ty">float</span> dy=<span class="fn">fabs</span>(y2-y1);   <span class="bc">// y দূরত্ব</span>
+    <span class="ty">float</span> steps=<span class="fn">fmax</span>(dx,dy); <span class="bc">// কোনটা বড়?</span>
+    <span class="bc">// signed increment = যেকোনো দিকে আঁকা যায়</span>
+    <span class="ty">float</span> x_inc=(x2-x1)/steps; <span class="bc">// x বৃদ্ধি</span>
+    <span class="ty">float</span> y_inc=(y2-y1)/steps; <span class="bc">// y বৃদ্ধি</span>
+
+    <span class="fn">glColor3f</span>(<span class="nu">1</span>,<span class="nu">1</span>,<span class="nu">1</span>);       <span class="bc">// সাদা রং</span>
+    <span class="fn">glBegin</span>(GL_POINTS);
+    <span class="ty">float</span> x=x1, y=y1;
+    <span class="kw">for</span>(<span class="ty">int</span> i=<span class="nu">0</span>;i&lt;=steps;i++)
+    {
+        <span class="fn">glVertex2f</span>(<span class="fn">round</span>(x),<span class="fn">round</span>(y)); <span class="bc">// পিক্সেল বসাও</span>
+        x+=x_inc; y+=y_inc;   <span class="bc">// পরের ধাপ</span>
+    }
+    <span class="fn">glEnd</span>();
+}
+
+<span class="ty">void</span> <span class="fn">display</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClear</span>(GL_COLOR_BUFFER_BIT);
+    <span class="cm">// একটি লাইন:</span>
+    <span class="fn">DDA</span>(<span class="nu">100</span>,<span class="nu">100</span>,<span class="nu">200</span>,<span class="nu">200</span>);
+    <span class="cm">// ত্রিভুজ (তিনটি লাইন):</span>
+    <span class="fn">DDA</span>(<span class="nu">50</span>,<span class="nu">50</span>,<span class="nu">250</span>,<span class="nu">50</span>);    <span class="bc">// ভূমি</span>
+    <span class="fn">DDA</span>(<span class="nu">250</span>,<span class="nu">50</span>,<span class="nu">150</span>,<span class="nu">250</span>);  <span class="bc">// ডান পাশ</span>
+    <span class="fn">DDA</span>(<span class="nu">150</span>,<span class="nu">250</span>,<span class="nu">50</span>,<span class="nu">50</span>);   <span class="bc">// বাম পাশ</span>
+    <span class="fn">glutSwapBuffers</span>();
+}
+
+<span class="ty">void</span> <span class="fn">init</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClearColor</span>(<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>);
+    <span class="fn">glMatrixMode</span>(GL_PROJECTION);
+    <span class="fn">glLoadIdentity</span>();
+    <span class="fn">glOrtho</span>(<span class="nu">0</span>,<span class="nu">300</span>,<span class="nu">0</span>,<span class="nu">300</span>,<span class="nu">-100</span>,<span class="nu">1</span>);
+}
+
+<span class="ty">int</span> <span class="fn">main</span>(<span class="ty">int</span> argc,<span class="ty">char</span>** argv)
+{
+    <span class="fn">glutInit</span>(&amp;argc,argv);
+    <span class="fn">glutInitDisplayMode</span>(GLUT_DOUBLE|GLUT_RGB);
+    <span class="fn">glutInitWindowSize</span>(<span class="nu">500</span>,<span class="nu">500</span>);
+    <span class="fn">glutCreateWindow</span>(<span class="st">"DDA"</span>);
+    <span class="fn">init</span>();
+    <span class="fn">glutDisplayFunc</span>(display);
+    <span class="fn">glutMainLoop</span>();
+    <span class="kw">return</span> <span class="nu">0</span>;
+}</code></pre>
+</div>
+<div class="note-box warning"><span>⚠️</span><div><b>পার্থক্য:</b> <code class="inline">dx/steps</code> = শুধু positive direction | <code class="inline">(x2-x1)/steps</code> = যেকোনো direction (signed)</div></div>
+</div>
+</section>
+<div class="section-divider"></div>
+
+<!-- ===== BRESENHAM ===== -->
+<section class="section" id="bresenham">
+<div class="section-header animate-on-scroll">
+<div class="section-tag">📐 Topic 02</div>
+<h2>Bresenham's Line Algorithm</h2>
+<p>Integer-only, ফাস্ট — DDA এর উন্নত সংস্করণ</p>
+</div>
+<div class="content-block animate-on-scroll">
+<h3>📖 Theory / তত্ত্ব</h3>
+<div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span>
+<p><b>Bresenham</b> শুধু integer যোগ-বিয়োগ ব্যবহার করে — float না, round() না। তাই ফাস্ট।</p>
+<p><b>Decision Parameter (p):</b></p>
+<ul>
+<li>শুরু: p₀ = 2dy - dx</li>
+<li>p &lt; 0 → (x+1, y), p = p + 2dy</li>
+<li>p ≥ 0 → (x+1, y+1), p = p + 2dy - 2dx</li>
+</ul>
+<p><b>General:</b> dx&gt;dy → x বরাবর | dy≥dx → y বরাবর। x_change/y_change দিয়ে দিক নির্ধারণ।</p>
+</div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span>
+<p><b>Bresenham</b> uses only integer add/subtract — no float, no round(). Faster.</p>
+<p><b>Decision Parameter (p):</b></p>
+<ul>
+<li>Initial: p₀ = 2dy - dx</li>
+<li>p &lt; 0 → (x+1, y), p = p + 2dy</li>
+<li>p ≥ 0 → (x+1, y+1), p = p + 2dy - 2dx</li>
+</ul>
+<p><b>General:</b> dx&gt;dy → step along x | dy≥dx → step along y. Direction via x_change/y_change.</p>
+</div>
+</div>
+<div class="formula">p₀ = 2dy - dx | p&lt;0: p+=2dy | p≥0: p+=2dy-2dx, y++</div>
+</div>
+
+<div class="content-block animate-on-scroll">
+<h3>💻 Code: Bresenham General (Any Direction)</h3>
+<div class="code-container">
+<div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="file-name">📄 bresenham_general.c</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div>
+<pre class="code-block"><code><span class="pp">#include</span> <span class="st">&lt;GL/gl.h&gt;</span>
+<span class="pp">#include</span> <span class="st">&lt;GL/glut.h&gt;</span>
+<span class="pp">#include</span> <span class="st">&lt;math.h&gt;</span>
+
+<span class="bc">// Bresenham General: যেকোনো দিকে লাইন</span>
+<span class="ty">void</span> <span class="fn">Bresenham_General</span>(<span class="ty">float</span> x1,<span class="ty">float</span> y1,<span class="ty">float</span> x2,<span class="ty">float</span> y2)
+{
+    <span class="ty">float</span> dx=<span class="fn">abs</span>(x2-x1), dy=<span class="fn">abs</span>(y2-y1);
+    <span class="ty">float</span> p;
+    <span class="bc">// দিক নির্ধারণ / Direction</span>
+    <span class="ty">float</span> x_change = x1&gt;x2 ? <span class="nu">-1</span>:<span class="nu">1</span>; <span class="bc">// বামে/ডানে</span>
+    <span class="ty">float</span> y_change = y1&gt;y2 ? <span class="nu">-1</span>:<span class="nu">1</span>; <span class="bc">// উপরে/নিচে</span>
+
+    <span class="fn">glBegin</span>(GL_POINTS);
+    <span class="fn">glVertex2f</span>(x1,y1); <span class="bc">// শুরু বিন্দু</span>
+
+    <span class="kw">if</span>(dx&gt;dy) <span class="bc">// slope&lt;1: x বরাবর আগাও</span>
+    {
+        p = <span class="nu">2</span>*dy - dx;
+        <span class="kw">while</span>(<span class="nu">1</span>)
+        {
+            x1 += x_change;      <span class="bc">// x এগোও</span>
+            <span class="kw">if</span>(p&lt;<span class="nu">0</span>) p += <span class="nu">2</span>*dy;  <span class="bc">// y বদলাবে না</span>
+            <span class="kw">else</span> { y1+=y_change; p+=<span class="nu">2</span>*dy-<span class="nu">2</span>*dx; } <span class="bc">// y এগোও</span>
+            <span class="fn">glVertex2f</span>(x1,y1);
+            <span class="kw">if</span>(x1==x2) <span class="kw">break</span>;   <span class="bc">// শেষ?</span>
+        }
+    }
+    <span class="kw">else</span> <span class="bc">// slope≥1: y বরাবর আগাও</span>
+    {
+        p = <span class="nu">2</span>*dx - dy;          <span class="bc">// dx-dy swapped!</span>
+        <span class="kw">while</span>(<span class="nu">1</span>)
+        {
+            y1 += y_change;      <span class="bc">// y এগোও</span>
+            <span class="kw">if</span>(p&lt;<span class="nu">0</span>) p += <span class="nu">2</span>*dx;  <span class="bc">// x বদলাবে না</span>
+            <span class="kw">else</span> { x1+=x_change; p+=<span class="nu">2</span>*dx-<span class="nu">2</span>*dy; } <span class="bc">// x এগোও</span>
+            <span class="fn">glVertex2f</span>(x1,y1);
+            <span class="kw">if</span>(y1==y2) <span class="kw">break</span>;   <span class="bc">// শেষ?</span>
+        }
+    }
+    <span class="fn">glEnd</span>();
+}
+
+<span class="ty">void</span> <span class="fn">display</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClear</span>(GL_COLOR_BUFFER_BIT);
+    <span class="fn">glColor3f</span>(<span class="nu">1</span>,<span class="nu">1</span>,<span class="nu">1</span>);
+    <span class="fn">Bresenham_General</span>(<span class="nu">260</span>,<span class="nu">240</span>,<span class="nu">140</span>,<span class="nu">140</span>); <span class="bc">// উল্টো দিকে!</span>
+    <span class="fn">glutSwapBuffers</span>();
+}
+
+<span class="ty">void</span> <span class="fn">init</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClearColor</span>(<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>);
+    <span class="fn">glMatrixMode</span>(GL_PROJECTION);
+    <span class="fn">glLoadIdentity</span>();
+    <span class="fn">glOrtho</span>(<span class="nu">0</span>,<span class="nu">300</span>,<span class="nu">0</span>,<span class="nu">300</span>,<span class="nu">-100</span>,<span class="nu">1</span>);
+}
+
+<span class="ty">int</span> <span class="fn">main</span>(<span class="ty">int</span> argc,<span class="ty">char</span>** argv)
+{
+    <span class="fn">glutInit</span>(&amp;argc,argv);
+    <span class="fn">glutInitDisplayMode</span>(GLUT_DOUBLE|GLUT_RGB);
+    <span class="fn">glutInitWindowSize</span>(<span class="nu">500</span>,<span class="nu">500</span>);
+    <span class="fn">glutCreateWindow</span>(<span class="st">"Bresenham General"</span>);
+    <span class="fn">init</span>();
+    <span class="fn">glutDisplayFunc</span>(display);
+    <span class="fn">glutMainLoop</span>();
+    <span class="kw">return</span> <span class="nu">0</span>;
+}</code></pre>
+</div>
+<div class="note-box success"><span>✅</span><div><b>DDA vs Bresenham:</b> DDA = float+round() (ধীর) | Bresenham = integer +,- (ফাস্ট) | General = যেকোনো direction</div></div>
+</div>
+</section>
+<div class="section-divider"></div>
+
+<!-- ===== MIDPOINT ===== -->
+<section class="section" id="midpoint">
+<div class="section-header animate-on-scroll">
+<div class="section-tag">⭕ Topic 03</div>
+<h2>Midpoint Circle Algorithm</h2>
+<p>Decision parameter দিয়ে সার্কেল আঁকা — 8-way symmetry</p>
+</div>
+<div class="content-block animate-on-scroll">
+<h3>📖 Theory / তত্ত্ব</h3>
+<div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span>
+<p><b>Midpoint Circle</b> অ্যালগরিদম সার্কেল আঁকে। এটি 8-way symmetry ব্যবহার করে — এক অষ্টাংশ হিসাব করলে বাকি ৭টি অটোমেটিক পাওয়া যায়।</p>
+<ul>
+<li>শুরু: x=0, y=r, p=1-r</li>
+<li>p &lt; 0 → p = p + 2x + 3</li>
+<li>p ≥ 0 → p = p + 2(x-y) + 5, y--</li>
+<li>প্রতি ধাপে ৮টি প্রতিসম বিন্দু আঁকো</li>
+</ul>
+</div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span>
+<p><b>Midpoint Circle</b> draws circles using 8-way symmetry — compute one octant, mirror to get all 8.</p>
+<ul>
+<li>Start: x=0, y=r, p=1-r</li>
+<li>p &lt; 0 → p = p + 2x + 3</li>
+<li>p ≥ 0 → p = p + 2(x-y) + 5, y--</li>
+<li>Plot 8 symmetric points each step</li>
+</ul>
+</div>
+</div>
+<div class="formula">p₀ = 1-r | p&lt;0: p+=2x+3 | p≥0: p+=2(x-y)+5, y--<br>8 points: (±x,±y), (±y,±y) relative to center</div>
+</div>
+<div class="content-block animate-on-scroll">
+<h3>💻 Code: Midpoint Circle</h3>
+<div class="code-container">
+<div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="file-name">📄 midpoint_circle.c</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div>
+<pre class="code-block"><code><span class="pp">#include</span> <span class="st">&lt;GL/gl.h&gt;</span>
+<span class="pp">#include</span> <span class="st">&lt;GL/glut.h&gt;</span>
+
+<span class="bc">// ৮টি প্রতিসম বিন্দু আঁকে / Plot 8 symmetric points</span>
+<span class="ty">void</span> <span class="fn">plot8</span>(<span class="ty">float</span> cx,<span class="ty">float</span> cy,<span class="ty">float</span> x,<span class="ty">float</span> y)
+{
+    <span class="fn">glVertex2f</span>(cx+x, cy+y);  <span class="fn">glVertex2f</span>(cx-x, cy+y);
+    <span class="fn">glVertex2f</span>(cx+x, cy-y);  <span class="fn">glVertex2f</span>(cx-x, cy-y);
+    <span class="fn">glVertex2f</span>(cx+y, cy+x);  <span class="fn">glVertex2f</span>(cx-y, cy+x);
+    <span class="fn">glVertex2f</span>(cx+y, cy-x);  <span class="fn">glVertex2f</span>(cx-y, cy-x);
+}
+
+<span class="bc">// Midpoint Circle: (cx,cy) কেন্দ্র, r ব্যাসার্ধ</span>
+<span class="ty">void</span> <span class="fn">MidpointCircle</span>(<span class="ty">float</span> cx,<span class="ty">float</span> cy,<span class="ty">float</span> r)
+{
+    <span class="ty">float</span> x=<span class="nu">0</span>, y=r;       <span class="bc">// শুরু: উপরে থেকে</span>
+    <span class="ty">float</span> p=<span class="nu">1</span>-r;           <span class="bc">// প্রাথমিক decision parameter</span>
+
+    <span class="fn">glColor3f</span>(<span class="nu">0</span>,<span class="nu">1</span>,<span class="nu">0</span>);     <span class="bc">// সবুজ রং</span>
+    <span class="fn">glBegin</span>(GL_POINTS);
+    <span class="fn">plot8</span>(cx,cy,x,y);       <span class="bc">// প্রথম ৮ বিন্দু</span>
+
+    <span class="kw">while</span>(x &lt; y)            <span class="bc">// x&lt;y পর্যন্ত (এক অষ্টাংশ)</span>
+    {
+        x++;                 <span class="bc">// x সবসময় বাড়ে</span>
+        <span class="kw">if</span>(p &lt; <span class="nu">0</span>)
+            p = p + <span class="nu">2</span>*x + <span class="nu">1</span>;  <span class="bc">// y বদলাবে না</span>
+        <span class="kw">else</span>
+        {
+            y--;             <span class="bc">// y কমে</span>
+            p = p + <span class="nu">2</span>*x - <span class="nu">2</span>*y + <span class="nu">1</span>;
+        }
+        <span class="fn">plot8</span>(cx,cy,x,y);   <span class="bc">// ৮ বিন্দু আঁকো</span>
+    }
+    <span class="fn">glEnd</span>();
+}
+
+<span class="ty">void</span> <span class="fn">display</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClear</span>(GL_COLOR_BUFFER_BIT);
+    <span class="fn">MidpointCircle</span>(<span class="nu">150</span>,<span class="nu">150</span>,<span class="nu">100</span>); <span class="bc">// কেন্দ্র(150,150), r=100</span>
+    <span class="fn">glutSwapBuffers</span>();
+}
+
+<span class="ty">void</span> <span class="fn">init</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClearColor</span>(<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>);
+    <span class="fn">glMatrixMode</span>(GL_PROJECTION);
+    <span class="fn">glLoadIdentity</span>();
+    <span class="fn">glOrtho</span>(<span class="nu">0</span>,<span class="nu">300</span>,<span class="nu">0</span>,<span class="nu">300</span>,<span class="nu">-100</span>,<span class="nu">1</span>);
+}
+
+<span class="ty">int</span> <span class="fn">main</span>(<span class="ty">int</span> argc,<span class="ty">char</span>** argv)
+{
+    <span class="fn">glutInit</span>(&amp;argc,argv);
+    <span class="fn">glutInitDisplayMode</span>(GLUT_DOUBLE|GLUT_RGB);
+    <span class="fn">glutInitWindowSize</span>(<span class="nu">500</span>,<span class="nu">500</span>);
+    <span class="fn">glutCreateWindow</span>(<span class="st">"Midpoint Circle"</span>);
+    <span class="fn">init</span>();
+    <span class="fn">glutDisplayFunc</span>(display);
+    <span class="fn">glutMainLoop</span>();
+    <span class="kw">return</span> <span class="nu">0</span>;
+}</code></pre>
+</div>
+</div>
+</section>
+<div class="section-divider"></div>
+
+<!-- ===== 2D TRANSFORMATION ===== -->
+<section class="section" id="transformation">
+<div class="section-header animate-on-scroll">
+<div class="section-tag">🔄 Topic 04</div>
+<h2>2D Transformation</h2>
+<p>Translation, Rotation, Scaling — OpenGL built-in ফাংশন দিয়ে</p>
+</div>
+<div class="content-block animate-on-scroll">
+<h3>📖 Theory / তত্ত্ব</h3>
+<div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span>
+<p><b>2D Transformation</b> দিয়ে অবজেক্ট মুভ, ঘোরানো, সাইজ বদলানো যায়:</p>
+<ul>
+<li><b>Translation:</b> <code class="inline">glTranslatef(tx,ty,0)</code> — অবজেক্ট সরাও</li>
+<li><b>Rotation:</b> <code class="inline">glRotatef(angle,0,0,1)</code> — z-axis এ ঘোরাও</li>
+<li><b>Scaling:</b> <code class="inline">glScalef(sx,sy,1)</code> — সাইজ বদলাও</li>
+</ul>
+<p><b>গুরুত্বপূর্ণ:</b> <code class="inline">glPushMatrix()</code> ও <code class="inline">glPopMatrix()</code> দিয়ে transformation আলাদা রাখো।</p>
+</div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span>
+<p><b>2D Transformation</b> moves, rotates, scales objects:</p>
+<ul>
+<li><b>Translation:</b> <code class="inline">glTranslatef(tx,ty,0)</code> — move object</li>
+<li><b>Rotation:</b> <code class="inline">glRotatef(angle,0,0,1)</code> — rotate around z</li>
+<li><b>Scaling:</b> <code class="inline">glScalef(sx,sy,1)</code> — resize</li>
+</ul>
+<p><b>Important:</b> Use <code class="inline">glPushMatrix()</code> / <code class="inline">glPopMatrix()</code> to isolate transforms.</p>
+</div>
+</div>
+</div>
+<div class="content-block animate-on-scroll">
+<h3>💻 Code: Keyboard Control + Rotation</h3>
+<div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span><p>Arrow keys / WASD দিয়ে নীল বর্গ সরাও। 'L' চাপলে লাল বর্গ ঘুরতে থাকে, 'K' চাপলে থামে।</p></div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span><p>Move blue square with Arrow keys / WASD. Press 'L' to rotate red square, 'K' to stop.</p></div>
+</div>
+<div class="code-container">
+<div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="file-name">📄 transform_keyboard.c</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div>
+<pre class="code-block"><code><span class="pp">#include</span> <span class="st">&lt;GL/gl.h&gt;</span>
+<span class="pp">#include</span> <span class="st">&lt;GL/glut.h&gt;</span>
+
+<span class="ty">float</span> px=<span class="nu">-8</span>, py=<span class="nu">2</span>, speed=<span class="nu">0.5</span>, angle=<span class="nu">1</span>;
+
+<span class="ty">void</span> <span class="fn">display</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClear</span>(GL_COLOR_BUFFER_BIT);
+
+    <span class="bc">// নীল বর্গ (keyboard দিয়ে মুভ করে)</span>
+    <span class="fn">glColor3f</span>(<span class="nu">.25</span>,<span class="nu">.25</span>,<span class="nu">1.0</span>);
+    <span class="fn">glBegin</span>(GL_POLYGON);
+        <span class="fn">glVertex2f</span>(px,py);
+        <span class="fn">glVertex2f</span>(px+<span class="nu">4</span>,py);
+        <span class="fn">glVertex2f</span>(px+<span class="nu">4</span>,py-<span class="nu">4</span>);
+        <span class="fn">glVertex2f</span>(px,py-<span class="nu">4</span>);
+    <span class="fn">glEnd</span>();
+
+    <span class="bc">// লাল বর্গ (ঘুরতে থাকে)</span>
+    <span class="fn">glPushMatrix</span>();            <span class="bc">// ম্যাট্রিক্স সেভ</span>
+    <span class="fn">glRotatef</span>(angle,<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">1</span>);  <span class="bc">// z-axis এ ঘোরাও</span>
+    <span class="fn">glColor3f</span>(<span class="nu">1</span>,<span class="nu">0</span>,<span class="nu">0</span>);       <span class="bc">// লাল</span>
+    <span class="fn">glRectf</span>(<span class="nu">-2</span>,<span class="nu">-2</span>,<span class="nu">2</span>,<span class="nu">2</span>);     <span class="bc">// বর্গ আঁকো</span>
+    <span class="fn">glPopMatrix</span>();           <span class="bc">// ম্যাট্রিক্স রিস্টোর</span>
+
+    <span class="fn">glutSwapBuffers</span>();
+}
+
+<span class="bc">// ঘোরানোর ফাংশন (idle এ কল হয়)</span>
+<span class="ty">void</span> <span class="fn">RotateLeft</span>(){ angle+=<span class="nu">10</span>; <span class="fn">glutPostRedisplay</span>(); }
+
+<span class="bc">// Arrow keys হ্যান্ডলার</span>
+<span class="ty">void</span> <span class="fn">specialKeys</span>(<span class="ty">int</span> key,<span class="ty">int</span> x,<span class="ty">int</span> y)
+{
+    <span class="kw">switch</span>(key){
+        <span class="kw">case</span> GLUT_KEY_RIGHT: px+=speed; <span class="kw">break</span>;
+        <span class="kw">case</span> GLUT_KEY_LEFT:  px-=speed; <span class="kw">break</span>;
+        <span class="kw">case</span> GLUT_KEY_UP:    py+=speed; <span class="kw">break</span>;
+        <span class="kw">case</span> GLUT_KEY_DOWN:  py-=speed; <span class="kw">break</span>;
+    }
+    <span class="fn">glutPostRedisplay</span>();
+}
+
+<span class="bc">// WASD + L/K হ্যান্ডলার</span>
+<span class="ty">void</span> <span class="fn">keyboard</span>(<span class="ty">unsigned char</span> key,<span class="ty">int</span> x,<span class="ty">int</span> y)
+{
+    <span class="kw">switch</span>(key){
+        <span class="kw">case</span> <span class="st">'w'</span>: py+=speed; <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="st">'s'</span>: py-=speed; <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="st">'a'</span>: px-=speed; <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="st">'d'</span>: px+=speed; <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="st">'l'</span>: <span class="fn">glutIdleFunc</span>(RotateLeft); <span class="kw">break</span>; <span class="bc">// ঘোরাও</span>
+        <span class="kw">case</span> <span class="st">'k'</span>: <span class="fn">glutIdleFunc</span>(NULL); <span class="kw">break</span>;       <span class="bc">// থামাও</span>
+    }
+    <span class="fn">glutPostRedisplay</span>();
+}
+
+<span class="ty">void</span> <span class="fn">init</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClearColor</span>(<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>);
+    <span class="fn">glMatrixMode</span>(GL_PROJECTION);
+    <span class="fn">glLoadIdentity</span>();
+    <span class="fn">glOrtho</span>(<span class="nu">-10</span>,<span class="nu">10</span>,<span class="nu">-10</span>,<span class="nu">10</span>,<span class="nu">-100</span>,<span class="nu">1</span>); <span class="bc">// -10 to 10</span>
+}
+
+<span class="ty">int</span> <span class="fn">main</span>(<span class="ty">int</span> argc,<span class="ty">char</span>** argv)
+{
+    <span class="fn">glutInit</span>(&amp;argc,argv);
+    <span class="fn">glutInitDisplayMode</span>(GLUT_DOUBLE|GLUT_RGB);
+    <span class="fn">glutInitWindowSize</span>(<span class="nu">500</span>,<span class="nu">500</span>);
+    <span class="fn">glutCreateWindow</span>(<span class="st">"2D Transform"</span>);
+    <span class="fn">init</span>();
+    <span class="fn">glutDisplayFunc</span>(display);
+    <span class="fn">glutKeyboardFunc</span>(keyboard);     <span class="bc">// WASD</span>
+    <span class="fn">glutSpecialFunc</span>(specialKeys);   <span class="bc">// Arrows</span>
+    <span class="fn">glutMainLoop</span>();
+    <span class="kw">return</span> <span class="nu">0</span>;
+}</code></pre>
+</div>
+</div>
+</section>
+<div class="section-divider"></div>
+
+<!-- ===== ANIMATION ===== -->
+<section class="section" id="animation">
+<div class="section-header animate-on-scroll">
+<div class="section-tag">🎬 Topic 05</div>
+<h2>Animation</h2>
+<p>Timer function দিয়ে অটো অ্যানিমেশন — বাউন্সিং অবজেক্ট</p>
+</div>
+<div class="content-block animate-on-scroll">
+<h3>📖 Theory / তত্ত্ব</h3>
+<div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span>
+<p><b>Animation</b> এর মূল কৌশল:</p>
+<ul>
+<li><code class="inline">glutTimerFunc(ms, func, val)</code> — প্রতি ms মিলিসেকেন্ডে func কল হয়</li>
+<li>func এর ভিতরে position আপডেট করো</li>
+<li><code class="inline">glutPostRedisplay()</code> দিয়ে স্ক্রিন রিড্র করো</li>
+<li>আবার <code class="inline">glutTimerFunc</code> কল করো (recursive loop)</li>
+<li>বাউন্স: সীমানায় পৌঁছালে speed = -speed</li>
+</ul>
+</div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span>
+<p><b>Animation</b> key technique:</p>
+<ul>
+<li><code class="inline">glutTimerFunc(ms, func, val)</code> — calls func every ms milliseconds</li>
+<li>Update position inside func</li>
+<li><code class="inline">glutPostRedisplay()</code> to redraw screen</li>
+<li>Call <code class="inline">glutTimerFunc</code> again (recursive loop)</li>
+<li>Bounce: at boundary, speed = -speed</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="content-block animate-on-scroll">
+<h3>💻 Code: Bouncing Animation (Timer)</h3>
+<div class="code-container">
+<div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="file-name">📄 animation_bounce.c</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div>
+<pre class="code-block"><code><span class="pp">#include</span> <span class="st">&lt;GL/gl.h&gt;</span>
+<span class="pp">#include</span> <span class="st">&lt;GL/glut.h&gt;</span>
+
+<span class="ty">float</span> p = <span class="nu">-8</span>;       <span class="bc">// অবজেক্টের x পজিশন</span>
+<span class="ty">float</span> speed = <span class="nu">0.1</span>;  <span class="bc">// গতি (positive = ডানে)</span>
+
+<span class="ty">void</span> <span class="fn">display</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClear</span>(GL_COLOR_BUFFER_BIT);
+    <span class="fn">glColor3f</span>(<span class="nu">.25</span>,<span class="nu">.25</span>,<span class="nu">1.0</span>);  <span class="bc">// নীল রং</span>
+
+    <span class="bc">// বর্গ আঁকো p পজিশনে</span>
+    <span class="fn">glBegin</span>(GL_POLYGON);
+        <span class="fn">glVertex2f</span>(p, <span class="nu">2</span>);
+        <span class="fn">glVertex2f</span>(p+<span class="nu">4</span>, <span class="nu">2</span>);
+        <span class="fn">glVertex2f</span>(p+<span class="nu">4</span>, <span class="nu">-2</span>);
+        <span class="fn">glVertex2f</span>(p, <span class="nu">-2</span>);
+    <span class="fn">glEnd</span>();
+
+    <span class="fn">glutSwapBuffers</span>();
+}
+
+<span class="bc">// পজিশন আপডেট করো</span>
+<span class="ty">void</span> <span class="fn">update</span>()
+{
+    p = p + speed;              <span class="bc">// এগোও</span>
+    <span class="kw">if</span>(p >= <span class="nu">6</span> || p <= <span class="nu">-10</span>)    <span class="bc">// সীমানায় পৌঁছেছে?</span>
+        speed = -speed;         <span class="bc">// দিক উল্টাও (বাউন্স!)</span>
+    <span class="fn">glutPostRedisplay</span>();       <span class="bc">// আবার আঁকো</span>
+}
+
+<span class="bc">// টাইমার ফাংশন — প্রতি 100ms এ কল হয়</span>
+<span class="ty">void</span> <span class="fn">myTimer</span>(<span class="ty">int</span> val)
+{
+    <span class="fn">update</span>();                   <span class="bc">// পজিশন আপডেট</span>
+    <span class="fn">glutTimerFunc</span>(<span class="nu">100</span>, myTimer, <span class="nu">0</span>); <span class="bc">// আবার কল (loop!)</span>
+}
+
+<span class="ty">void</span> <span class="fn">init</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClearColor</span>(<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>);
+    <span class="fn">glMatrixMode</span>(GL_PROJECTION);
+    <span class="fn">glLoadIdentity</span>();
+    <span class="fn">glOrtho</span>(<span class="nu">-10</span>,<span class="nu">10</span>,<span class="nu">-10</span>,<span class="nu">10</span>,<span class="nu">-100</span>,<span class="nu">1</span>);
+}
+
+<span class="ty">int</span> <span class="fn">main</span>(<span class="ty">int</span> argc,<span class="ty">char</span>** argv)
+{
+    <span class="fn">glutInit</span>(&amp;argc,argv);
+    <span class="fn">glutInitDisplayMode</span>(GLUT_DOUBLE|GLUT_RGB);
+    <span class="fn">glutInitWindowSize</span>(<span class="nu">500</span>,<span class="nu">500</span>);
+    <span class="fn">glutCreateWindow</span>(<span class="st">"Animation"</span>);
+    <span class="fn">init</span>();
+    <span class="fn">glutDisplayFunc</span>(display);
+    <span class="fn">glutTimerFunc</span>(<span class="nu">100</span>, myTimer, <span class="nu">0</span>); <span class="bc">// টাইমার শুরু!</span>
+    <span class="fn">glutMainLoop</span>();
+    <span class="kw">return</span> <span class="nu">0</span>;
+}</code></pre>
+</div>
+<div class="note-box info"><span>💡</span><div><b>Animation Pattern:</b> Timer → update() → position change → glutPostRedisplay() → glutTimerFunc() আবার → infinite loop</div></div>
+</div>
+</section>
+<div class="section-divider"></div>
+
+<!-- ===== SHAPES & 3D ===== -->
+<section class="section" id="shapes">
+<div class="section-header animate-on-scroll">
+<div class="section-tag">🏠 Topic 06</div>
+<h2>Shapes & 3D VR Room</h2>
+<p>বিভিন্ন শেপ এবং 3D পার্সপেক্টিভ ভিউ</p>
+</div>
+<div class="content-block animate-on-scroll">
+<h3>📖 Theory / তত্ত্ব</h3>
+<div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span>
+<p><b>3D ভিউ</b> এর জন্য নতুন ফাংশন লাগে:</p>
+<ul>
+<li><code class="inline">gluPerspective(fov, ratio, near, far)</code> — 3D পার্সপেক্টিভ</li>
+<li><code class="inline">gluLookAt(ex,ey,ez, cx,cy,cz, ux,uy,uz)</code> — ক্যামেরা পজিশন</li>
+<li><code class="inline">glEnable(GL_DEPTH_TEST)</code> — depth buffer (3D এ অবশ্যই লাগবে)</li>
+<li><code class="inline">glutSolidCube(1)</code> — 3D কিউব আঁকে</li>
+</ul>
+<p>WASD দিয়ে ক্যামেরা মুভ, A/D দিয়ে তাকানোর দিক বদলাও।</p>
+</div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span>
+<p><b>3D View</b> requires new functions:</p>
+<ul>
+<li><code class="inline">gluPerspective(fov, ratio, near, far)</code> — 3D perspective</li>
+<li><code class="inline">gluLookAt(ex,ey,ez, cx,cy,cz, ux,uy,uz)</code> — camera position</li>
+<li><code class="inline">glEnable(GL_DEPTH_TEST)</code> — depth buffer (required for 3D)</li>
+<li><code class="inline">glutSolidCube(1)</code> — draws 3D cube</li>
+</ul>
+<p>WASD moves camera, A/D changes look direction.</p>
+</div>
+</div>
+</div>
+<div class="content-block animate-on-scroll">
+<h3>💻 Code: 3D VR Room</h3>
+<div class="code-container">
+<div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="file-name">📄 vr_room.c</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div>
+<pre class="code-block"><code><span class="pp">#include</span> <span class="st">&lt;GL/glut.h&gt;</span>
+<span class="pp">#include</span> <span class="st">&lt;math.h&gt;</span>
+
+<span class="ty">float</span> angle=<span class="nu">0</span>, lx=<span class="nu">0</span>, lz=<span class="nu">-1</span>; <span class="bc">// ক্যামেরা দিক</span>
+<span class="ty">float</span> x=<span class="nu">0</span>, z=<span class="nu">5</span>;              <span class="bc">// ক্যামেরা পজিশন</span>
+
+<span class="bc">// ঘর আঁকো: মেঝে + দেয়াল</span>
+<span class="ty">void</span> <span class="fn">drawRoom</span>()
+{
+    <span class="fn">glColor3f</span>(<span class="nu">0.6</span>,<span class="nu">0.6</span>,<span class="nu">0.6</span>);  <span class="bc">// ধূসর মেঝে</span>
+    <span class="fn">glBegin</span>(GL_QUADS);
+        <span class="fn">glVertex3f</span>(<span class="nu">-10</span>,<span class="nu">0</span>,<span class="nu">-10</span>); <span class="fn">glVertex3f</span>(<span class="nu">-10</span>,<span class="nu">0</span>,<span class="nu">10</span>);
+        <span class="fn">glVertex3f</span>(<span class="nu">10</span>,<span class="nu">0</span>,<span class="nu">10</span>);   <span class="fn">glVertex3f</span>(<span class="nu">10</span>,<span class="nu">0</span>,<span class="nu">-10</span>);
+    <span class="fn">glEnd</span>();
+
+    <span class="fn">glColor3f</span>(<span class="nu">0.8</span>,<span class="nu">0.7</span>,<span class="nu">0.5</span>);  <span class="bc">// পেছনের দেয়াল</span>
+    <span class="fn">glBegin</span>(GL_QUADS);
+        <span class="fn">glVertex3f</span>(<span class="nu">-10</span>,<span class="nu">0</span>,<span class="nu">-10</span>); <span class="fn">glVertex3f</span>(<span class="nu">-10</span>,<span class="nu">8</span>,<span class="nu">-10</span>);
+        <span class="fn">glVertex3f</span>(<span class="nu">10</span>,<span class="nu">8</span>,<span class="nu">-10</span>);  <span class="fn">glVertex3f</span>(<span class="nu">10</span>,<span class="nu">0</span>,<span class="nu">-10</span>);
+    <span class="fn">glEnd</span>();
+
+    <span class="fn">glBegin</span>(GL_QUADS);         <span class="bc">// বাম দেয়াল</span>
+        <span class="fn">glVertex3f</span>(<span class="nu">-10</span>,<span class="nu">0</span>,<span class="nu">-10</span>); <span class="fn">glVertex3f</span>(<span class="nu">-10</span>,<span class="nu">8</span>,<span class="nu">-10</span>);
+        <span class="fn">glVertex3f</span>(<span class="nu">-10</span>,<span class="nu">8</span>,<span class="nu">10</span>);  <span class="fn">glVertex3f</span>(<span class="nu">-10</span>,<span class="nu">0</span>,<span class="nu">10</span>);
+    <span class="fn">glEnd</span>();
+}
+
+<span class="bc">// টেবিল আঁকো: টপ + ৪ পায়া</span>
+<span class="ty">void</span> <span class="fn">drawTable</span>()
+{
+    <span class="fn">glPushMatrix</span>();
+    <span class="fn">glTranslatef</span>(<span class="nu">0</span>,<span class="nu">1</span>,<span class="nu">-3</span>);   <span class="bc">// টেবিল পজিশন</span>
+    <span class="fn">glColor3f</span>(<span class="nu">0.5</span>,<span class="nu">0.2</span>,<span class="nu">0.1</span>); <span class="bc">// কাঠের রং</span>
+
+    <span class="fn">glPushMatrix</span>();            <span class="bc">// টেবিল টপ</span>
+    <span class="fn">glScalef</span>(<span class="nu">2</span>,<span class="nu">0.2</span>,<span class="nu">1</span>);
+    <span class="fn">glutSolidCube</span>(<span class="nu">1</span>);
+    <span class="fn">glPopMatrix</span>();
+
+    <span class="ty">float</span> leg[<span class="nu">4</span>][<span class="nu">2</span>]={{<span class="nu">.8</span>,<span class="nu">.4</span>},{<span class="nu">-.8</span>,<span class="nu">.4</span>},{<span class="nu">.8</span>,<span class="nu">-.4</span>},{<span class="nu">-.8</span>,<span class="nu">-.4</span>}};
+    <span class="kw">for</span>(<span class="ty">int</span> i=<span class="nu">0</span>;i&lt;<span class="nu">4</span>;i++)   <span class="bc">// ৪টি পায়া</span>
+    {
+        <span class="fn">glPushMatrix</span>();
+        <span class="fn">glTranslatef</span>(leg[i][<span class="nu">0</span>],<span class="nu">-0.6</span>,leg[i][<span class="nu">1</span>]);
+        <span class="fn">glScalef</span>(<span class="nu">0.1</span>,<span class="nu">1.2</span>,<span class="nu">0.1</span>);
+        <span class="fn">glutSolidCube</span>(<span class="nu">1</span>);
+        <span class="fn">glPopMatrix</span>();
+    }
+    <span class="fn">glPopMatrix</span>();
+}
+
+<span class="ty">void</span> <span class="fn">display</span>()
+{
+    <span class="fn">glClear</span>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    <span class="fn">glLoadIdentity</span>();
+    <span class="bc">// ক্যামেরা সেট: পজিশন → তাকানোর দিক → up vector</span>
+    <span class="fn">gluLookAt</span>(x,<span class="nu">2</span>,z, x+lx,<span class="nu">2</span>,z+lz, <span class="nu">0</span>,<span class="nu">1</span>,<span class="nu">0</span>);
+    <span class="fn">drawRoom</span>();
+    <span class="fn">drawTable</span>();
+    <span class="fn">glutSwapBuffers</span>();
+}
+
+<span class="ty">void</span> <span class="fn">reshape</span>(<span class="ty">int</span> w,<span class="ty">int</span> h)
+{
+    <span class="kw">if</span>(h==<span class="nu">0</span>) h=<span class="nu">1</span>;
+    <span class="fn">glMatrixMode</span>(GL_PROJECTION);
+    <span class="fn">glLoadIdentity</span>();
+    <span class="fn">gluPerspective</span>(<span class="nu">45</span>,(<span class="ty">float</span>)w/h,<span class="nu">0.1</span>,<span class="nu">100</span>); <span class="bc">// 3D perspective</span>
+    <span class="fn">glMatrixMode</span>(GL_MODELVIEW);
+}
+
+<span class="ty">void</span> <span class="fn">keyboard</span>(<span class="ty">unsigned char</span> key,<span class="ty">int</span> xx,<span class="ty">int</span> yy)
+{
+    <span class="ty">float</span> f=<span class="nu">0.3</span>;
+    <span class="kw">switch</span>(key){
+        <span class="kw">case</span> <span class="st">'w'</span>: x+=lx*f; z+=lz*f; <span class="kw">break</span>; <span class="bc">// সামনে</span>
+        <span class="kw">case</span> <span class="st">'s'</span>: x-=lx*f; z-=lz*f; <span class="kw">break</span>; <span class="bc">// পেছনে</span>
+        <span class="kw">case</span> <span class="st">'a'</span>: angle-=<span class="nu">.05</span>; lx=<span class="fn">sin</span>(angle); lz=-<span class="fn">cos</span>(angle); <span class="kw">break</span>; <span class="bc">// বামে তাকাও</span>
+        <span class="kw">case</span> <span class="st">'d'</span>: angle+=<span class="nu">.05</span>; lx=<span class="fn">sin</span>(angle); lz=-<span class="fn">cos</span>(angle); <span class="kw">break</span>; <span class="bc">// ডানে তাকাও</span>
+        <span class="kw">case</span> <span class="nu">27</span>: <span class="fn">exit</span>(<span class="nu">0</span>);  <span class="bc">// ESC = বন্ধ</span>
+    }
+    <span class="fn">glutPostRedisplay</span>();
+}
+
+<span class="ty">void</span> <span class="fn">init</span>()
+{
+    <span class="fn">glEnable</span>(GL_DEPTH_TEST);  <span class="bc">// 3D depth buffer চালু</span>
+    <span class="fn">glClearColor</span>(<span class="nu">0.5</span>,<span class="nu">0.8</span>,<span class="nu">1.0</span>,<span class="nu">1.0</span>); <span class="bc">// আকাশি রং</span>
+}
+
+<span class="ty">int</span> <span class="fn">main</span>(<span class="ty">int</span> argc,<span class="ty">char</span>** argv)
+{
+    <span class="fn">glutInit</span>(&amp;argc,argv);
+    <span class="fn">glutInitDisplayMode</span>(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
+    <span class="fn">glutInitWindowSize</span>(<span class="nu">800</span>,<span class="nu">600</span>);
+    <span class="fn">glutCreateWindow</span>(<span class="st">"VR Room"</span>);
+    <span class="fn">init</span>();
+    <span class="fn">glutDisplayFunc</span>(display);
+    <span class="fn">glutReshapeFunc</span>(reshape);
+    <span class="fn">glutKeyboardFunc</span>(keyboard);
+    <span class="fn">glutMainLoop</span>();
+    <span class="kw">return</span> <span class="nu">0</span>;
+}</code></pre>
+</div>
+<div class="note-box info"><span>💡</span><div><b>3D Controls:</b> W=সামনে, S=পেছনে, A=বামে তাকাও, D=ডানে তাকাও, ESC=বন্ধ</div></div>
+</div>
+</section>
+<div class="section-divider"></div>
+
+<!-- ===== CONTRIBUTORS ===== -->
+<section class="section" id="contributors">
+<div class="section-header animate-on-scroll">
+<div class="section-tag">👥 Team</div>
+<h2>Contributors / অবদানকারী</h2>
+<p>যাদের কোড ও পরিশ্রমে এই সাইট তৈরি</p>
+</div>
+<div class="contributors-grid">
+<div class="contributor-card animate-on-scroll"><div class="contributor-avatar">S</div><h4>Shoumik Bala Somu</h4><p>Project Lead & Developer</p></div>
+<div class="contributor-card animate-on-scroll"><div class="contributor-avatar">A</div><h4>Abdullah Al Amin</h4><p>Code Contributor</p></div>
+<div class="contributor-card animate-on-scroll"><div class="contributor-avatar">A</div><h4>Afrin Maharin Shama</h4><p>3D VR Room Code</p></div>
+<div class="contributor-card animate-on-scroll"><div class="contributor-avatar">N</div><h4>Nusrat Jahan Nishi</h4><p>Animation & Transform Code</p></div>
+</div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+<p>🎨 CG LAB Learn — Computer Graphics Lab Practice Platform</p>
+<p style="margin-top:8px;font-size:.8rem">Made with ❤️ by DIU Students | 2026</p>
+<div class="footer-links">
+<a href="https://github.com/ShoumikBalaSomu/CG-LAB-Learn" target="_blank">⭐ GitHub</a>
+<a href="#home">🏠 Home</a>
+<a href="#topics">📚 Topics</a>
+</div>
+</footer>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// Particles
+(function(){var b=document.getElementById('bgAnim');for(var i=0;i<15;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*80+20;p.style.width=s+'px';p.style.height=s+'px';p.style.left=Math.random()*100+'%';p.style.animationDuration=(Math.random()*20+15)+'s';p.style.animationDelay=(Math.random()*10)+'s';b.appendChild(p);}})();
+
+// Scroll effects
+window.addEventListener('scroll',function(){
+    var s=window.scrollY;
+    document.getElementById('navbar').classList.toggle('scrolled',s>50);
+    document.getElementById('backToTop').classList.toggle('visible',s>400);
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    document.getElementById('progressBar').style.width=(s/h*100)+'%';
+    // Active nav
+    document.querySelectorAll('.section,.hero').forEach(function(sec){
+        var top=sec.offsetTop-100,bot=top+sec.offsetHeight;
+        var id=sec.getAttribute('id');
+        if(s>=top&&s<bot){
+            document.querySelectorAll('.nav-links a').forEach(function(a){
+                a.classList.toggle('active',a.getAttribute('href')==='#'+id);
+            });
+        }
+    });
+});
+
+// Animate on scroll
+var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.animate-on-scroll').forEach(function(el){obs.observe(el);});
+
+// Copy code
+function copyCode(btn){
+    var code=btn.closest('.code-container').querySelector('code');
+    navigator.clipboard.writeText(code.textContent).then(function(){
+        btn.textContent='✅ Copied!';btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='📋 Copy';btn.classList.remove('copied');},2000);
+    });
+}
+</script>
+</body>
+</html>
