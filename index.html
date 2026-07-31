@@ -1,1904 +1,620 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CG·LAB·LEARN — Computer Graphics Lab Manual</title>
-<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect width="16" height="16" fill="%23081321"/><rect x="1" y="1" width="4" height="4" fill="%234fd8e8"/><rect x="6" y="6" width="4" height="4" fill="%23ffb454"/><rect x="11" y="11" width="4" height="4" fill="%237ee787"/></svg>'>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/unbounded:wght@600;800;900@latest/index.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/space-grotesk:wght@400;500;700@latest/index.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/jetbrains-mono:wght@400;500;700;800@latest/index.css">
-<style>
-:root{
-  --bg:#081321; --panel:#081527; --deep:#050d18;
-  --ink:#e9f2ff; --dim:#93aac8; --faint:#5d7699;
-  --line:rgba(125,165,225,.13); --line2:rgba(125,165,225,.28);
-  --cyan:#4fd8e8; --amber:#ffb454; --green:#7ee787; --pink:#ff6ac1; --blue:#6ea8ff; --coral:#ff7a6b;
-  --disp:'Unbounded',sans-serif; --body:'Space Grotesk',sans-serif; --mono:'JetBrains Mono',monospace;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:76px}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);overflow-x:hidden}
-::selection{background:var(--amber);color:#081321}
-::-webkit-scrollbar{width:10px;height:10px}
-::-webkit-scrollbar-track{background:#081321}
-::-webkit-scrollbar-thumb{background:#1c3350;border:2px solid #081321}
-::-webkit-scrollbar-thumb:hover{background:#2a4a72}
+<title>CG LAB Learn | Computer Graphics Lab Practice</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><text y=%27.9em%27 font-size=%2790%27>🎨</text></svg>">
+</head><body>
+<div class="bg-animation" id="bgAnim"></div>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="navbar" id="navbar"><div class="nav-container">
+<a href="#home" class="nav-logo"><span class="logo-icon">🎨</span> CG LAB Learn</a>
+<ul class="nav-links" id="navLinks">
+<li><a href="#home" class="active">Home</a></li>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#topics">Topics</a></li>
+<li><a href="#dda">DDA</a></li>
+<li><a href="#bresenham">Bresenham</a></li>
+<li><a href="#midpoint">Midpoint</a></li>
+<li><a href="#transformation">2D Transform</a></li>
+<li><a href="#animation">Animation</a></li>
+<li><a href="#shapes">Shapes 3D</a></li>
+<li><a href="#contributors">Team</a></li>
+</ul>
+<div class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')"><span></span><span></span><span></span></div>
+</div></nav>
+<section class="hero" id="home"><div class="hero-content">
+<div class="hero-badge">📐 Computer Graphics Lab — DIU</div>
+<h1>Learn <span class="gradient-text">Computer Graphics</span><br>Lab Codes Deeply</h1>
+<p>কম্পিউটার গ্রাফিক্স ল্যাবের সব কোড শেখো — বাংলা ও ইংরেজি ব্যাখ্যা সহ।<br>From DDA to 3D VR — everything explained step by step.</p>
+<div class="hero-buttons"><a href="#topics" class="btn btn-primary">🚀 Start Learning</a><a href="#setup" class="btn btn-outline">⚙️ Setup Guide</a></div>
+<div class="hero-stats"><div class="hero-stat"><div class="number">6+</div><div class="label">Topics</div></div>
+<div class="hero-stat"><div class="number">15+</div><div class="label">Code Examples</div></div>
+<div class="hero-stat"><div class="number">2</div><div class="label">বাংলা + English</div></div></div>
+</div></section><div class="section-divider"></div>
+<section class="section" id="setup"><div class="section-header animate-on-scroll">
+<div class="section-tag">⚙️ Setup</div><h2>OpenGL সেটআপ / Setup Guide</h2>
+<p>কোড রান করার আগে OpenGL ও GLUT ইনস্টল করতে হবে</p></div>
+<div class="content-block animate-on-scroll"><h3>🖥️ Windows (MSYS2 + MinGW)</h3>
+<div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span>
+<p><b>ধাপ ১:</b> <a href="https://www.msys2.org/" target="_blank" style="color:var(--secondary)">MSYS2</a> ইনস্টল করো।</p>
+<p><b>ধাপ ২:</b> টার্মিনালে কমান্ড দাও।</p>
+<p><b>ধাপ ৩:</b> PATH এ <code class="inline">C:\msys64\mingw64\bin</code> যোগ করো।</p>
+<p><b>ধাপ ৪:</b> কম্পাইল ও রান করো।</p></div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span>
+<p><b>Step 1:</b> Install <a href="https://www.msys2.org/" target="_blank" style="color:var(--primary-light)">MSYS2</a>.</p>
+<p><b>Step 2:</b> Run commands in terminal.</p>
+<p><b>Step 3:</b> Add <code class="inline">C:\msys64\mingw64\bin</code> to PATH.</p>
+<p><b>Step 4:</b> Compile &amp; run.</p></div></div>
+<div class="code-container"><div class="code-header"><div class="dots"><span></span><span></span><span></span></div>
+<span class="file-name">📋 Terminal</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div>
+<pre class="code-block"><code><span class="cm"># Install GCC / GCC ইনস্টল</span>
+pacman -S mingw-w64-x86_64-gcc
 
-/* layered blueprint background */
-body::before{content:"";position:fixed;inset:0;z-index:-3;background:
-  linear-gradient(rgba(120,170,235,.045) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(120,170,235,.045) 1px,transparent 1px),
-  linear-gradient(rgba(120,170,235,.085) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(120,170,235,.085) 1px,transparent 1px),
-  radial-gradient(1100px 600px at 85% -10%,rgba(79,216,232,.07),transparent 60%),
-  radial-gradient(900px 700px at -10% 110%,rgba(255,180,84,.05),transparent 60%),
-  var(--bg);
-  background-size:24px 24px,24px 24px,120px 120px,120px 120px,auto,auto,auto}
-body::after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
-  background:radial-gradient(120% 90% at 50% 40%,transparent 55%,rgba(3,8,16,.55) 100%)}
-.scan{position:fixed;left:0;right:0;height:150px;z-index:-1;pointer-events:none;
-  background:linear-gradient(180deg,transparent,rgba(79,216,232,.055),transparent);
-  animation:scan 9s linear infinite}
-@keyframes scan{from{top:-22%}to{top:112%}}
+<span class="cm"># Install FreeGLUT / FreeGLUT ইনস্টল</span>
+pacman -S mingw-w64-x86_64-freeglut
 
-a{color:var(--cyan);text-decoration:none}
-button{font-family:var(--mono)}
+<span class="cm"># Add to PATH / PATH এ যোগ</span>
+C:\msys64\mingw64\bin
 
-/* ---------- nav ---------- */
-.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:18px;
-  height:58px;padding:0 22px;background:rgba(7,17,31,.86);backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--line)}
-.logo{display:flex;align-items:center;gap:10px;font:800 13px var(--disp);letter-spacing:.06em;color:var(--ink)}
-.logo em{font:600 9px var(--mono);letter-spacing:.28em;color:var(--faint);font-style:normal;margin-top:2px}
-.glyph{width:17px;height:17px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:2px;flex:none}
-.glyph i{background:#173251}
-.glyph i:nth-child(1){background:var(--cyan)}
-.glyph i:nth-child(5){background:var(--amber)}
-.glyph i:nth-child(9){background:var(--green)}
-.glyph i:nth-child(3){background:var(--cyan);opacity:.45}
-.nav-links{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none}
-.nav-links::-webkit-scrollbar{display:none}
-.nav-links a{font:700 10.5px var(--mono);letter-spacing:.1em;color:var(--dim);padding:8px 10px;white-space:nowrap;
-  border-bottom:2px solid transparent;transition:.2s}
-.nav-links a b{color:var(--faint);font-weight:800}
-.nav-links a:hover{color:var(--ink)}
-.nav-links a.active{color:var(--cyan);border-bottom-color:var(--cyan)}
-.nav-links a.active b{color:var(--cyan)}
-.gh{font:800 10.5px var(--mono);letter-spacing:.12em;color:var(--amber);border:1px solid rgba(255,180,84,.45);
-  padding:9px 14px;transition:.25s;white-space:nowrap}
-.gh:hover{background:var(--amber);color:#081321;box-shadow:0 6px 22px -8px rgba(255,180,84,.6)}
+<span class="cm"># Verify / ভেরিফাই</span>
+gcc --version
+ls /mingw64/lib | grep glut
 
-/* ---------- hero ---------- */
-.hero{display:grid;grid-template-columns:minmax(330px,5fr) 7fr;gap:46px;align-items:center;
-  padding:128px 6vw 66px;max-width:1460px;margin:0 auto}
-.overline{display:flex;align-items:center;gap:10px;font:700 10.5px var(--mono);letter-spacing:.24em;color:var(--dim);margin-bottom:26px}
-.led{width:8px;height:8px;flex:none;background:var(--cyan);box-shadow:0 0 12px var(--cyan);animation:pulse 2s infinite}
-@keyframes pulse{50%{opacity:.3}}
-h1{font:900 clamp(38px,5.4vw,74px)/1 var(--disp);letter-spacing:-.01em;text-transform:uppercase}
-h1 .hl{color:var(--cyan);text-shadow:0 0 34px rgba(79,216,232,.4)}
-.pix{display:inline-block;width:11px;height:11px;background:var(--amber);margin-left:12px;animation:blink 1.1s steps(2) infinite}
-@keyframes blink{50%{opacity:0}}
-.hero-p{color:var(--dim);font-size:16px;line-height:1.7;max-width:520px;margin-top:26px}
-.hero-p b{color:var(--ink)}
-.hero-cta{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:8px;font:800 11.5px var(--mono);letter-spacing:.14em;
-  padding:14px 22px;border:1px solid var(--line2);color:var(--ink);background:transparent;cursor:pointer;transition:.25s}
-.btn:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px);
-  box-shadow:0 10px 26px -12px rgba(79,216,232,.55)}
-.btn-solid{background:var(--cyan);border-color:var(--cyan);color:#04101c}
-.btn-solid:hover{background:#8ae9f5;color:#04101c}
-.stats{display:flex;border:1px solid var(--line2);margin-top:38px;width:max-content;background:rgba(8,21,39,.6)}
-.stats div{padding:13px 24px;border-right:1px solid var(--line)}
-.stats div:last-child{border-right:0}
-.stats b{display:block;font:800 21px var(--disp);color:var(--ink)}
-.stats span{font:700 9px var(--mono);letter-spacing:.2em;color:var(--faint)}
-
-/* playground */
-.pg{background:var(--panel);border:1px solid var(--line2);position:relative;--tc:var(--amber)}
-.pg::before,.pg::after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
-.pg::before{top:-1px;left:-1px;border-top:2px solid var(--tc);border-left:2px solid var(--tc)}
-.pg::after{bottom:-1px;right:-1px;border-bottom:2px solid var(--tc);border-right:2px solid var(--tc)}
-.pg-head{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--line);
-  font:800 10.5px var(--mono);letter-spacing:.16em;color:var(--dim)}
-.pg-head .led{background:var(--tc);box-shadow:0 0 10px var(--tc)}
-.pg-hint{margin-left:auto;color:var(--faint);font-weight:500;letter-spacing:.1em}
-.pg-body{padding:14px;background:#060f1d}
-#pgc{width:100%;aspect-ratio:1/1;display:block;cursor:crosshair;touch-action:none}
-.pg-ctrl{display:flex;flex-wrap:wrap;gap:14px;align-items:center;padding:13px 16px;border-top:1px solid var(--line)}
-.seg{display:flex;border:1px solid var(--line2)}
-.seg button{font:800 10px var(--mono);letter-spacing:.1em;padding:10px 13px;background:transparent;color:var(--dim);
-  border:0;border-right:1px solid var(--line);cursor:pointer;transition:.2s}
-.seg button:last-child{border-right:0}
-.seg button:hover{color:var(--ink)}
-.seg button.active{color:#04101c;background:var(--tc)}
-.speed{display:flex;align-items:center;gap:9px;font:700 9.5px var(--mono);letter-spacing:.16em;color:var(--faint)}
-.speed input{width:110px;accent-color:var(--tc)}
-.mini-btn{font:800 10px var(--mono);letter-spacing:.12em;padding:10px 14px;background:transparent;
-  border:1px solid var(--line2);color:var(--dim);cursor:pointer;transition:.2s;margin-left:auto}
-.mini-btn:hover{border-color:var(--tc);color:var(--tc)}
-.pg-status{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--line)}
-.pg-status>div{padding:9px 13px;border-right:1px solid var(--line)}
-.pg-status>div:last-child{border-right:0}
-.pg-status span{display:block;font:700 8.5px var(--mono);letter-spacing:.18em;color:var(--faint);margin-bottom:4px}
-.pg-status b{font:700 13px var(--mono);color:var(--ink)}
-
-/* ticker */
-.ticker{overflow:hidden;border-block:1px solid var(--line2);background:rgba(8,21,39,.65)}
-.ticker-track{display:flex;width:max-content;animation:tick 30s linear infinite}
-.ticker:hover .ticker-track{animation-play-state:paused}
-.tg{display:flex;align-items:center}
-.tg span{font:700 11px var(--mono);letter-spacing:.26em;color:var(--dim);padding:14px 16px;white-space:nowrap}
-.tg i{font-style:normal;font-size:8px;color:var(--cyan)}
-.tg i:nth-of-type(even){color:var(--amber)}
-.tg i:nth-of-type(3n){color:var(--green)}
-@keyframes tick{to{transform:translateX(-50%)}}
-
-/* manual strip */
-.manual-head{display:flex;align-items:center;gap:18px;padding:34px 6vw 0;max-width:1460px;margin:0 auto;
-  font:800 10px var(--mono);letter-spacing:.26em;color:var(--faint)}
-.manual-head i{flex:1;height:1px;background:var(--line2)}
-
-/* ---------- labs ---------- */
-.lab{position:relative;padding:104px 6vw;border-top:1px solid var(--line)}
-.lab-num{position:absolute;top:30px;right:3vw;z-index:0;font:900 clamp(110px,17vw,230px)/1 var(--disp);
-  color:transparent;-webkit-text-stroke:1px rgba(125,165,225,.13);user-select:none;pointer-events:none;transition:.5s}
-.lab:hover .lab-num{-webkit-text-stroke-color:rgba(125,165,225,.3)}
-.lab.alt .lab-num{right:auto;left:3vw}
-.lab-head{max-width:780px;position:relative;z-index:1;margin:0 auto 0;max-width:1360px}
-.lab-in{max-width:1360px;margin:0 auto;position:relative;z-index:1}
-.chip{display:inline-flex;align-items:center;gap:9px;font:800 10px var(--mono);letter-spacing:.22em;
-  color:var(--tc);border:1px solid var(--tc);padding:8px 13px;margin-bottom:24px}
-.chip::before{content:"";width:7px;height:7px;background:var(--tc)}
-.lab h2{font:800 clamp(28px,3.6vw,48px)/1.05 var(--disp);letter-spacing:-.01em;text-transform:uppercase}
-.lab h2 em{display:block;font:500 clamp(14.5px,1.5vw,18px)/1.5 var(--body);color:var(--dim);
-  font-style:normal;margin-top:12px;letter-spacing:0;text-transform:none;max-width:640px}
-.lab-grid{display:grid;grid-template-columns:minmax(300px,5fr) 7fr;gap:38px;margin-top:46px;align-items:start}
-.lab.alt .lab-grid{grid-template-columns:7fr minmax(300px,5fr)}
-.lab.alt .theory{order:2}
-.theory h3{font:800 10.5px var(--mono);letter-spacing:.24em;color:var(--tc);margin:0 0 14px}
-.theory p{color:var(--dim);line-height:1.7;font-size:15px}
-.theory p+p{margin-top:12px}
-.formula{font:500 12.5px/1.95 var(--mono);background:var(--panel);border:1px solid var(--line2);
-  border-left:3px solid var(--tc);padding:15px 19px;margin:20px 0;color:#cfe0f5;white-space:pre-wrap}
-.obs{list-style:none;margin:14px 0 0}
-.obs li{position:relative;padding:8px 0 8px 24px;color:var(--dim);font-size:14px;line-height:1.55;border-bottom:1px dashed var(--line)}
-.obs li::before{content:"▸";position:absolute;left:2px;color:var(--tc)}
-.obs li b{color:var(--ink);font-weight:600}
-
-/* codebox */
-.codebox{background:var(--panel);border:1px solid var(--line2);position:relative;transition:border-color .3s}
-.codebox:hover{border-color:rgba(125,165,225,.5)}
-.codebox::before,.codebox::after{content:"";position:absolute;width:14px;height:14px;pointer-events:none;z-index:2}
-.codebox::before{top:-1px;left:-1px;border-top:2px solid var(--tc);border-left:2px solid var(--tc)}
-.codebox::after{bottom:-1px;right:-1px;border-bottom:2px solid var(--tc);border-right:2px solid var(--tc)}
-.tabs{display:flex;align-items:stretch;border-bottom:1px solid var(--line2);overflow-x:auto;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{font:700 11px var(--mono);letter-spacing:.06em;padding:12px 16px;color:var(--faint);background:transparent;
-  border:0;border-right:1px solid var(--line);cursor:pointer;position:relative;transition:.2s;white-space:nowrap}
-.tab:hover{color:var(--ink);background:rgba(255,255,255,.03)}
-.tab.active{color:var(--tc)}
-.tab.active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--tc)}
-.cp{font:800 9.5px var(--mono);letter-spacing:.14em;color:var(--dim);background:transparent;
-  border:1px solid var(--line2);padding:6px 11px;cursor:pointer;transition:.2s;margin:auto 12px}
-.cp:hover{color:var(--tc);border-color:var(--tc)}
-.cp.ok{color:#04101c;background:var(--green);border-color:var(--green)}
-.coder pre{display:none;margin:0;padding:18px 20px;overflow:auto;font:400 12.5px/1.75 var(--mono);
-  color:#cfe0f5;max-height:500px;background:#071322}
-.coder pre.on{display:block}
-.tk-c{color:#7d8fa5;font-style:italic}
-.tk-s{color:#a5d6ff}
-.tk-p{color:#f0883e}
-.tk-k{color:#ff7b72}
-.tk-t{color:#79c0ff}
-.tk-n{color:#e3b341}
-.tk-m{color:#d2a8ff}
-.tk-f{color:#7ee787}
-.compile{display:flex;align-items:center;gap:12px;padding:11px 16px;border-top:1px solid var(--line);
-  background:#050f1d;font:500 12px var(--mono)}
-.compile .pr{color:var(--faint)}
-.compile code{color:var(--green);flex:1;overflow-x:auto;white-space:nowrap}
-.compile .cp{margin:0}
-
-/* bench */
-.bench{margin-top:26px;background:var(--panel);border:1px solid var(--line2);position:relative}
-.bench::before{content:"";position:absolute;top:-1px;left:-1px;width:14px;height:14px;
-  border-top:2px solid var(--tc);border-left:2px solid var(--tc)}
-.bench-head{display:flex;align-items:center;gap:9px;padding:10px 14px;border-bottom:1px solid var(--line);
-  font:800 9.5px var(--mono);letter-spacing:.2em;color:var(--dim)}
-.bench-head .led{width:6px;height:6px;background:var(--tc);box-shadow:0 0 8px var(--tc)}
-.bench canvas{width:100%;display:block;background:#060f1d}
-#benchc{height:280px}
-#animc{height:230px;cursor:pointer}
-.bench-ctrl{display:grid;grid-template-columns:1fr 1fr;gap:11px 20px;padding:14px 16px 6px}
-.sl{display:flex;align-items:center;gap:10px;font:700 10.5px var(--mono);color:var(--dim)}
-.sl input{flex:1;accent-color:var(--tc)}
-.sl output{min-width:46px;text-align:right;color:var(--ink);font-weight:800}
-.matrix{padding:10px 16px 15px;font:700 11px var(--mono);letter-spacing:.04em;color:var(--tc)}
-.bench-foot{display:flex;align-items:center;gap:12px;padding:0 16px 14px}
-
-/* ---------- setup ---------- */
-#setup{padding:104px 6vw;border-top:1px solid var(--line)}
-.setup-in{max-width:1100px;margin:0 auto}
-.term{background:var(--deep);border:1px solid var(--line2);margin-top:42px;position:relative}
-.term::before{content:"";position:absolute;top:-1px;left:-1px;width:15px;height:15px;
-  border-top:2px solid var(--amber);border-left:2px solid var(--amber)}
-.term-head{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--line);
-  font:800 10.5px var(--mono);letter-spacing:.2em;color:var(--dim)}
-.term-head .led{background:var(--amber);box-shadow:0 0 10px var(--amber)}
-.steps{list-style:none}
-.steps li{display:flex;gap:20px;padding:22px;border-bottom:1px solid var(--line)}
-.steps li:last-child{border-bottom:0}
-.s-num{flex:0 0 36px;height:36px;display:grid;place-items:center;font:800 14px var(--disp);
-  color:var(--amber);border:1px solid rgba(255,180,84,.45)}
-.steps h4{font:700 15px var(--body);margin-bottom:6px}
-.steps p{color:var(--dim);font-size:14px;line-height:1.6}
-.steps p b{color:var(--ink)}
-.cmd{display:flex;align-items:center;gap:11px;background:#04101c;border:1px solid var(--line);
-  padding:9px 12px;margin-top:9px;font:500 12.5px var(--mono);max-width:640px}
-.cmd .pr{color:var(--faint)}
-.cmd code{color:var(--green);flex:1;overflow-x:auto;white-space:nowrap}
-.cmd .cp{margin:0}
-.note{border:1px dashed rgba(255,180,84,.45);background:rgba(255,180,84,.05);padding:13px 16px;
-  font:500 12px/1.7 var(--mono);color:var(--amber);margin-top:12px;max-width:640px}
-
-/* ---------- footer ---------- */
-footer{border-top:1px solid var(--line);padding:64px 6vw 30px;overflow:hidden}
-.foot-big{font:900 clamp(42px,9.5vw,140px)/1 var(--disp);white-space:nowrap;color:transparent;
-  -webkit-text-stroke:1px rgba(125,165,225,.22);user-select:none;transition:.6s;letter-spacing:-.01em}
-.foot-big:hover{-webkit-text-stroke-color:rgba(79,216,232,.55)}
-.foot-grid{display:grid;grid-template-columns:2fr 1fr 1.2fr;gap:38px;margin:46px 0;max-width:1200px}
-.foot-grid h5{font:800 10px var(--mono);letter-spacing:.24em;color:var(--faint);margin-bottom:16px}
-.foot-grid p{color:var(--dim);font-size:14px;line-height:1.7;max-width:380px}
-.foot-grid ul{list-style:none}
-.foot-grid li{padding:5px 0;color:var(--dim);font-size:13.5px}
-.foot-grid li b{color:var(--ink);font-weight:600}
-.foot-grid li i{font-style:normal;font:700 9px var(--mono);letter-spacing:.14em;margin-right:8px}
-.foot-bar{display:flex;flex-wrap:wrap;gap:14px 26px;justify-content:space-between;align-items:center;
-  border-top:1px solid var(--line);padding-top:22px;font:500 11px var(--mono);letter-spacing:.08em;color:var(--faint)}
-.foot-bar a{transition:.2s}
-.foot-bar a:hover{text-decoration:underline}
-
-#totop{position:fixed;right:22px;bottom:22px;width:44px;height:44px;border:1px solid var(--line2);
-  background:rgba(8,19,33,.92);color:var(--cyan);font:800 15px var(--mono);cursor:pointer;
-  opacity:0;pointer-events:none;transition:.3s;z-index:60}
-#totop.show{opacity:1;pointer-events:auto}
-#totop:hover{border-color:var(--cyan);transform:translateY(-4px);box-shadow:0 10px 24px -10px rgba(79,216,232,.5)}
-
-/* reveal */
-.rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
-.rv.on{opacity:1;transform:none}
-.lab-grid .rv:nth-child(2){transition-delay:.12s}
-
-@media(max-width:1080px){
-  .hero{grid-template-columns:1fr;padding-top:110px;gap:38px}
-  .stats{width:100%}.stats div{flex:1;text-align:center}
-}
-@media(max-width:980px){
-  .lab-grid{grid-template-columns:1fr!important}
-  .theory{order:0!important}
-  .lab-num{font-size:110px;opacity:.7}
-}
-@media(max-width:640px){
-  .pg-status{grid-template-columns:repeat(3,1fr)}
-  .pg-status>div:nth-child(3){border-right:0}
-  .pg-status>div:nth-child(n+4){border-top:1px solid var(--line)}
-  .bench-ctrl{grid-template-columns:1fr}
-  .foot-grid{grid-template-columns:1fr}
-  .nav{padding:0 14px;gap:10px}
-  .gh{padding:8px 10px}
-}
-@media(prefers-reduced-motion:reduce){
-  .scan{display:none}
-  .ticker-track{animation:none}
-  .rv{transition:none;opacity:1;transform:none}
-  html{scroll-behavior:auto}
-}
-</style>
-</head>
-<body id="top">
-<div class="scan" aria-hidden="true"></div>
-
-<nav class="nav">
-  <a class="logo" href="#top">
-    <span class="glyph"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-    CG·LAB <em>LEARN</em>
-  </a>
-  <div class="nav-links" id="navlinks">
-    <a href="#playground">PLAYGROUND</a>
-    <a href="#lab1"><b>01</b> DDA</a>
-    <a href="#lab2"><b>02</b> BRESENHAM</a>
-    <a href="#lab3"><b>03</b> MIDPOINT</a>
-    <a href="#lab4"><b>04</b> TRANSFORM</a>
-    <a href="#lab5"><b>05</b> ANIMATION</a>
-    <a href="#lab6"><b>06</b> SHAPES·3D</a>
-    <a href="#setup">SETUP</a>
-  </div>
-  <a class="gh" href="https://github.com/ShoumikBalaSomu/CG-LAB-Learn" target="_blank" rel="noopener">GITHUB ↗</a>
-</nav>
-
-<main>
-<!-- ============ HERO + PLAYGROUND ============ -->
-<section class="hero">
-  <div>
-    <div class="overline"><span class="led"></span> COMPUTER GRAPHICS LAB · C + FREEGLUT / MSYS2</div>
-    <h1>RASTERIZE<br><span class="hl">EVERY PIXEL.</span><span class="pix"></span></h1>
-    <p class="hero-p">Every line on a screen is a negotiation between math and the pixel grid.
-      This site is our <b>lab notebook</b> — the exact C + OpenGL programs we ran in lab, with the
-      theory beside each one, plus a <b>live rasterizer</b> you can drag around. Start with the
-      playground, then dig into the six experiments.</p>
-    <div class="hero-cta">
-      <a class="btn btn-solid" href="#lab1">▶ OPEN LAB 01</a>
-      <a class="btn" href="https://github.com/ShoumikBalaSomu/CG-LAB-Learn" target="_blank" rel="noopener">VIEW ON GITHUB ↗</a>
-    </div>
-    <div class="stats">
-      <div><b>06</b><span>LABS</span></div>
-      <div><b>13</b><span>PROGRAMS</span></div>
-      <div><b>C</b><span>+ OPENGL</span></div>
-      <div><b>100%</b><span>RUNNABLE</span></div>
-    </div>
-  </div>
-
-  <div class="pg" id="playground">
-    <div class="pg-head"><span class="led"></span> PLAYGROUND — line_rasterizer.exe
-      <span class="pg-hint">⌖ DRAG A / B</span></div>
-    <div class="pg-body"><canvas id="pgc"></canvas></div>
-    <div class="pg-ctrl">
-      <div class="seg" id="pgmodes">
-        <button data-mode="dda">DDA</button>
-        <button data-mode="bres" class="active">BRESENHAM</button>
-        <button data-mode="mid">MIDPOINT ○</button>
-      </div>
-      <label class="speed">SPEED <input type="range" id="pgspeed" min="0" max="10" value="3" step="1"></label>
-      <button class="mini-btn" id="pgreplay">⟳ REPLAY</button>
-    </div>
-    <div class="pg-status">
-      <div><span>ALGO</span><b id="st-algo">BRESENHAM</b></div>
-      <div><span>STEP</span><b id="st-step">0/0</b></div>
-      <div><span>X</span><b id="st-x">—</b></div>
-      <div><span>Y</span><b id="st-y">—</b></div>
-      <div><span>P</span><b id="st-p">—</b></div>
-      <div><span>CURSOR</span><b id="st-cur">—</b></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ TICKER ============ -->
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <div class="tg">
-      <span>DDA</span><i>◆</i><span>BRESENHAM</span><i>◆</i><span>MIDPOINT CIRCLE</span><i>◆</i>
-      <span>MIDPOINT ELLIPSE</span><i>◆</i><span>2D TRANSFORM</span><i>◆</i><span>ANIMATION</span><i>◆</i>
-      <span>SHAPES &amp; 3D</span><i>◆</i><span>GL_POINTS</span><i>◆</i><span>glVertex2f</span><i>◆</i>
-      <span>glOrtho</span><i>◆</i><span>gluLookAt</span><i>◆</i><span>glutTimerFunc</span><i>◆</i>
-      <span>FREEGLUT</span><i>◆</i><span>MSYS2</span><i>◆</i>
-    </div>
-    <div class="tg">
-      <span>DDA</span><i>◆</i><span>BRESENHAM</span><i>◆</i><span>MIDPOINT CIRCLE</span><i>◆</i>
-      <span>MIDPOINT ELLIPSE</span><i>◆</i><span>2D TRANSFORM</span><i>◆</i><span>ANIMATION</span><i>◆</i>
-      <span>SHAPES &amp; 3D</span><i>◆</i><span>GL_POINTS</span><i>◆</i><span>glVertex2f</span><i>◆</i>
-      <span>glOrtho</span><i>◆</i><span>gluLookAt</span><i>◆</i><span>glutTimerFunc</span><i>◆</i>
-      <span>FREEGLUT</span><i>◆</i><span>MSYS2</span><i>◆</i>
-    </div>
-  </div>
+<span class="cm"># Compile &amp; Run / কম্পাইল ও রান</span>
+gcc main.c -o app -lfreeglut -lopengl32 -lglu32
+./app</code></pre></div>
+<div class="note-box info"><span>💡</span><div>প্রতিবার কম্পাইল: <code class="inline">gcc main.c -o app -lfreeglut -lopengl32 -lglu32</code></div></div>
 </div>
+<div class="content-block animate-on-scroll"><h3>📁 First Program / প্রথম প্রোগ্রাম</h3>
+<div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span><p>সবচেয়ে বেসিক OpenGL প্রোগ্রাম — নীল ত্রিভুজ আঁকে। <b>init()</b>, <b>display()</b>, <b>main()</b> বোঝো।</p></div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span><p>Most basic OpenGL program — draws a blue triangle. Understand <b>init()</b>, <b>display()</b>, <b>main()</b>.</p></div></div>
+<div class="code-container"><div class="code-header"><div class="dots"><span></span><span></span><span></span></div>
+<span class="file-name">📄 hello_opengl.c</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div>
+<pre class="code-block"><code><span class="pp">#include</span> <span class="st">&lt;GL/gl.h&gt;</span>      <span class="bc">// OpenGL মূল লাইব্রেরি</span>
+<span class="pp">#include</span> <span class="st">&lt;GL/glut.h&gt;</span>    <span class="bc">// GLUT উইন্ডো ম্যানেজমেন্ট</span>
 
-<div class="manual-head rv"><span>LAB MANUAL</span><i></i><span>SIX EXPERIMENTS · C + FREEGLUT</span></div>
-
-<!-- ============ LAB 01 : DDA ============ -->
-<section class="lab" id="lab1" style="--tc:var(--cyan)">
-  <div class="lab-num">01</div>
-  <div class="lab-in">
-    <div class="lab-head rv">
-      <span class="chip">LAB 01 · LINE DRAWING</span>
-      <h2>DDA <em>Digital Differential Analyzer — the float-stepping line rasterizer</em></h2>
-    </div>
-    <div class="lab-grid">
-      <aside class="theory rv">
-        <h3>// HOW IT WORKS</h3>
-        <p>The friendliest line algorithm: measure <b>Δx</b> and <b>Δy</b>, walk the dominant axis in
-        unit steps, and let floating-point increments decide where each pixel lands. Every iteration
-        plots <b>round(x), round(y)</b> as a GL_POINT, so the plotted points hug the ideal line as
-        closely as the grid allows.</p>
-        <div class="formula">steps = max(|Δx|, |Δy|)
-x_inc = Δx / steps      y_inc = Δy / steps
-plot( round(x), round(y) )   // each step
-x += x_inc;  y += y_inc;</div>
-        <ul class="obs">
-          <li><b>One iteration per pixel</b> — the loop runs O(length) times</li>
-          <li>Float error <b>accumulates</b>; long steep lines can wobble</li>
-          <li>Signed increments <b>(x2−x1)/steps</b> make it work in every direction</li>
-          <li>A triangle is just <b>three DDA calls</b> inside one display()</li>
-        </ul>
-      </aside>
-      <div class="codecol rv" data-code="dda_line,dda_triangle"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ LAB 02 : BRESENHAM ============ -->
-<section class="lab alt" id="lab2" style="--tc:var(--amber)">
-  <div class="lab-num">02</div>
-  <div class="lab-in">
-    <div class="lab-head rv">
-      <span class="chip">LAB 02 · LINE DRAWING</span>
-      <h2>Bresenham <em>Integer-only line drawing with a single decision parameter</em></h2>
-    </div>
-    <div class="lab-grid">
-      <aside class="theory rv">
-        <h3>// HOW IT WORKS</h3>
-        <p>One question per column: is the true line closer to the pixel <b>beside</b> us, or the pixel
-        <b>diagonally above</b>? Start with <b>p₀ = 2Δy − Δx</b>. If p &lt; 0 move east and add 2Δy;
-        otherwise step diagonally and add 2Δy − 2Δx. No floats, no rounding — just additions.</p>
-        <p>The <b>general version</b> picks the driving axis by comparing dx and dy, and walks backwards
-        with ±1 sign steps when endpoints are swapped — so it draws in <b>all four quadrants</b>.</p>
-        <div class="formula">p₀ = 2Δy − Δx
-p &lt; 0 →  x++          p += 2Δy
-p ≥ 0 →  x++, y++     p += 2Δy − 2Δx
-// dx &lt; dy ? drive y instead, swap roles</div>
-        <ul class="obs">
-          <li><b>Pure integer math</b> → faster than DDA on old hardware</li>
-          <li>The error term is exact — pixels <b>never drift</b></li>
-          <li><b>dx &gt; dy</b> branch drives x; the else branch drives y</li>
-          <li>The combined demo draws DDA (green) + Bresenham (white) side by side</li>
-        </ul>
-      </aside>
-      <div class="codecol rv" data-code="bres_line,bres_general,dda_bres"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ LAB 03 : MIDPOINT ============ -->
-<section class="lab" id="lab3" style="--tc:var(--green)">
-  <div class="lab-num">03</div>
-  <div class="lab-in">
-    <div class="lab-head rv">
-      <span class="chip">LAB 03 · CIRCLE &amp; ELLIPSE</span>
-      <h2>Midpoint <em>Circles and ellipses without a single trig call</em></h2>
-    </div>
-    <div class="lab-grid">
-      <aside class="theory rv">
-        <h3>// HOW IT WORKS</h3>
-        <p>Test which side of the curve a <b>midpoint</b> falls on, step east or south-east, and mirror
-        every computed point into <b>8 symmetric pixels</b> (4 for the ellipse). Start at (0, r) with
-        p = 1 − r; while x &lt; y: step x++, and if p ≥ 0 also drop y.</p>
-        <div class="formula">circle :  p₀ = 1 − r
-p &lt; 0 → E  : p += 2x + 1
-p ≥ 0 → SE : y-- , p += 2x − 2y + 1
-plot8 → (±x,±y) and (±y,±x) around (xc,yc)
-
-ellipse: two regions,
-switch when 2·ry²·x ≥ 2·rx²·y</div>
-        <ul class="obs">
-          <li><b>8-way symmetry</b>: one eighth of the math draws the full circle</li>
-          <li>The ellipse splits into <b>two regions</b> with different driving axes</li>
-          <li><b>plot8() / plot4()</b> helpers keep the loop body tiny</li>
-          <li>Try it live in the playground — switch to MIDPOINT ○ and drag B to change r</li>
-        </ul>
-      </aside>
-      <div class="codecol rv" data-code="mid_circle,mid_ellipse"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ LAB 04 : 2D TRANSFORMATION ============ -->
-<section class="lab alt" id="lab4" style="--tc:var(--pink)">
-  <div class="lab-num">04</div>
-  <div class="lab-in">
-    <div class="lab-head rv">
-      <span class="chip">LAB 04 · 2D TRANSFORMATION</span>
-      <h2>Transform <em>Translation · Rotation · Scaling on the matrix stack</em></h2>
-    </div>
-    <div class="lab-grid">
-      <aside class="theory rv">
-        <h3>// HOW IT WORKS</h3>
-        <p>Every vertex is multiplied by <b>M = T · R · S</b>. Order matters:
-        <b>glTranslatef → glRotatef → glScalef</b> means the geometry is scaled first, then spun,
-        then moved — so a scaled triangle still orbits the origin the same way.</p>
-        <div class="formula">[ x' ]   [ s·cosθ  −s·sinθ  tx ] [ x ]
-[ y' ] = [ s·sinθ   s·cosθ  ty ] [ y ]
-[ 1  ]   [   0        0      1 ] [ 1 ]</div>
-        <ul class="obs">
-          <li>In the .c file: <b>WASD</b> translates · <b>R/E</b> rotates · <b>Q/Z</b> scales · <b>0</b> resets</li>
-          <li><b>glPushMatrix / glPopMatrix</b> isolate the transform from the ghost copy</li>
-          <li>Change the call order and the orbit changes completely</li>
-        </ul>
-        <div class="bench" style="--tc:var(--pink)">
-          <div class="bench-head"><span class="led"></span> TRANSFORM BENCH — LIVE</div>
-          <canvas id="benchc"></canvas>
-          <div class="bench-ctrl">
-            <label class="sl">tx <input type="range" id="rtx" min="-120" max="120" step="5" value="40"><output id="otx">40</output></label>
-            <label class="sl">ty <input type="range" id="rty" min="-120" max="120" step="5" value="20"><output id="oty">20</output></label>
-            <label class="sl">θ&nbsp; <input type="range" id="rot" min="-180" max="180" step="5" value="30"><output id="orot">30°</output></label>
-            <label class="sl">s&nbsp; <input type="range" id="rsc" min="0.4" max="2" step="0.1" value="1"><output id="osc">1.0</output></label>
-          </div>
-          <div class="matrix" id="matx"></div>
-          <div class="bench-foot"><button class="mini-btn" id="breset" style="margin-left:0">⟲ RESET</button></div>
-        </div>
-      </aside>
-      <div class="codecol rv" data-code="transform2d"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ LAB 05 : ANIMATION ============ -->
-<section class="lab" id="lab5" style="--tc:var(--blue)">
-  <div class="lab-num">05</div>
-  <div class="lab-in">
-    <div class="lab-head rv">
-      <span class="chip">LAB 05 · ANIMATION</span>
-      <h2>Animation <em>Timers, idle callbacks and keyboard control in GLUT</em></h2>
-    </div>
-    <div class="lab-grid">
-      <aside class="theory rv">
-        <h3>// HOW IT WORKS</h3>
-        <p>GLUT has no game loop of its own — you register a <b>timer callback</b> that nudges state,
-        calls <b>glutPostRedisplay()</b>, and re-arms itself every 100 ms. The square below runs the
-        exact same math as animation_timer.c — click it to pause.</p>
-        <div class="formula">void myTimer(int val){
-    update();                        /* change state */
-    glutTimerFunc(100, myTimer, 0);  /* re-arm       */
-}
-if (p &gt;= 6 || p &lt;= -10) speed = -speed;  /* bounce */</div>
-        <ul class="obs">
-          <li><b>glutTimerFunc(ms, fn, val)</b> fires once — always re-arm inside</li>
-          <li><b>glutSpecialFunc</b> handles arrow keys; <b>glutKeyboardFunc</b> handles chars</li>
-          <li><b>glutIdleFunc(fn)</b> spins the square every frame — 'k' sets it to NULL and stops it</li>
-        </ul>
-        <div class="bench" style="--tc:var(--blue)">
-          <div class="bench-head"><span class="led"></span> ANIMATION PREVIEW — glutTimerFunc(100ms)</div>
-          <canvas id="animc"></canvas>
-          <div class="bench-foot"><button class="mini-btn" id="animbtn" style="margin-left:14px">⏸ PAUSE</button></div>
-        </div>
-      </aside>
-      <div class="codecol rv" data-code="anim_timer,keyboard_move,keyboard_rotate"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ LAB 06 : SHAPES & 3D ============ -->
-<section class="lab alt" id="lab6" style="--tc:var(--coral)">
-  <div class="lab-num">06</div>
-  <div class="lab-in">
-    <div class="lab-head rv">
-      <span class="chip">LAB 06 · SHAPES &amp; 3D</span>
-      <h2>Shapes &amp; 3D <em>From GL_POLYGON soup to a walkable first-person room</em></h2>
-    </div>
-    <div class="lab-grid">
-      <aside class="theory rv">
-        <h3>// HOW IT WORKS</h3>
-        <p>Everything above draws points and lines; real scenes are built from <b>polygons</b>.
-        GL_POLYGON fills, GL_LINE_LOOP outlines, GL_POINTS sprites — and in 3D, quads become walls,
-        a scaled <b>glutSolidCube</b> becomes a table, and <b>gluLookAt</b> becomes your eyes.</p>
-        <div class="formula">glBegin(GL_POLYGON / GL_QUADS / GL_LINE_LOOP)
-glVertex2f · glVertex3f · glColor3f
-glutSolidCube(1)  // after glScalef → any box
-gluPerspective(45, ratio, 0.1, 100)
-gluLookAt(eye, center, up)   // first-person camera
-glEnable(GL_DEPTH_TEST)      // correct occlusion</div>
-        <ul class="obs">
-          <li><b>VR room controls:</b> W/S walk forward/back · A/D turn · ESC quit</li>
-          <li>Depth testing needs <b>GLUT_DEPTH</b> in the display mode + glClear of GL_DEPTH_BUFFER_BIT</li>
-          <li>Each table leg = pushMatrix → translate → scale → solidCube → popMatrix</li>
-          <li>The camera moves along its <b>look vector (lx, lz)</b> — pure vector math</li>
-        </ul>
-      </aside>
-      <div class="codecol rv" data-code="basic_shapes,vr_room"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SETUP ============ -->
-<section id="setup">
-  <div class="setup-in">
-    <div class="rv">
-      <span class="chip" style="--tc:var(--amber)">TOOLCHAIN · WINDOWS</span>
-      <h2 style="font:800 clamp(28px,3.6vw,48px)/1.05 var(--disp);text-transform:uppercase">Setup
-        <em style="display:block;font:500 clamp(14.5px,1.5vw,18px)/1.5 var(--body);color:var(--dim);font-style:normal;margin-top:12px;text-transform:none">Compile exactly like we did in the lab — MSYS2 + MinGW64 + freeglut</em></h2>
-    </div>
-    <div class="term rv">
-      <div class="term-head"><span class="led"></span> MSYS2 / MINGW64 — LAB TOOLCHAIN</div>
-      <ol class="steps">
-        <li>
-          <span class="s-num">1</span>
-          <div style="flex:1">
-            <h4>Install MSYS2</h4>
-            <p>Download the installer from <b>msys2.org</b> and open the <b>MSYS2 MINGW64</b> terminal.</p>
-          </div>
-        </li>
-        <li>
-          <span class="s-num">2</span>
-          <div style="flex:1">
-            <h4>Install the compiler and freeglut</h4>
-            <p>Run both packages inside the MSYS2 terminal:</p>
-            <div class="cmd"><span class="pr">$</span><code>pacman -S mingw-w64-x86_64-gcc</code><button class="cp" data-copy="pacman -S mingw-w64-x86_64-gcc">COPY</button></div>
-            <div class="cmd"><span class="pr">$</span><code>pacman -S mingw-w64-x86_64-freeglut</code><button class="cp" data-copy="pacman -S mingw-w64-x86_64-freeglut">COPY</button></div>
-          </div>
-        </li>
-        <li>
-          <span class="s-num">3</span>
-          <div style="flex:1">
-            <h4>Add MinGW to Windows PATH</h4>
-            <p>System → Environment Variables → Path → New:</p>
-            <div class="cmd"><span class="pr">▸</span><code>C:\msys64\mingw64\bin</code><button class="cp" data-copy="C:\msys64\mingw64\bin">COPY</button></div>
-          </div>
-        </li>
-        <li>
-          <span class="s-num">4</span>
-          <div style="flex:1">
-            <h4>Verify the toolchain</h4>
-            <p>Both commands should respond — the second must list the freeglut libraries:</p>
-            <div class="cmd"><span class="pr">$</span><code>gcc --version</code><button class="cp" data-copy="gcc --version">COPY</button></div>
-            <div class="cmd"><span class="pr">$</span><code>ls /mingw64/lib | grep glut</code><button class="cp" data-copy="ls /mingw64/lib | grep glut">COPY</button></div>
-          </div>
-        </li>
-        <li>
-          <span class="s-num">5</span>
-          <div style="flex:1">
-            <h4>Compile &amp; run any lab program</h4>
-            <p>Link freeglut + the Windows OpenGL libraries, then launch:</p>
-            <div class="cmd"><span class="pr">$</span><code>gcc main.c -o app -lfreeglut -lopengl32 -lglu32</code><button class="cp" data-copy="gcc main.c -o app -lfreeglut -lopengl32 -lglu32">COPY</button></div>
-            <div class="cmd"><span class="pr">$</span><code>./app</code><button class="cp" data-copy="./app">COPY</button></div>
-            <div class="note">⚠ Link order matters: -lfreeglut -lopengl32 -lglu32. If you get "undefined reference to __imp_...", a library is missing from the command.</div>
-          </div>
-        </li>
-      </ol>
-    </div>
-  </div>
-</section>
-</main>
-
-<!-- ============ FOOTER ============ -->
-<footer>
-  <div class="foot-big">CG·LAB·LEARN</div>
-  <div class="foot-grid">
-    <div>
-      <h5>// ABOUT</h5>
-      <p>A study site for the Computer Graphics lab — every algorithm we practiced, as runnable C +
-      freeglut code with the theory that makes it click. Clone it, compile it, break it, fix it.</p>
-    </div>
-    <div>
-      <h5>// TOPICS</h5>
-      <ul>
-        <li><i style="color:var(--cyan)">01</i>DDA line drawing</li>
-        <li><i style="color:var(--amber)">02</i>Bresenham (all quadrants)</li>
-        <li><i style="color:var(--green)">03</i>Midpoint circle &amp; ellipse</li>
-        <li><i style="color:var(--pink)">04</i>2D transformation</li>
-        <li><i style="color:var(--blue)">05</i>Animation &amp; input</li>
-        <li><i style="color:var(--coral)">06</i>Shapes &amp; 3D room</li>
-      </ul>
-    </div>
-    <div>
-      <h5>// CREDITS</h5>
-      <ul>
-        <li><b>Shoumik Bala Somu</b> — repo &amp; lab codes</li>
-        <li><b>Abdullah Al Amin</b> — lab codes</li>
-        <li><b>Nusrat Jahan Nishi</b> — lab codes</li>
-        <li><b>Afrin Maharin Shama</b> — VR room</li>
-        <li style="color:var(--faint);font-size:12px;margin-top:6px">Daffodil International University (DIU)</li>
-      </ul>
-    </div>
-  </div>
-  <div class="foot-bar">
-    <span>© 2026 SHOUMIKBALASOMU · MIT LICENSE</span>
-    <a href="https://github.com/ShoumikBalaSomu/CG-LAB-Learn" target="_blank" rel="noopener">GITHUB.COM/SHOUMIKBALASOMU/CG-LAB-LEARN ↗</a>
-    <span>C + OPENGL · FREEGLUT · MSYS2</span>
-  </div>
-</footer>
-
-<button id="totop" title="Back to top">↑</button>
-
-<script>
-(function(){
-"use strict";
-var $=function(s){return document.querySelector(s)};
-var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
-var clamp=function(v,a,b){return Math.max(a,Math.min(b,v))};
-
-/* ================= C CODE LIBRARY ================= */
-var CODES={
-dda_line:{file:"dda_line.c",code:
-"#include <GL/gl.h>\n"+
-"#include <GL/glut.h>\n"+
-"#include <math.h>\n\n"+
-"void DDA(float x1, float y1, float x2, float y2)\n"+
-"{\n"+
-"    float dx = fabs(x2 - x1);\n"+
-"    float dy = fabs(y2 - y1);\n\n"+
-"    float steps = fmax(dx, dy);          /* dominant axis */\n"+
-"    float x_inc = (x2 - x1) / steps;     /* signed!       */\n"+
-"    float y_inc = (y2 - y1) / steps;\n\n"+
-"    glColor3f(1.0f, 1.0f, 1.0f);\n"+
-"    glBegin(GL_POINTS);\n"+
-"    float x = x1, y = y1;\n"+
-"    for (int i = 0; i <= steps; i++)\n"+
-"    {\n"+
-"        glVertex2f(round(x), round(y));  /* plot the pixel */\n"+
-"        x += x_inc;\n"+
-"        y += y_inc;\n"+
-"    }\n"+
-"    glEnd();\n"+
-"}\n\n"+
-"void display(void)\n"+
-"{\n"+
-"    glClear(GL_COLOR_BUFFER_BIT);\n"+
-"    DDA(50.0f, 50.0f, 250.0f, 180.0f);\n"+
-"    glutSwapBuffers();\n"+
-"}\n\n"+
-"void init(void)\n"+
-"{\n"+
-"    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);\n"+
-"    glMatrixMode(GL_PROJECTION);\n"+
-"    glLoadIdentity();\n"+
-"    glOrtho(0.0, 300.0, 0.0, 300.0, -100.0, 1.0);\n"+
-"}\n\n"+
-"int main(int argc, char **argv)\n"+
-"{\n"+
-"    glutInit(&argc, argv);\n"+
-"    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);\n"+
-"    glutInitWindowSize(500, 500);\n"+
-"    glutInitWindowPosition(100, 100);\n"+
-"    glutCreateWindow(\"DDA Line - OpenGL\");\n\n"+
-"    init();\n"+
-"    glutDisplayFunc(display);\n"+
-"    glutMainLoop();\n"+
-"    return 0;\n"+
-"}\n"},
-
-dda_triangle:{file:"dda_triangle.c",code:
-"#include <GL/gl.h>\n"+
-"#include <GL/glut.h>\n"+
-"#include <math.h>\n\n"+
-"void DDA(float x1, float y1, float x2, float y2)\n"+
-"{\n"+
-"    float dx = fabs(x2 - x1);\n"+
-"    float dy = fabs(y2 - y1);\n\n"+
-"    float steps = fmax(dx, dy);\n"+
-"    float x_inc = (x2 - x1) / steps;\n"+
-"    float y_inc = (y2 - y1) / steps;\n\n"+
-"    glColor3f(1.0f, 1.0f, 1.0f);\n"+
-"    glBegin(GL_POINTS);\n"+
-"    float x = x1, y = y1;\n"+
-"    for (int i = 0; i <= steps; i++)\n"+
-"    {\n"+
-"        glVertex2f(round(x), round(y));\n"+
-"        x += x_inc;\n"+
-"        y += y_inc;\n"+
-"    }\n"+
-"    glEnd();\n"+
-"}\n\n"+
-"void display(void)\n"+
-"{\n"+
-"    glClear(GL_COLOR_BUFFER_BIT);\n\n"+
-"    /* a triangle is just three DDA lines */\n"+
-"    DDA(50.0f, 50.0f, 250.0f, 50.0f);    /* base line   */\n"+
-"    DDA(250.0f, 50.0f, 150.0f, 250.0f);  /* right side  */\n"+
-"    DDA(150.0f, 250.0f, 50.0f, 50.0f);   /* left side   */\n\n"+
-"    glutSwapBuffers();\n"+
-"}\n\n"+
-"void init(void)\n"+
-"{\n"+
-"    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);\n"+
-"    glMatrixMode(GL_PROJECTION);\n"+
-"    glLoadIdentity();\n"+
-"    glOrtho(0.0, 300.0, 0.0, 300.0, -100.0, 1.0);\n"+
-"}\n\n"+
-"int main(int argc, char **argv)\n"+
-"{\n"+
-"    glutInit(&argc, argv);\n"+
-"    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);\n"+
-"    glutInitWindowSize(500, 500);\n"+
-"    glutInitWindowPosition(100, 100);\n"+
-"    glutCreateWindow(\"DDA Triangle - OpenGL\");\n\n"+
-"    init();\n"+
-"    glutDisplayFunc(display);\n"+
-"    glutMainLoop();\n"+
-"    return 0;\n"+
-"}\n"},
-
-bres_line:{file:"bresenham_line.c",code:
-"#include <GL/gl.h>\n"+
-"#include <GL/glut.h>\n"+
-"#include <math.h>\n\n"+
-"/* works when 0 <= slope <= 1 (x drives, y grows) */\n"+
-"void Bresenham(float x1, float y1, float x2, float y2)\n"+
-"{\n"+
-"    float dx = fabs(x2 - x1);\n"+
-"    float dy = fabs(y2 - y1);\n"+
-"    float p = 2 * dy - dx;              /* initial decision parameter */\n\n"+
-"    glColor3f(1, 1, 1);\n"+
-"    glBegin(GL_POINTS);\n"+
-"    glVertex2f(x1, y1);\n"+
-"    while (x1 < x2)\n"+
-"    {\n"+
-"        x1 = x1 + 1;\n"+
-"        if (p < 0)\n"+
-"        {\n"+
-"            p = p + 2 * dy;             /* east step */\n"+
-"        }\n"+
-"        else\n"+
-"        {\n"+
-"            p = p + 2 * dy - 2 * dx;    /* diagonal step */\n"+
-"            y1 = y1 + 1;\n"+
-"        }\n"+
-"        glVertex2f(x1, y1);\n"+
-"    }\n"+
-"    glEnd();\n"+
-"}\n\n"+
-"void display(void)\n"+
-"{\n"+
-"    glClear(GL_COLOR_BUFFER_BIT);\n"+
-"    Bresenham(140, 140, 260, 240);\n"+
-"    glutSwapBuffers();\n"+
-"}\n\n"+
-"void init(void)\n"+
-"{\n"+
-"    glClearColor(0.0, 0.0, 0.0, 0.0);\n"+
-"    glMatrixMode(GL_PROJECTION);\n"+
-"    glLoadIdentity();\n"+
-"    glOrtho(0.0, 300.0, 0.0, 300.0, -100.0, 1.0);\n"+
-"}\n\n"+
-"int main(int argc, char **argv)\n"+
-"{\n"+
-"    glutInit(&argc, argv);\n"+
-"    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);\n"+
-"    glutInitWindowSize(500, 500);\n"+
-"    glutInitWindowPosition(100, 100);\n"+
-"    glutCreateWindow(\"Bresenham Line\");\n\n"+
-"    init();\n"+
-"    glutDisplayFunc(display);\n"+
-"    glutMainLoop();\n"+
-"    return 0;\n"+
-"}\n"},
-
-bres_general:{file:"bresenham_general.c",code:
-"#include <GL/gl.h>\n"+
-"#include <GL/glut.h>\n"+
-"#include <math.h>\n\n"+
-"/* general Bresenham - draws in all four quadrants */\n"+
-"void Bresenham_general(float x1, float y1, float x2, float y2)\n"+
-"{\n"+
-"    float dx = fabs(x2 - x1);\n"+
-"    float dy = fabs(y2 - y1);\n"+
-"    float p;\n\n"+
-"    float x_change = x1 < x2 ? 1 : -1;   /* direction signs */\n"+
-"    float y_change = y1 < y2 ? 1 : -1;\n\n"+
-"    glColor3f(1, 1, 1);\n"+
-"    glBegin(GL_POINTS);\n"+
-"    glVertex2f(x1, y1);\n\n"+
-"    if (dx > dy)                          /* |slope| < 1 : x drives */\n"+
-"    {\n"+
-"        p = 2 * dy - dx;\n"+
-"        while (1)\n"+
-"        {\n"+
-"            x1 = x1 + x_change;\n"+
-"            if (p < 0)\n"+
-"                p = p + 2 * dy;\n"+
-"            else\n"+
-"            {\n"+
-"                y1 = y1 + y_change;\n"+
-"                p = p + 2 * dy - 2 * dx;\n"+
-"            }\n"+
-"            glVertex2f(x1, y1);\n"+
-"            if (x1 == x2) break;\n"+
-"        }\n"+
-"    }\n"+
-"    else                                  /* |slope| >= 1 : y drives */\n"+
-"    {\n"+
-"        p = 2 * dx - dy;\n"+
-"        while (1)\n"+
-"        {\n"+
-"            y1 = y1 + y_change;\n"+
-"            if (p < 0)\n"+
-"                p = p + 2 * dx;\n"+
-"            else\n"+
-"            {\n"+
-"                x1 = x1 + x_change;\n"+
-"                p = p + 2 * dx - 2 * dy;\n"+
-"            }\n"+
-"            glVertex2f(x1, y1);\n"+
-"            if (y1 == y2) break;\n"+
-"        }\n"+
-"    }\n"+
-"    glEnd();\n"+
-"}\n\n"+
-"void display(void)\n"+
-"{\n"+
-"    glClear(GL_COLOR_BUFFER_BIT);\n"+
-"    Bresenham_general(260, 240, 140, 140);  /* backwards + steep: no problem */\n"+
-"    glutSwapBuffers();\n"+
-"}\n\n"+
-"void init(void)\n"+
-"{\n"+
-"    glClearColor(0.0, 0.0, 0.0, 0.0);\n"+
-"    glMatrixMode(GL_PROJECTION);\n"+
-"    glLoadIdentity();\n"+
-"    glOrtho(0.0, 300.0, 0.0, 300.0, -100.0, 1.0);\n"+
-"}\n\n"+
-"int main(int argc, char **argv)\n"+
-"{\n"+
-"    glutInit(&argc, argv);\n"+
-"    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);\n"+
-"    glutInitWindowSize(500, 500);\n"+
-"    glutInitWindowPosition(100, 100);\n"+
-"    glutCreateWindow(\"Bresenham - General\");\n\n"+
-"    init();\n"+
-"    glutDisplayFunc(display);\n"+
-"    glutMainLoop();\n"+
-"    return 0;\n"+
-"}\n"},
-
-dda_bres:{file:"dda_bresenham_combined.c",code:
-"#include <GL/gl.h>\n"+
-"#include <GL/glut.h>\n"+
-"#include <math.h>\n\n"+
-"void DDA(float x1, float y1, float x2, float y2)\n"+
-"{\n"+
-"    float dx = fabs(x2 - x1);\n"+
-"    float dy = fabs(y2 - y1);\n"+
-"    float steps = fmax(dx, dy);\n"+
-"    float x_inc = (x2 - x1) / steps;\n"+
-"    float y_inc = (y2 - y1) / steps;\n\n"+
-"    glColor3f(0, 1, 0);                  /* green line = DDA */\n"+
-"    glBegin(GL_POINTS);\n"+
-"    for (int i = 0; i <= steps; i++)\n"+
-"    {\n"+
-"        glVertex2f(round(x1), round(y1));\n"+
-"        x1 += x_inc;\n"+
-"        y1 += y_inc;\n"+
-"    }\n"+
-"    glEnd();\n"+
-"}\n\n"+
-"void Bresenham(float x1, float y1, float x2, float y2)\n"+
-"{\n"+
-"    float dx = fabs(x2 - x1);\n"+
-"    float dy = fabs(y2 - y1);\n"+
-"    float p = 2 * dy - dx;\n\n"+
-"    glColor3f(1, 1, 1);                  /* white line = Bresenham */\n"+
-"    glBegin(GL_POINTS);\n"+
-"    glVertex2f(x1, y1);\n"+
-"    while (x1 < x2)\n"+
-"    {\n"+
-"        x1 += 1;\n"+
-"        if (p < 0)\n"+
-"            p += 2 * dy;\n"+
-"        else\n"+
-"        {\n"+
-"            p += 2 * dy - 2 * dx;\n"+
-"            y1 += 1;\n"+
-"        }\n"+
-"        glVertex2f(x1, y1);\n"+
-"    }\n"+
-"    glEnd();\n"+
-"}\n\n"+
-"void display(void)\n"+
-"{\n"+
-"    glClear(GL_COLOR_BUFFER_BIT);\n\n"+
-"    DDA(100, 100, 220, 200);             /* compare the two */\n"+
-"    Bresenham(140, 140, 260, 240);\n\n"+
-"    glutSwapBuffers();\n"+
-"}\n\n"+
-"void init(void)\n"+
-"{\n"+
-"    glClearColor(0.0, 0.0, 0.0, 0.0);\n"+
-"    glMatrixMode(GL_PROJECTION);\n"+
-"    glLoadIdentity();\n"+
-"    glOrtho(0.0, 300.0, 0.0, 300.0, -100.0, 1.0);\n"+
-"}\n\n"+
-"int main(int argc, char **argv)\n"+
-"{\n"+
-"    glutInit(&argc, argv);\n"+
-"    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);\n"+
-"    glutInitWindowSize(500, 500);\n"+
-"    glutInitWindowPosition(100, 100);\n"+
-"    glutCreateWindow(\"DDA vs Bresenham\");\n\n"+
-"    init();\n"+
-"    glutDisplayFunc(display);\n"+
-"    glutMainLoop();\n"+
-"    return 0;\n"+
-"}\n"},
-
-mid_circle:{file:"midpoint_circle.c",code:
-"#include <GL/gl.h>\n"+
-"#include <GL/glut.h>\n\n"+
-"int xc = 150, yc = 150;    /* center */\n"+
-"int r  = 90;               /* radius */\n\n"+
-"/* 8-way symmetry: one computed point gives eight pixels */\n"+
-"void plot8(int x, int y)\n"+
-"{\n"+
-"    glVertex2f(xc + x, yc + y);  glVertex2f(xc - x, yc + y);\n"+
-"    glVertex2f(xc + x, yc - y);  glVertex2f(xc - x, yc - y);\n"+
-"    glVertex2f(xc + y, yc + x);  glVertex2f(xc - y, yc + x);\n"+
-"    glVertex2f(xc + y, yc - x);  glVertex2f(xc - y, yc - x);\n"+
-"}\n\n"+
-"void MidpointCircle(void)\n"+
-"{\n"+
-"    int x = 0, y = r;\n"+
-"    float p = 1 - r;                 /* initial decision parameter */\n\n"+
-"    glColor3f(1, 1, 1);\n"+
-"    glBegin(GL_POINTS);\n"+
-"    plot8(x, y);\n"+
-"    while (x < y)\n"+
-"    {\n"+
-"        x++;\n"+
-"        if (p < 0)\n"+
-"            p = p + 2 * x + 1;       /* E  step */\n"+
-"        else\n"+
-"        {\n"+
-"            y--;\n"+
-"            p = p + 2 * x - 2 * y + 1;  /* SE step */\n"+
-"        }\n"+
-"        plot8(x, y);\n"+
-"    }\n"+
-"    glEnd();\n"+
-"}\n\n"+
-"void display(void)\n"+
-"{\n"+
-"    glClear(GL_COLOR_BUFFER_BIT);\n"+
-"    MidpointCircle();\n"+
-"    glutSwapBuffers();\n"+
-"}\n\n"+
-"void init(void)\n"+
-"{\n"+
-"    glClearColor(0.0, 0.0, 0.0, 0.0);\n"+
-"    glMatrixMode(GL_PROJECTION);\n"+
-"    glLoadIdentity();\n"+
-"    glOrtho(0.0, 300.0, 0.0, 300.0, -100.0, 1.0);\n"+
-"}\n\n"+
-"int main(int argc, char **argv)\n"+
-"{\n"+
-"    glutInit(&argc, argv);\n"+
-"    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);\n"+
-"    glutInitWindowSize(500, 500);\n"+
-"    glutInitWindowPosition(100, 100);\n"+
-"    glutCreateWindow(\"Midpoint Circle\");\n\n"+
-"    init();\n"+
-"    glutDisplayFunc(display);\n"+
-"    glutMainLoop();\n"+
-"    return 0;\n"+
-"}\n"},
-
-mid_ellipse:{file:"midpoint_ellipse.c",code:
-"#include <GL/gl.h>\n"+
-"#include <GL/glut.h>\n\n"+
-"int xc = 150, yc = 150;    /* center        */\n"+
-"int rx = 100, ry = 60;     /* semi-axes     */\n\n"+
-"/* 4-way symmetry for the ellipse */\n"+
-"void plot4(float x, float y)\n"+
-"{\n"+
-"    glVertex2f(xc + x, yc + y);\n"+
-"    glVertex2f(xc - x, yc + y);\n"+
-"    glVertex2f(xc + x, yc - y);\n"+
-"    glVertex2f(xc - x, yc - y);\n"+
-"}\n\n"+
-"void MidpointEllipse(void)\n"+
-"{\n"+
-"    float x = 0, y = ry;\n"+
-"    float rx2 = rx * rx, ry2 = ry * ry;\n"+
-"    float p = ry2 - rx2 * ry + 0.25f * rx2;\n\n"+
-"    glColor3f(1, 1, 1);\n"+
-"    glBegin(GL_POINTS);\n"+
-"    plot4(x, y);\n\n"+
-"    /* region 1 : slope magnitude < 1, x drives */\n"+
-"    while (2 * ry2 * x < 2 * rx2 * y)\n"+
-"    {\n"+
-"        x++;\n"+
-"        if (p < 0)\n"+
-"            p += 2 * ry2 * x + ry2;\n"+
-"        else\n"+
-"        {\n"+
-"            y--;\n"+
-"            p += 2 * ry2 * x - 2 * rx2 * y + ry2;\n"+
-"        }\n"+
-"        plot4(x, y);\n"+
-"    }\n\n"+
-"    /* region 2 : slope magnitude > 1, y drives */\n"+
-"    p = ry2 * (x + 0.5f) * (x + 0.5f)\n"+
-"      + rx2 * (y - 1) * (y - 1) - rx2 * ry2;\n"+
-"    while (y > 0)\n"+
-"    {\n"+
-"        y--;\n"+
-"        if (p > 0)\n"+
-"            p += rx2 - 2 * rx2 * y;\n"+
-"        else\n"+
-"        {\n"+
-"            x++;\n"+
-"            p += 2 * ry2 * x - 2 * rx2 * y + rx2;\n"+
-"        }\n"+
-"        plot4(x, y);\n"+
-"    }\n"+
-"    glEnd();\n"+
-"}\n\n"+
-"void display(void)\n"+
-"{\n"+
-"    glClear(GL_COLOR_BUFFER_BIT);\n"+
-"    MidpointEllipse();\n"+
-"    glutSwapBuffers();\n"+
-"}\n\n"+
-"void init(void)\n"+
-"{\n"+
-"    glClearColor(0.0, 0.0, 0.0, 0.0);\n"+
-"    glMatrixMode(GL_PROJECTION);\n"+
-"    glLoadIdentity();\n"+
-"    glOrtho(0.0, 300.0, 0.0, 300.0, -100.0, 1.0);\n"+
-"}\n\n"+
-"int main(int argc, char **argv)\n"+
-"{\n"+
-"    glutInit(&argc, argv);\n"+
-"    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);\n"+
-"    glutInitWindowSize(500, 500);\n"+
-"    glutInitWindowPosition(100, 100);\n"+
-"    glutCreateWindow(\"Midpoint Ellipse\");\n\n"+
-"    init();\n"+
-"    glutDisplayFunc(display);\n"+
-"    glutMainLoop();\n"+
-"    return 0;\n"+
-"}\n"},
-
-transform2d:{file:"transformation_2d.c",code:
-"#include <GL/gl.h>\n"+
-"#include <GL/glut.h>\n"+
-"#include <math.h>\n"+
-"#include <stdlib.h>\n\n"+
-"float tx = 0, ty = 0;     /* translation */\n"+
-"float angle = 0;          /* rotation    */\n"+
-"float s = 1;              /* scaling     */\n\n"+
-"void drawTriangle(void)\n"+
-"{\n"+
-"    glBegin(GL_LINE_LOOP);\n"+
-"    glVertex2f(-40, -30);\n"+
-"    glVertex2f( 40, -30);\n"+
-"    glVertex2f(  0,  45);\n"+
-"    glEnd();\n"+
-"}\n\n"+
-"void display(void)\n"+
-"{\n"+
-"    glClear(GL_COLOR_BUFFER_BIT);\n\n"+
-"    /* original position (ghost) */\n"+
-"    glColor3f(0.35f, 0.35f, 0.35f);\n"+
-"    drawTriangle();\n\n"+
-"    /* transformed copy : M = T * R * S */\n"+
-"    glColor3f(1.0f, 0.42f, 0.75f);\n"+
-"    glPushMatrix();\n"+
-"    glTranslatef(tx, ty, 0);\n"+
-"    glRotatef(angle, 0, 0, 1);\n"+
-"    glScalef(s, s, 1);\n"+
-"    drawTriangle();\n"+
-"    glPopMatrix();\n\n"+
-"    glutSwapBuffers();\n"+
-"}\n\n"+
-"void keyboard(unsigned char key, int x, int y)\n"+
-"{\n"+
-"    switch (key)\n"+
-"    {\n"+
-"        case 'w': ty += 10;      break;  /* translate up    */\n"+
-"        case 's': ty -= 10;      break;  /* translate down  */\n"+
-"        case 'a': tx -= 10;      break;  /* translate left  */\n"+
-"        case 'd': tx += 10;      break;  /* translate right */\n"+
-"        case 'r': angle += 15;   break;  /* rotate CCW      */\n"+
-"        case 'e': angle -= 15;   break;  /* rotate CW       */\n"+
-"        case 'q': s += 0.1f;     break;  /* scale up        */\n"+
-"        case 'z': s -= 0.1f;     break;  /* scale down      */\n"+
-"        case '0': tx = ty = angle = 0; s = 1; break; /* reset */\n"+
-"        case 27 : exit(0);\n"+
-"    }\n"+
-"    glutPostRedisplay();\n"+
-"}\n\n"+
-"void init(void)\n"+
-"{\n"+
-"    glClearColor(0.0, 0.0, 0.0, 0.0);\n"+
-"    glMatrixMode(GL_PROJECTION);\n"+
-"    glLoadIdentity();\n"+
-"    glOrtho(-150.0, 150.0, -150.0, 150.0, -100.0, 1.0);\n"+
-"}\n\n"+
-"int main(int argc, char **argv)\n"+
-"{\n"+
-"    glutInit(&argc, argv);\n"+
-"    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);\n"+
-"    glutInitWindowSize(500, 500);\n"+
-"    glutInitWindowPosition(100, 100);\n"+
-"    glutCreateWindow(\"2D Transformation | WASD move R/E rot Q/Z scale 0 reset\");\n\n"+
-"    init();\n"+
-"    glutDisplayFunc(display);\n"+
-"    glutKeyboardFunc(keyboard);\n"+
-"    glutMainLoop();\n"+
-"    return 0;\n"+
-"}\n"},
-
-anim_timer:{file:"animation_timer.c",code:
-"#include <GL/gl.h>\n"+
-"#include <GL/glut.h>\n\n"+
-"float p = -8;          /* block position  */\n"+
-"float speed = 0.1f;    /* step per tick   */\n\n"+
-"void display(void)\n"+
-"{\n"+
-"    glClear(GL_COLOR_BUFFER_BIT);\n"+
-"    glColor3f(0.25f, 0.25f, 1.0f);\n\n"+
-"    glBegin(GL_POLYGON);\n"+
-"    glVertex2f(p,     2);\n"+
-"    glVertex2f(p + 4, 2);\n"+
-"    glVertex2f(p + 4, -2);\n"+
-"    glVertex2f(p,    -2);\n"+
-"    glEnd();\n\n"+
-"    glutSwapBuffers();\n"+
-"}\n\n"+
-"void update(void)\n"+
-"{\n"+
-"    p = p + speed;\n"+
-"    if (p >= 6 || p <= -10)   /* hit a wall? bounce */\n"+
-"        speed = -speed;\n"+
-"    glutPostRedisplay();\n"+
-"}\n\n"+
-"void myTimer(int val)\n"+
-"{\n"+
-"    update();\n"+
-"    glutTimerFunc(100, myTimer, 0);   /* re-arm every 100 ms */\n"+
-"}\n\n"+
-"void init(void)\n"+
-"{\n"+
-"    glClearColor(0.0, 0.0, 0.0, 0.0);\n"+
-"    glMatrixMode(GL_PROJECTION);\n"+
-"    glLoadIdentity();\n"+
-"    glOrtho(-10.0, 10.0, -10.0, 10.0, -100.0, 1.0);\n"+
-"}\n\n"+
-"int main(int argc, char **argv)\n"+
-"{\n"+
-"    glutInit(&argc, argv);\n"+
-"    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);\n"+
-"    glutInitWindowSize(500, 500);\n"+
-"    glutInitWindowPosition(100, 100);\n"+
-"    glutCreateWindow(\"Timer Animation\");\n\n"+
-"    init();\n"+
-"    glutDisplayFunc(display);\n"+
-"    glutTimerFunc(100, myTimer, 0);\n"+
-"    glutMainLoop();\n"+
-"    return 0;\n"+
-"}\n"},
-
-keyboard_move:{file:"keyboard_control.c",code:
-"#include <GL/gl.h>\n"+
-"#include <GL/glut.h>\n\n"+
-"float px = -8, py = 2;    /* block position */\n"+
-"float speed = 0.5f;\n\n"+
-"void display(void)\n"+
-"{\n"+
-"    glClear(GL_COLOR_BUFFER_BIT);\n"+
-"    glColor3f(0.25f, 0.25f, 1.0f);\n\n"+
-"    glBegin(GL_POLYGON);\n"+
-"    glVertex2f(px,     py);\n"+
-"    glVertex2f(px + 4, py);\n"+
-"    glVertex2f(px + 4, py - 4);\n"+
-"    glVertex2f(px,     py - 4);\n"+
-"    glEnd();\n\n"+
-"    glutSwapBuffers();\n"+
-"}\n\n"+
-"/* arrow keys arrive through the SPECIAL callback */\n"+
-"void myKeyboardControl(int key, int x, int y)\n"+
-"{\n"+
-"    switch (key)\n"+
-"    {\n"+
-"        case GLUT_KEY_RIGHT: px += speed; break;\n"+
-"        case GLUT_KEY_LEFT : px -= speed; break;\n"+
-"        case GLUT_KEY_UP   : py += speed; break;\n"+
-"        case GLUT_KEY_DOWN : py -= speed; break;\n"+
-"        default: return;\n"+
-"    }\n"+
-"    glutPostRedisplay();\n"+
-"}\n\n"+
-"void init(void)\n"+
-"{\n"+
-"    glClearColor(0.0, 0.0, 0.0, 0.0);\n"+
-"    glMatrixMode(GL_PROJECTION);\n"+
-"    glLoadIdentity();\n"+
-"    glOrtho(-10.0, 10.0, -10.0, 10.0, -100.0, 1.0);\n"+
-"}\n\n"+
-"int main(int argc, char **argv)\n"+
-"{\n"+
-"    glutInit(&argc, argv);\n"+
-"    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);\n"+
-"    glutInitWindowSize(500, 500);\n"+
-"    glutInitWindowPosition(100, 100);\n"+
-"    glutCreateWindow(\"Arrow Key Control\");\n\n"+
-"    init();\n"+
-"    glutDisplayFunc(display);\n"+
-"    glutSpecialFunc(myKeyboardControl);\n"+
-"    glutMainLoop();\n"+
-"    return 0;\n"+
-"}\n"},
-
-keyboard_rotate:{file:"keyboard_rotate.c",code:
-"#include <GL/gl.h>\n"+
-"#include <GL/glut.h>\n\n"+
-"float px = -8, py = 2, speed = 0.5f, angle = 1;\n\n"+
-"void display(void)\n"+
-"{\n"+
-"    glClear(GL_COLOR_BUFFER_BIT);\n\n"+
-"    /* movable blue square (WASD + arrows) */\n"+
-"    glColor3f(0.25f, 0.25f, 1.0f);\n"+
-"    glBegin(GL_POLYGON);\n"+
-"    glVertex2f(px,     py);\n"+
-"    glVertex2f(px + 4, py);\n"+
-"    glVertex2f(px + 4, py - 4);\n"+
-"    glVertex2f(px,     py - 4);\n"+
-"    glEnd();\n\n"+
-"    /* spinning red square at the origin */\n"+
-"    glPushMatrix();\n"+
-"    glRotatef(angle, 0, 0, 1);\n"+
-"    glColor3f(1.0f, 0.0f, 0.0f);\n"+
-"    glRectf(-2, -2, 2, 2);\n"+
-"    glPopMatrix();\n\n"+
-"    glutSwapBuffers();\n"+
-"}\n\n"+
-"void RotateLeft(void)\n"+
-"{\n"+
-"    angle += 10;                 /* runs every idle frame */\n"+
-"    glutPostRedisplay();\n"+
-"}\n\n"+
-"void mykeyboardcontrol(int key, int x, int y)\n"+
-"{\n"+
-"    switch (key)\n"+
-"    {\n"+
-"        case GLUT_KEY_RIGHT: px += speed; break;\n"+
-"        case GLUT_KEY_LEFT : px -= speed; break;\n"+
-"        case GLUT_KEY_UP   : py += speed; break;\n"+
-"        case GLUT_KEY_DOWN : py -= speed; break;\n"+
-"        default: return;\n"+
-"    }\n"+
-"    glutPostRedisplay();\n"+
-"}\n\n"+
-"void mykeyboardcontrol2(unsigned char key, int x, int y)\n"+
-"{\n"+
-"    switch (key)\n"+
-"    {\n"+
-"        case 'w': py += speed; break;\n"+
-"        case 's': py -= speed; break;\n"+
-"        case 'a': px -= speed; break;\n"+
-"        case 'd': px += speed; break;\n"+
-"        case 'l': glutIdleFunc(RotateLeft); break;  /* start spin */\n"+
-"        case 'k': glutIdleFunc(NULL);       break;  /* stop spin  */\n"+
-"        default: return;\n"+
-"    }\n"+
-"    glutPostRedisplay();\n"+
-"}\n\n"+
-"void init(void)\n"+
-"{\n"+
-"    glClearColor(0.0, 0.0, 0.0, 0.0);\n"+
-"    glMatrixMode(GL_PROJECTION);\n"+
-"    glLoadIdentity();\n"+
-"    glOrtho(-10, 10, -10, 10, -100.0, 1.0);\n"+
-"}\n\n"+
-"int main(int argc, char **argv)\n"+
-"{\n"+
-"    glutInit(&argc, argv);\n"+
-"    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);\n"+
-"    glutInitWindowSize(500, 500);\n"+
-"    glutInitWindowPosition(100, 100);\n"+
-"    glutCreateWindow(\"Keyboard + Idle Spin | l = spin, k = stop\");\n\n"+
-"    init();\n"+
-"    glutDisplayFunc(display);\n"+
-"    glutKeyboardFunc(mykeyboardcontrol2);\n"+
-"    glutSpecialFunc(mykeyboardcontrol);\n"+
-"    glutMainLoop();\n"+
-"    return 0;\n"+
-"}\n"},
-
-basic_shapes:{file:"basic_shapes.c",code:
-"#include <GL/gl.h>\n"+
-"#include <GL/glut.h>\n\n"+
-"void display(void)\n"+
-"{\n"+
-"    glClear(GL_COLOR_BUFFER_BIT);\n\n"+
-"    /* filled square - GL_POLYGON */\n"+
-"    glColor3f(0.25f, 0.25f, 1.0f);\n"+
-"    glBegin(GL_POLYGON);\n"+
-"    glVertex2f(0.10f, 0.10f);\n"+
-"    glVertex2f(0.40f, 0.10f);\n"+
-"    glVertex2f(0.40f, 0.40f);\n"+
-"    glVertex2f(0.10f, 0.40f);\n"+
-"    glEnd();\n\n"+
-"    /* triangle outline - GL_LINE_LOOP */\n"+
-"    glColor3f(1.0f, 0.8f, 0.2f);\n"+
-"    glLineWidth(3.0f);\n"+
-"    glBegin(GL_LINE_LOOP);\n"+
-"    glVertex2f(0.55f, 0.10f);\n"+
-"    glVertex2f(0.90f, 0.10f);\n"+
-"    glVertex2f(0.72f, 0.45f);\n"+
-"    glEnd();\n\n"+
-"    /* fat points - GL_POINTS */\n"+
-"    glColor3f(0.3f, 1.0f, 0.5f);\n"+
-"    glPointSize(8.0f);\n"+
-"    glBegin(GL_POINTS);\n"+
-"    glVertex2f(0.25f, 0.70f);\n"+
-"    glVertex2f(0.50f, 0.82f);\n"+
-"    glVertex2f(0.75f, 0.70f);\n"+
-"    glEnd();\n\n"+
-"    glutSwapBuffers();\n"+
-"}\n\n"+
-"void init(void)\n"+
-"{\n"+
-"    glClearColor(0.0, 0.0, 0.0, 0.0);\n"+
-"    glMatrixMode(GL_PROJECTION);\n"+
-"    glLoadIdentity();\n"+
-"    glOrtho(0.0, 1.0, 0.0, 1.0, -100.0, 1.0);\n"+
-"}\n\n"+
-"int main(int argc, char **argv)\n"+
-"{\n"+
-"    glutInit(&argc, argv);\n"+
-"    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);\n"+
-"    glutInitWindowSize(500, 500);\n"+
-"    glutInitWindowPosition(100, 100);\n"+
-"    glutCreateWindow(\"Basic Shapes\");\n\n"+
-"    init();\n"+
-"    glutDisplayFunc(display);\n"+
-"    glutMainLoop();\n"+
-"    return 0;\n"+
-"}\n"},
-
-vr_room:{file:"vr_room.c",code:
-"#include <GL/gl.h>\n"+
-"#include <GL/glut.h>\n"+
-"#include <math.h>\n"+
-"#include <stdlib.h>\n\n"+
-"float angle = 0.0f;\n"+
-"float lx = 0.0f, lz = -1.0f;      /* look direction  */\n"+
-"float x  = 0.0f, z  =  5.0f;      /* camera position */\n\n"+
-"void drawRoom(void)\n"+
-"{\n"+
-"    /* floor */\n"+
-"    glColor3f(0.6f, 0.6f, 0.6f);\n"+
-"    glBegin(GL_QUADS);\n"+
-"    glVertex3f(-10, 0, -10);\n"+
-"    glVertex3f(-10, 0,  10);\n"+
-"    glVertex3f( 10, 0,  10);\n"+
-"    glVertex3f( 10, 0, -10);\n"+
-"    glEnd();\n\n"+
-"    /* back wall */\n"+
-"    glColor3f(0.8f, 0.7f, 0.5f);\n"+
-"    glBegin(GL_QUADS);\n"+
-"    glVertex3f(-10, 0, -10);\n"+
-"    glVertex3f(-10, 8, -10);\n"+
-"    glVertex3f( 10, 8, -10);\n"+
-"    glVertex3f( 10, 0, -10);\n"+
-"    glEnd();\n\n"+
-"    /* left wall */\n"+
-"    glBegin(GL_QUADS);\n"+
-"    glVertex3f(-10, 0, -10);\n"+
-"    glVertex3f(-10, 8, -10);\n"+
-"    glVertex3f(-10, 8,  10);\n"+
-"    glVertex3f(-10, 0,  10);\n"+
-"    glEnd();\n"+
-"}\n\n"+
-"void drawTable(void)\n"+
-"{\n"+
-"    glPushMatrix();\n"+
-"    glTranslatef(0, 1, -3);\n"+
-"    glColor3f(0.5f, 0.2f, 0.1f);\n\n"+
-"    /* table top : unit cube stretched flat */\n"+
-"    glPushMatrix();\n"+
-"    glScalef(2, 0.2f, 1);\n"+
-"    glutSolidCube(1);\n"+
-"    glPopMatrix();\n\n"+
-"    /* four legs */\n"+
-"    float leg[4][2] = {{0.8f, 0.4f}, {-0.8f, 0.4f},\n"+
-"                       {0.8f, -0.4f}, {-0.8f, -0.4f}};\n"+
-"    for (int i = 0; i < 4; i++)\n"+
-"    {\n"+
-"        glPushMatrix();\n"+
-"        glTranslatef(leg[i][0], -0.6f, leg[i][1]);\n"+
-"        glScalef(0.1f, 1.2f, 0.1f);\n"+
-"        glutSolidCube(1);\n"+
-"        glPopMatrix();\n"+
-"    }\n"+
-"    glPopMatrix();\n"+
-"}\n\n"+
-"void display(void)\n"+
-"{\n"+
-"    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);\n"+
-"    glLoadIdentity();\n\n"+
-"    gluLookAt(x, 2, z,              /* eye    */\n"+
-"              x + lx, 2, z + lz,    /* center */\n"+
-"              0, 1, 0);             /* up     */\n\n"+
-"    drawRoom();\n"+
-"    drawTable();\n\n"+
-"    glutSwapBuffers();\n"+
-"}\n\n"+
-"void reshape(int w, int h)\n"+
-"{\n"+
-"    if (h == 0) h = 1;\n"+
-"    float ratio = 1.0f * w / h;\n\n"+
-"    glMatrixMode(GL_PROJECTION);\n"+
-"    glLoadIdentity();\n"+
-"    gluPerspective(45, ratio, 0.1, 100);\n"+
-"    glMatrixMode(GL_MODELVIEW);\n"+
-"}\n\n"+
-"void keyboard(unsigned char key, int xx, int yy)\n"+
-"{\n"+
-"    float fraction = 0.3f;\n"+
-"    switch (key)\n"+
-"    {\n"+
-"        case 'w': x += lx * fraction; z += lz * fraction; break; /* walk fwd  */\n"+
-"        case 's': x -= lx * fraction; z -= lz * fraction; break; /* walk back */\n"+
-"        case 'a': angle -= 0.05f; lx = sin(angle); lz = -cos(angle); break;\n"+
-"        case 'd': angle += 0.05f; lx = sin(angle); lz = -cos(angle); break;\n"+
-"        case 27 : exit(0);\n"+
-"    }\n"+
-"    glutPostRedisplay();\n"+
-"}\n\n"+
-"void init(void)\n"+
-"{\n"+
-"    glEnable(GL_DEPTH_TEST);\n"+
-"    glClearColor(0.5f, 0.8f, 1.0f, 1.0f);   /* sky */\n"+
-"}\n\n"+
-"int main(int argc, char **argv)\n"+
-"{\n"+
-"    glutInit(&argc, argv);\n"+
-"    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);\n"+
-"    glutInitWindowSize(800, 600);\n"+
-"    glutCreateWindow(\"Virtual Reality Room | W/S walk A/D turn ESC quit\");\n\n"+
-"    init();\n"+
-"    glutDisplayFunc(display);\n"+
-"    glutReshapeFunc(reshape);\n"+
-"    glutKeyboardFunc(keyboard);\n"+
-"    glutMainLoop();\n"+
-"    return 0;\n"+
-"}\n"}
-};
-
-/* ================= SYNTAX HIGHLIGHTER ================= */
-function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
-var HIRE=/(\/\*[\s\S]*?\*\/|\/\/[^\n]*)|(&quot;[^\n]*?&quot;|'[^'\n]*')|(^[ \t]*#[A-Za-z]+[^\n]*)|\b(void|int|float|double|char|if|else|while|for|switch|case|break|continue|return|default|do|struct|typedef|const|static|unsigned|enum)\b|\b(GLfloat|GLint|GLuint|GLdouble|GLboolean|GLsizei)\b|\b(\d+\.?\d*[fF]?)\b|\b([A-Z_][A-Z0-9_]{2,})\b(?!\s*\()|\b([A-Za-z_][A-Za-z0-9_]*)\s*(?=\()/gm;
-function hiC(src){
-  return esc(src).replace(HIRE,function(m,com,str,pre,kw,ty,num,mac,fn){
-    if(com)return '<span class="tk-c">'+com+'</span>';
-    if(str)return '<span class="tk-s">'+str+'</span>';
-    if(pre)return '<span class="tk-p">'+pre+'</span>';
-    if(kw)return '<span class="tk-k">'+kw+'</span>';
-    if(ty)return '<span class="tk-t">'+ty+'</span>';
-    if(num)return '<span class="tk-n">'+num+'</span>';
-    if(mac)return '<span class="tk-m">'+mac+'</span>';
-    if(fn)return '<span class="tk-f">'+fn+'</span>';
-    return m;
-  });
+<span class="bc">// display() - স্ক্রিনে আঁকে / Draws on screen</span>
+<span class="ty">void</span> <span class="fn">display</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClear</span>(GL_COLOR_BUFFER_BIT);  <span class="bc">// স্ক্রিন ক্লিয়ার</span>
+    <span class="fn">glColor3f</span>(<span class="nu">.25</span>,<span class="nu">0.25</span>,<span class="nu">1.0</span>);     <span class="bc">// রং = নীলচে</span>
+    <span class="fn">glBegin</span>(GL_POLYGON);           <span class="bc">// পলিগন শুরু</span>
+        <span class="fn">glVertex3f</span>(<span class="nu">0.25</span>,<span class="nu">0.25</span>,<span class="nu">0.0</span>); <span class="bc">// বিন্দু ১</span>
+        <span class="fn">glVertex3f</span>(<span class="nu">0.75</span>,<span class="nu">0.25</span>,<span class="nu">0.0</span>); <span class="bc">// বিন্দু ২</span>
+        <span class="fn">glVertex3f</span>(<span class="nu">0.75</span>,<span class="nu">0.75</span>,<span class="nu">0.0</span>); <span class="bc">// বিন্দু ৩</span>
+    <span class="fn">glEnd</span>();                       <span class="bc">// পলিগন শেষ</span>
+    <span class="fn">glutSwapBuffers</span>();            <span class="bc">// বাফার সোয়াপ</span>
 }
 
-/* ================= BUILD CODE BOXES ================= */
-$$(".codecol").forEach(function(col){
-  var keys=col.dataset.code.split(",");
-  var box=document.createElement("div");box.className="codebox";
-  var tabs=document.createElement("div");tabs.className="tabs";
-  var coder=document.createElement("div");coder.className="coder";
-  var compileCode=document.createElement("code");
-  keys.forEach(function(k,i){
-    var entry=CODES[k];
-    var tb=document.createElement("button");
-    tb.className="tab"+(i===0?" active":"");tb.textContent=entry.file;
-    var pre=document.createElement("pre");
-    if(i===0)pre.className="on";
-    pre.dataset.raw=entry.code;pre.innerHTML=hiC(entry.code);
-    tb.addEventListener("click",function(){
-      tabs.querySelectorAll(".tab").forEach(function(t){t.classList.remove("active")});
-      tb.classList.add("active");
-      coder.querySelectorAll("pre").forEach(function(p){p.classList.remove("on")});
-      pre.classList.add("on");
-      compileCode.textContent="gcc "+entry.file+" -o app -lfreeglut -lopengl32 -lglu32 && ./app";
-    });
-    tabs.appendChild(tb);coder.appendChild(pre);
-  });
-  var cp=document.createElement("button");
-  cp.className="cp";cp.dataset.from="code";cp.textContent="COPY";
-  tabs.appendChild(cp);
-  var comp=document.createElement("div");comp.className="compile";
-  var pr=document.createElement("span");pr.className="pr";pr.textContent="$";
-  compileCode.textContent="gcc "+CODES[keys[0]].file+" -o app -lfreeglut -lopengl32 -lglu32 && ./app";
-  var cp2=document.createElement("button");
-  cp2.className="cp";cp2.dataset.from="compile";cp2.textContent="COPY";
-  comp.appendChild(pr);comp.appendChild(compileCode);comp.appendChild(cp2);
-  box.appendChild(tabs);box.appendChild(coder);box.appendChild(comp);
-  col.appendChild(box);
-});
+<span class="bc">// init() - সেটিংস / Settings</span>
+<span class="ty">void</span> <span class="fn">init</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClearColor</span>(<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>);       <span class="bc">// কালো ব্যাকগ্রাউন্ড</span>
+    <span class="fn">glMatrixMode</span>(GL_PROJECTION);
+    <span class="fn">glLoadIdentity</span>();
+    <span class="fn">glOrtho</span>(<span class="nu">0</span>,<span class="nu">1</span>,<span class="nu">0</span>,<span class="nu">1</span>,<span class="nu">-100</span>,<span class="nu">1</span>);   <span class="bc">// কোঅর্ডিনেট 0-1</span>
+}
 
-/* ================= COPY ================= */
-function doCopy(b){
-  var t=b.dataset.copy;
-  if(!t){
-    var box=b.closest(".codebox");
-    if(b.dataset.from==="compile"){t=box.querySelector(".compile code").textContent;}
-    else{var pre=box.querySelector("pre.on");t=pre?pre.dataset.raw:"";}
-  }
-  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).catch(function(){});}
-  else{var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();
-    try{document.execCommand("copy")}catch(e){}document.body.removeChild(ta);}
-  var old=b.textContent;b.textContent="✓ COPIED";b.classList.add("ok");
-  setTimeout(function(){b.textContent=old;b.classList.remove("ok")},1200);
-}
-document.addEventListener("click",function(e){
-  var b=e.target.closest(".cp,[data-copy]");
-  if(b)doCopy(b);
-});
+<span class="ty">int</span> <span class="fn">main</span>(<span class="ty">int</span> argc, <span class="ty">char</span>** argv)
+{
+    <span class="fn">glutInit</span>(&amp;argc, argv);
+    <span class="fn">glutInitDisplayMode</span>(GLUT_DOUBLE | GLUT_RGB);
+    <span class="fn">glutInitWindowSize</span>(<span class="nu">500</span>,<span class="nu">500</span>);
+    <span class="fn">glutCreateWindow</span>(<span class="st">"Hello OpenGL"</span>);
+    <span class="fn">init</span>();
+    <span class="fn">glutDisplayFunc</span>(display);
+    <span class="fn">glutMainLoop</span>();
+    <span class="kw">return</span> <span class="nu">0</span>;
+}</code></pre></div>
+<h4>🔑 Key Functions</h4>
+<table class="info-table"><thead><tr><th>Function</th><th>কাজ / Purpose</th></tr></thead><tbody>
+<tr><td><code class="inline">glClear()</code></td><td>স্ক্রিন ক্লিয়ার / Clears screen</td></tr>
+<tr><td><code class="inline">glColor3f(r,g,b)</code></td><td>রং সেট / Sets color (0-1)</td></tr>
+<tr><td><code class="inline">glBegin/glEnd</code></td><td>আঁকা শুরু/শেষ / Drawing start/end</td></tr>
+<tr><td><code class="inline">glVertex2f(x,y)</code></td><td>বিন্দু বসাও / Place vertex</td></tr>
+<tr><td><code class="inline">glOrtho()</code></td><td>কোঅর্ডিনেট সিস্টেম / Coordinate system</td></tr>
+<tr><td><code class="inline">glutSwapBuffers()</code></td><td>বাফার সোয়াপ / Swap buffers</td></tr>
+<tr><td><code class="inline">glutMainLoop()</code></td><td>ইভেন্ট লুপ / Event loop</td></tr>
+</tbody></table></div></section><div class="section-divider"></div>
+<section class="section" id="topics"><div class="section-header animate-on-scroll">
+<div class="section-tag">📚 Topics</div><h2>যা শিখবে / What You'll Learn</h2>
+<p>ল্যাবের সব টপিক — থিওরি, কোড, বাংলা ব্যাখ্যা সহ</p></div><div class="topics-grid">
+<div class="topic-card animate-on-scroll"><div class="card-icon" style="background:rgba(108,92,231,.12)">📏</div>
+<h3>1. DDA Line Drawing</h3><p>Digital Differential Analyzer — সবচেয়ে সহজ লাইন অ্যালগরিদম।</p><a href="#dda" class="card-link">শেখো →</a></div>
+<div class="topic-card animate-on-scroll"><div class="card-icon" style="background:rgba(0,206,201,.12)">📐</div>
+<h3>2. Bresenham's Algorithm</h3><p>Integer-only ফাস্ট লাইন অ্যালগরিদম। General version সহ।</p><a href="#bresenham" class="card-link">শেখো →</a></div>
+<div class="topic-card animate-on-scroll"><div class="card-icon" style="background:rgba(253,121,168,.12)">⭕</div>
+<h3>3. Midpoint Circle</h3><p>Decision parameter দিয়ে সার্কেল আঁকা।</p><a href="#midpoint" class="card-link">শেখো →</a></div>
+<div class="topic-card animate-on-scroll"><div class="card-icon" style="background:rgba(253,203,110,.12)">🔄</div>
+<h3>4. 2D Transformation</h3><p>Translation, Rotation, Scaling ম্যাট্রিক্স।</p><a href="#transformation" class="card-link">শেখো →</a></div>
+<div class="topic-card animate-on-scroll"><div class="card-icon" style="background:rgba(0,184,148,.12)">🎬</div>
+<h3>5. Animation</h3><p>Timer ও Keyboard control দিয়ে অ্যানিমেশন।</p><a href="#animation" class="card-link">শেখো →</a></div>
+<div class="topic-card animate-on-scroll"><div class="card-icon" style="background:rgba(225,112,85,.12)">🏠</div>
+<h3>6. Shapes & 3D VR</h3><p>বিভিন্ন শেপ ও 3D রুম — gluLookAt সহ।</p><a href="#shapes" class="card-link">শেখো →</a></div>
+</div></section><div class="section-divider"></div>
+<section class="section" id="dda"><div class="section-header animate-on-scroll">
+<div class="section-tag">📏 Topic 01</div><h2>DDA Line Drawing Algorithm</h2>
+<p>Digital Differential Analyzer — লাইন আঁকার সবচেয়ে সহজ উপায়</p></div>
+<div class="content-block animate-on-scroll"><h3>📖 Theory / তত্ত্ব</h3><div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span>
+<p><b>DDA</b> দুটি বিন্দুর মধ্যে লাইন আঁকে।</p><ul>
+<li>dx = |x2-x1|, dy = |y2-y1| বের করো</li>
+<li>steps = max(dx, dy)</li>
+<li>x_inc = dx/steps, y_inc = dy/steps</li>
+<li>লুপে round() করে পিক্সেল বসাও</li></ul>
+<p><b>সমস্যা:</b> float + round() = ধীর।</p></div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span>
+<p><b>DDA</b> draws a line between two points.</p><ul>
+<li>Calculate dx = |x2-x1|, dy = |y2-y1|</li>
+<li>steps = max(dx, dy)</li>
+<li>x_inc = dx/steps, y_inc = dy/steps</li>
+<li>Loop and plot pixels with round()</li></ul>
+<p><b>Drawback:</b> float + round() = slower.</p></div></div>
+<div class="formula">steps = max(|dx|,|dy|) | x_inc = dx/steps | y_inc = dy/steps<br>Loop: plot(round(x),round(y)); x+=x_inc; y+=y_inc;</div></div>
+<div class="content-block animate-on-scroll"><h3>💻 Code: DDA Line + Triangle</h3>
+<div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span><p>DDA দিয়ে লাইন ও ত্রিভুজ। <code class="inline">x_inc=(x2-x1)/steps</code> (signed) দিলে যেকোনো দিকে আঁকা যায়।</p></div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span><p>Line and triangle with DDA. <code class="inline">x_inc=(x2-x1)/steps</code> (signed) allows any direction.</p></div></div>
+<div class="code-container"><div class="code-header"><div class="dots"><span></span><span></span><span></span></div>
+<span class="file-name">📄 dda.c</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div>
+<pre class="code-block"><code><span class="pp">#include</span> <span class="st">&lt;GL/gl.h&gt;</span>
+<span class="pp">#include</span> <span class="st">&lt;GL/glut.h&gt;</span>
+<span class="pp">#include</span> <span class="st">&lt;math.h&gt;</span>  <span class="bc">// fabs, fmax, round</span>
 
-/* ================= PLAYGROUND RASTERIZER ================= */
-var pgc=$("#pgc"),pctx=pgc.getContext("2d");
-var PG={mode:"bres",speed:3,prog:0,hold:0,N:26,A:{x:4,y:20},B:{x:21,y:5},pts:[],r:8,drag:null,hover:null,last:0,cell:20,w:0};
-var MODES={dda:{name:"DDA",color:"#4fd8e8"},bres:{name:"BRESENHAM",color:"#ffb454"},mid:{name:"MIDPOINT ○",color:"#7ee787"}};
+<span class="bc">// DDA: দুটি বিন্দুর মধ্যে লাইন আঁকে</span>
+<span class="ty">void</span> <span class="fn">DDA</span>(<span class="ty">float</span> x1,<span class="ty">float</span> y1,<span class="ty">float</span> x2,<span class="ty">float</span> y2)
+{
+    <span class="ty">float</span> dx=<span class="fn">fabs</span>(x2-x1);   <span class="bc">// x দূরত্ব</span>
+    <span class="ty">float</span> dy=<span class="fn">fabs</span>(y2-y1);   <span class="bc">// y দূরত্ব</span>
+    <span class="ty">float</span> steps=<span class="fn">fmax</span>(dx,dy); <span class="bc">// কোনটা বড়?</span>
+    <span class="ty">float</span> x_inc=(x2-x1)/steps; <span class="bc">// signed = যেকোনো দিকে</span>
+    <span class="ty">float</span> y_inc=(y2-y1)/steps;
 
-function lineDDA(ax,ay,bx,by){
-  var dx=Math.abs(bx-ax),dy=Math.abs(by-ay);
-  var steps=Math.max(dx,dy);
-  if(steps===0)return[{x:ax,y:ay,fx:ax,fy:ay,p:0}];
-  var xi=(bx-ax)/steps,yi=(by-ay)/steps,x=ax,y=ay,out=[];
-  for(var i=0;i<=steps;i++){out.push({x:Math.round(x),y:Math.round(y),fx:x,fy:y,p:0});x+=xi;y+=yi;}
-  return out;
-}
-function lineBres(ax,ay,bx,by){
-  var dx=Math.abs(bx-ax),dy=Math.abs(by-ay);
-  var sx=ax<bx?1:-1,sy=ay<by?1:-1;
-  var x=ax,y=ay,out=[{x:x,y:y,p:2*dy-dx}];
-  if(dx>dy){var p=2*dy-dx;
-    while(x!==bx){x+=sx;if(p<0)p+=2*dy;else{y+=sy;p+=2*dy-2*dx;}out.push({x:x,y:y,p:p});}
-  }else{var p2=2*dx-dy;
-    while(y!==by){y+=sy;if(p2<0)p2+=2*dx;else{x+=sx;p2+=2*dx-2*dy;}out.push({x:x,y:y,p:p2});}
-  }
-  return out;
-}
-function circleMid(cx,cy,r){
-  var x=0,y=r,p=1-r,out=[{x:0,y:r,p:p}];
-  while(x<y){x++;if(p<0)p+=2*x+1;else{y--;p+=2*x-2*y+1;}out.push({x:x,y:y,p:p});}
-  return out;
-}
-function pgCompute(){
-  if(PG.mode==="dda")PG.pts=lineDDA(PG.A.x,PG.A.y,PG.B.x,PG.B.y);
-  else if(PG.mode==="bres")PG.pts=lineBres(PG.A.x,PG.A.y,PG.B.x,PG.B.y);
-  else{PG.r=Math.max(1,Math.round(Math.hypot(PG.B.x-PG.A.x,PG.B.y-PG.A.y)));PG.pts=circleMid(PG.A.x,PG.A.y,PG.r);}
-  PG.prog=0;PG.hold=0;
-}
-function pgResize(){
-  var s=pgc.clientWidth;if(!s)return;
-  var d=Math.min(window.devicePixelRatio||1,2);
-  pgc.width=s*d;pgc.height=s*d;
-  pctx.setTransform(d,0,0,d,0,0);
-  PG.w=s;PG.cell=s/PG.N;
-}
-function sym8(st,c){
-  var x=st.x,y=st.y;
-  return[[c.x+x,c.y+y],[c.x-x,c.y+y],[c.x+x,c.y-y],[c.x-x,c.y-y],
-         [c.x+y,c.y+x],[c.x-y,c.y+x],[c.x+y,c.y-x],[c.x-y,c.y-x]];
-}
-function plotStep(i,col,hot){
-  var st=PG.pts[i],cs=PG.cell;
-  var cells=PG.mode==="mid"?sym8(st,PG.A):[[st.x,st.y]];
-  for(var j=0;j<cells.length;j++){
-    var cx2=cells[j][0],cy2=cells[j][1];
-    if(cx2<0||cy2<0||cx2>=PG.N||cy2>=PG.N)continue;
-    var rx=cx2*cs+1.5,ry=(PG.N-1-cy2)*cs+1.5,rs=cs-3;
-    pctx.shadowBlur=hot?14:0;pctx.shadowColor=col;
-    pctx.globalAlpha=hot?1:.88;
-    pctx.fillStyle=hot?"#ffffff":col;
-    pctx.fillRect(rx,ry,rs,rs);
-    pctx.globalAlpha=1;pctx.shadowBlur=0;
-  }
-}
-function drawHandle(pt,label,shape){
-  var cs=PG.cell,c=pctx;
-  var px=(pt.x+.5)*cs,py=(PG.N-1-pt.y+.5)*cs;
-  var hot=PG.drag===label||PG.hover===label;
-  var s=cs*(hot?.66:.52);
-  c.save();
-  if(hot){c.shadowColor="#ffffff";c.shadowBlur=12;}
-  c.lineWidth=1.6;c.strokeStyle="#e9f2ff";c.fillStyle="rgba(8,19,33,.9)";
-  if(shape==="sq"){c.fillRect(px-s/2,py-s/2,s,s);c.strokeRect(px-s/2,py-s/2,s,s);}
-  else{c.beginPath();c.arc(px,py,s/2,0,7);c.fill();c.stroke();}
-  c.restore();
-  c.fillStyle=hot?"#ffffff":"rgba(233,242,255,.75)";
-  c.font='700 9px "JetBrains Mono",monospace';c.textAlign="center";
-  c.fillText(label,px,py-s/2-5);c.textAlign="left";
-}
-function pgDraw(){
-  var c=pctx,N=PG.N,cs=PG.cell,w=PG.w;if(!w)return;
-  c.clearRect(0,0,w,w);
-  c.fillStyle="#071322";c.fillRect(0,0,w,w);
-  c.lineWidth=1;
-  c.strokeStyle="rgba(125,165,225,.09)";c.beginPath();
-  for(var i=0;i<=N;i++){var p=Math.round(i*cs)+.5;c.moveTo(p,0);c.lineTo(p,w);c.moveTo(0,p);c.lineTo(w,p);}
-  c.stroke();
-  c.strokeStyle="rgba(125,165,225,.2)";c.beginPath();
-  for(var j=0;j<=N;j+=5){var q=Math.round(j*cs)+.5;c.moveTo(q,0);c.lineTo(q,w);c.moveTo(0,q);c.lineTo(w,q);}
-  c.stroke();
-  c.fillStyle="rgba(147,170,200,.42)";c.font='8px "JetBrains Mono",monospace';
-  for(var k=0;k<=N;k+=5){c.fillText(k,k*cs+3,w-4);if(k<N)c.fillText(k,3,(N-1-k)*cs+11);}
-  var col=MODES[PG.mode].color;
-  var ax=(PG.A.x+.5)*cs,ay=(PG.N-1-PG.A.y+.5)*cs;
-  var bx2=(PG.B.x+.5)*cs,by2=(PG.N-1-PG.B.y+.5)*cs;
-  c.save();c.setLineDash([4,4]);c.strokeStyle="rgba(233,242,255,.18)";c.lineWidth=1.2;
-  if(PG.mode==="mid"){c.beginPath();c.arc(ax,ay,PG.r*cs,0,7);c.stroke();}
-  else{c.beginPath();c.moveTo(ax,ay);c.lineTo(bx2,by2);c.stroke();}
-  c.restore();
-  var n=Math.floor(PG.prog);
-  for(var s2=0;s2<n;s2++)plotStep(s2,col,false);
-  if(PG.hold<=0&&n<PG.pts.length&&PG.prog>0)plotStep(n,col,true);
-  if(PG.hold>0&&PG.pts.length)plotStep(PG.pts.length-1,col,true);
-  drawHandle(PG.A,"A","sq");drawHandle(PG.B,"B","circle");
-}
-function pgStatus(){
-  var n=PG.pts.length;
-  var idx=clamp(Math.floor(PG.prog),0,Math.max(0,n-1));
-  var st=PG.pts[idx]||{x:0,y:0,fx:0,fy:0,p:0};
-  var cur=Math.min(Math.floor(PG.prog),n);
-  $("#st-algo").textContent=MODES[PG.mode].name;
-  $("#st-algo").style.color=MODES[PG.mode].color;
-  $("#st-step").textContent=cur+"/"+n;
-  if(PG.mode==="dda"){$("#st-x").textContent=st.fx.toFixed(2);$("#st-y").textContent=st.fy.toFixed(2);$("#st-p").textContent="—";}
-  else if(PG.mode==="bres"){$("#st-x").textContent=st.x;$("#st-y").textContent=st.y;$("#st-p").textContent=st.p;}
-  else{$("#st-x").textContent="±"+st.x;$("#st-y").textContent="±"+st.y;$("#st-p").textContent=st.p.toFixed(1);}
-}
-function pgTick(ts){
-  var dt=Math.min(50,ts-(PG.last||ts));PG.last=ts;
-  var n=PG.pts.length;
-  if(PG.hold>0){PG.hold-=dt;if(PG.hold<=0)PG.prog=0;}
-  else{PG.prog+=dt*.001*(10+PG.speed*14);if(PG.prog>=n){PG.prog=n;PG.hold=1100;}}
-  pgDraw();pgStatus();
-  requestAnimationFrame(pgTick);
-}
-function toCellF(e){
-  var r=pgc.getBoundingClientRect();
-  var px=e.clientX-r.left,py=e.clientY-r.top;
-  return{fx:px/PG.cell-.5,fy:(PG.N-1)-(py/PG.cell-.5)};
-}
-function nearHandle(c,pt){return Math.hypot(c.fx-pt.x,c.fy-pt.y)<.85}
-pgc.addEventListener("pointerdown",function(e){
-  var c=toCellF(e);
-  if(nearHandle(c,PG.A))PG.drag="A";
-  else if(nearHandle(c,PG.B))PG.drag="B";
-  if(PG.drag){pgc.setPointerCapture(e.pointerId);pgc.style.cursor="grabbing";
-    PG[PG.drag]={x:clamp(Math.round(c.fx),0,PG.N-1),y:clamp(Math.round(c.fy),0,PG.N-1)};
-    pgCompute();PG.prog=PG.pts.length;}
-});
-pgc.addEventListener("pointermove",function(e){
-  var c=toCellF(e);
-  if(PG.drag){
-    PG[PG.drag]={x:clamp(Math.round(c.fx),0,PG.N-1),y:clamp(Math.round(c.fy),0,PG.N-1)};
-    pgCompute();PG.prog=PG.pts.length;
-  }else{
-    PG.hover=nearHandle(c,PG.A)?"A":(nearHandle(c,PG.B)?"B":null);
-    pgc.style.cursor=PG.hover?"grab":"crosshair";
-    var gx=Math.floor(c.fx+.5),gy=Math.floor(c.fy+.5);
-    if(gx>=0&&gy>=0&&gx<PG.N&&gy<PG.N)$("#st-cur").textContent="("+gx+", "+gy+")";
-  }
-});
-function pgEndDrag(){if(PG.drag){PG.drag=null;pgc.style.cursor="crosshair";pgCompute();}}
-pgc.addEventListener("pointerup",pgEndDrag);
-pgc.addEventListener("pointercancel",pgEndDrag);
-pgc.addEventListener("pointerleave",function(){if(!PG.drag){PG.hover=null;$("#st-cur").textContent="—";}});
-$$("#pgmodes button").forEach(function(b){
-  b.addEventListener("click",function(){
-    $$("#pgmodes button").forEach(function(t){t.classList.remove("active")});
-    b.classList.add("active");
-    PG.mode=b.dataset.mode;
-    $("#playground").style.setProperty("--tc",MODES[PG.mode].color);
-    pgCompute();
-  });
-});
-$("#pgspeed").addEventListener("input",function(){PG.speed=+this.value});
-$("#pgreplay").addEventListener("click",function(){pgCompute()});
-
-/* ================= TRANSFORM BENCH ================= */
-var bc=$("#benchc"),bx=bc.getContext("2d");
-var TR={tx:40,ty:20,a:30,s:1};
-function sizeCanvas(cv){
-  var d=Math.min(window.devicePixelRatio||1,2);
-  var w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;
-  cv.width=w*d;cv.height=h*d;cv.getContext("2d").setTransform(d,0,0,d,0,0);
-}
-function poly(pts){bx.beginPath();bx.moveTo(pts[0][0],pts[0][1]);
-  for(var i=1;i<pts.length;i++)bx.lineTo(pts[i][0],pts[i][1]);bx.closePath();}
-function drawBench(){
-  var w=bc.clientWidth,h=bc.clientHeight;if(!w)return;
-  bx.clearRect(0,0,w,h);bx.fillStyle="#060f1d";bx.fillRect(0,0,w,h);
-  bx.lineWidth=1;bx.strokeStyle="rgba(125,165,225,.08)";bx.beginPath();
-  for(var gx=0;gx<=w;gx+=20){bx.moveTo(gx+.5,0);bx.lineTo(gx+.5,h);}
-  for(var gy=0;gy<=h;gy+=20){bx.moveTo(0,gy+.5);bx.lineTo(w,gy+.5);}
-  bx.stroke();
-  var cx=w/2,cy=h/2;
-  bx.strokeStyle="rgba(125,165,225,.3)";bx.beginPath();
-  bx.moveTo(0,cy+.5);bx.lineTo(w,cy+.5);bx.moveTo(cx+.5,0);bx.lineTo(cx+.5,h);bx.stroke();
-  bx.fillStyle="rgba(147,170,200,.55)";bx.font='9px "JetBrains Mono",monospace';
-  bx.fillText("+x",w-20,cy-6);bx.fillText("+y",cx+7,12);
-  var V=[[-40,-30],[40,-30],[0,45]];
-  var P=function(v){return[cx+v[0],cy-v[1]]};
-  bx.setLineDash([4,4]);bx.strokeStyle="rgba(233,242,255,.32)";bx.lineWidth=1.4;
-  poly(V.map(P));bx.stroke();bx.setLineDash([]);
-  var rad=TR.a*Math.PI/180,co=Math.cos(rad),si=Math.sin(rad);
-  var TV=V.map(function(v){
-    var sx2=v[0]*TR.s,sy2=v[1]*TR.s;
-    return[sx2*co-sy2*si+TR.tx,sx2*si+sy2*co+TR.ty];
-  });
-  var pts2=TV.map(P);
-  bx.fillStyle="rgba(255,106,193,.14)";poly(pts2);bx.fill();
-  bx.strokeStyle="#ff6ac1";bx.lineWidth=2;poly(pts2);bx.stroke();
-  pts2.forEach(function(p){bx.fillStyle="#ff6ac1";bx.beginPath();bx.arc(p[0],p[1],3.2,0,7);bx.fill();});
-}
-function benchUI(){
-  TR.tx=+$("#rtx").value;TR.ty=+$("#rty").value;TR.a=+$("#rot").value;TR.s=+$("#rsc").value;
-  $("#otx").textContent=TR.tx;$("#oty").textContent=TR.ty;
-  $("#orot").textContent=TR.a+"°";$("#osc").textContent=TR.s.toFixed(1);
-  $("#matx").textContent="P' = T("+TR.tx+", "+TR.ty+") · R("+TR.a+"°) · S("+TR.s.toFixed(1)+")";
-  drawBench();
-}
-["rtx","rty","rot","rsc"].forEach(function(id){$("#"+id).addEventListener("input",benchUI)});
-$("#breset").addEventListener("click",function(){
-  $("#rtx").value=40;$("#rty").value=20;$("#rot").value=30;$("#rsc").value=1;benchUI();
-});
-
-/* ================= ANIMATION PREVIEW ================= */
-var ac=$("#animc"),axc=ac.getContext("2d");
-var AN={p:-8,sp:.14,run:true};
-function drawAnim(){
-  var w=ac.clientWidth,h=ac.clientHeight;if(!w)return;
-  axc.clearRect(0,0,w,h);axc.fillStyle="#050d18";axc.fillRect(0,0,w,h);
-  axc.strokeStyle="rgba(125,165,225,.07)";axc.lineWidth=1;axc.beginPath();
-  for(var gx=0;gx<=w;gx+=24){axc.moveTo(gx+.5,0);axc.lineTo(gx+.5,h);}
-  for(var gy=0;gy<=h;gy+=24){axc.moveTo(0,gy+.5);axc.lineTo(w,gy+.5);}
-  axc.stroke();
-  axc.fillStyle="rgba(79,216,232,.14)";axc.fillRect(0,0,3,h);axc.fillRect(w-3,0,3,h);
-  var mx=function(v){return(v+10)/20*w};
-  var my=function(v){return h-(v+10)/20*h};
-  var x1=mx(AN.p),x2=mx(AN.p+4),y1=my(2),y2=my(-2);
-  axc.shadowColor="#4646ff";axc.shadowBlur=20;
-  axc.fillStyle="rgb(70,70,255)";axc.fillRect(x1,y1,x2-x1,y2-y1);
-  axc.shadowBlur=0;
-  axc.strokeStyle="rgba(170,170,255,.85)";axc.lineWidth=1.4;
-  axc.strokeRect(x1+.5,y1+.5,x2-x1-1,y2-y1-1);
-  axc.fillStyle="rgba(147,170,200,.85)";axc.font='10px "JetBrains Mono",monospace';
-  axc.fillText("p = "+AN.p.toFixed(2),10,16);
-  axc.fillText(AN.run?"▶ RUN   click canvas to pause":"⏸ PAUSED  click canvas to run",10,h-10);
-}
-function animLoop(){
-  if(AN.run){AN.p+=AN.sp;if(AN.p>=6||AN.p<=-10)AN.sp=-AN.sp;}
-  drawAnim();requestAnimationFrame(animLoop);
-}
-function animToggle(){
-  AN.run=!AN.run;
-  $("#animbtn").textContent=AN.run?"⏸ PAUSE":"▶ RUN";
-}
-ac.addEventListener("click",animToggle);
-$("#animbtn").addEventListener("click",animToggle);
-
-/* ================= REVEAL + SCROLLSPY + TOTOP ================= */
-var ro=new IntersectionObserver(function(es){
-  es.forEach(function(en){if(en.isIntersecting){en.target.classList.add("on");ro.unobserve(en.target);}});
-},{threshold:.12});
-$$(".rv").forEach(function(el){ro.observe(el)});
-
-var spy=new IntersectionObserver(function(es){
-  es.forEach(function(en){
-    if(en.isIntersecting){
-      var id=en.target.id;
-      $$(".nav-links a").forEach(function(a){
-        a.classList.toggle("active",a.getAttribute("href")==="#"+id);
-      });
+    <span class="fn">glColor3f</span>(<span class="nu">1</span>,<span class="nu">1</span>,<span class="nu">1</span>);       <span class="bc">// সাদা রং</span>
+    <span class="fn">glBegin</span>(GL_POINTS);
+    <span class="ty">float</span> x=x1, y=y1;
+    <span class="kw">for</span>(<span class="ty">int</span> i=<span class="nu">0</span>;i&lt;=steps;i++)
+    {
+        <span class="fn">glVertex2f</span>(<span class="fn">round</span>(x),<span class="fn">round</span>(y)); <span class="bc">// পিক্সেল বসাও</span>
+        x+=x_inc; y+=y_inc;
     }
-  });
-},{rootMargin:"-40% 0px -55% 0px"});
-["playground","lab1","lab2","lab3","lab4","lab5","lab6","setup"].forEach(function(id){
-  var el=document.getElementById(id);if(el)spy.observe(el);
-});
+    <span class="fn">glEnd</span>();
+}
 
-var totop=$("#totop");
-window.addEventListener("scroll",function(){
-  totop.classList.toggle("show",window.scrollY>600);
-},{passive:true});
-totop.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"})});
+<span class="ty">void</span> <span class="fn">display</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClear</span>(GL_COLOR_BUFFER_BIT);
+    <span class="fn">DDA</span>(<span class="nu">100</span>,<span class="nu">100</span>,<span class="nu">200</span>,<span class="nu">200</span>);  <span class="bc">// লাইন</span>
+    <span class="fn">DDA</span>(<span class="nu">50</span>,<span class="nu">50</span>,<span class="nu">250</span>,<span class="nu">50</span>);    <span class="bc">// ত্রিভুজ ভূমি</span>
+    <span class="fn">DDA</span>(<span class="nu">250</span>,<span class="nu">50</span>,<span class="nu">150</span>,<span class="nu">250</span>);  <span class="bc">// ডান পাশ</span>
+    <span class="fn">DDA</span>(<span class="nu">150</span>,<span class="nu">250</span>,<span class="nu">50</span>,<span class="nu">50</span>);   <span class="bc">// বাম পাশ</span>
+    <span class="fn">glutSwapBuffers</span>();
+}
 
-/* ================= BOOT ================= */
-pgResize();pgCompute();
-new ResizeObserver(function(){pgResize();}).observe(pgc);
-requestAnimationFrame(pgTick);
-sizeCanvas(bc);benchUI();
-new ResizeObserver(function(){sizeCanvas(bc);drawBench();}).observe(bc);
-sizeCanvas(ac);
-new ResizeObserver(function(){sizeCanvas(ac);}).observe(ac);
-requestAnimationFrame(animLoop);
-window.addEventListener("resize",function(){pgResize();sizeCanvas(bc);drawBench();sizeCanvas(ac);});
-})();
-</script>
-</body>
-</html>
+<span class="ty">void</span> <span class="fn">init</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClearColor</span>(<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>);
+    <span class="fn">glMatrixMode</span>(GL_PROJECTION);
+    <span class="fn">glLoadIdentity</span>();
+    <span class="fn">glOrtho</span>(<span class="nu">0</span>,<span class="nu">300</span>,<span class="nu">0</span>,<span class="nu">300</span>,<span class="nu">-100</span>,<span class="nu">1</span>);
+}
+
+<span class="ty">int</span> <span class="fn">main</span>(<span class="ty">int</span> argc,<span class="ty">char</span>** argv)
+{
+    <span class="fn">glutInit</span>(&amp;argc,argv);
+    <span class="fn">glutInitDisplayMode</span>(GLUT_DOUBLE|GLUT_RGB);
+    <span class="fn">glutInitWindowSize</span>(<span class="nu">500</span>,<span class="nu">500</span>);
+    <span class="fn">glutCreateWindow</span>(<span class="st">"DDA"</span>);
+    <span class="fn">init</span>();
+    <span class="fn">glutDisplayFunc</span>(display);
+    <span class="fn">glutMainLoop</span>();
+    <span class="kw">return</span> <span class="nu">0</span>;
+}</code></pre>
+</div>
+<div class="note-box warning"><span>⚠️</span><div><b>পার্থক্য:</b> <code class="inline">dx/steps</code> = শুধু positive | <code class="inline">(x2-x1)/steps</code> = যেকোনো direction (signed)</div></div>
+</div></section><div class="section-divider"></div>
+<section class="section" id="bresenham"><div class="section-header animate-on-scroll">
+<div class="section-tag">📐 Topic 02</div><h2>Bresenham's Line Algorithm</h2>
+<p>Integer-only, ফাস্ট — DDA এর উন্নত সংস্করণ</p></div>
+<div class="content-block animate-on-scroll"><h3>📖 Theory / তত্ত্ব</h3><div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span><p><b>Bresenham</b> শুধু integer যোগ-বিয়োগ ব্যবহার করে — float না, round() না। তাই ফাস্ট।</p><p><b>Decision Parameter (p):</b></p><ul><li>শুরু: p₀ = 2dy - dx</li><li>p &lt; 0 → (x+1, y), p = p + 2dy</li><li>p ≥ 0 → (x+1, y+1), p = p + 2dy - 2dx</li></ul><p><b>General:</b> dx&gt;dy → x বরাবর | dy≥dx → y বরাবর। x_change/y_change দিয়ে দিক নির্ধারণ।</p></div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span><p><b>Bresenham</b> uses only integer add/subtract — no float, no round(). Faster.</p><p><b>Decision Parameter (p):</b></p><ul><li>Initial: p₀ = 2dy - dx</li><li>p &lt; 0 → (x+1, y), p = p + 2dy</li><li>p ≥ 0 → (x+1, y+1), p = p + 2dy - 2dx</li></ul><p><b>General:</b> dx&gt;dy → step along x | dy≥dx → step along y.</p></div></div>
+<div class="formula">p₀ = 2dy - dx | p&lt;0: p+=2dy | p≥0: p+=2dy-2dx, y++</div></div>
+<div class="content-block animate-on-scroll"><h3>💻 Code: Bresenham General</h3>
+<div class="code-container"><div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="file-name">📄 bresenham_general.c</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre class="code-block"><code><span class="pp">#include</span> <span class="st">&lt;GL/gl.h&gt;</span>
+<span class="pp">#include</span> <span class="st">&lt;GL/glut.h&gt;</span>
+<span class="pp">#include</span> <span class="st">&lt;math.h&gt;</span>
+
+<span class="bc">// Bresenham General: যেকোনো দিকে লাইন</span>
+<span class="ty">void</span> <span class="fn">Bresenham_General</span>(<span class="ty">float</span> x1,<span class="ty">float</span> y1,<span class="ty">float</span> x2,<span class="ty">float</span> y2)
+{
+    <span class="ty">float</span> dx=<span class="fn">abs</span>(x2-x1), dy=<span class="fn">abs</span>(y2-y1);
+    <span class="ty">float</span> p;
+    <span class="ty">float</span> x_change = x1&gt;x2 ? <span class="nu">-1</span>:<span class="nu">1</span>; <span class="bc">// বামে/ডানে</span>
+    <span class="ty">float</span> y_change = y1&gt;y2 ? <span class="nu">-1</span>:<span class="nu">1</span>; <span class="bc">// উপরে/নিচে</span>
+
+    <span class="fn">glBegin</span>(GL_POINTS);
+    <span class="fn">glVertex2f</span>(x1,y1);
+
+    <span class="kw">if</span>(dx&gt;dy) <span class="bc">// slope&lt;1: x বরাবর</span>
+    {
+        p = <span class="nu">2</span>*dy - dx;
+        <span class="kw">while</span>(<span class="nu">1</span>)
+        {
+            x1 += x_change;
+            <span class="kw">if</span>(p&lt;<span class="nu">0</span>) p += <span class="nu">2</span>*dy;
+            <span class="kw">else</span> { y1+=y_change; p+=<span class="nu">2</span>*dy-<span class="nu">2</span>*dx; }
+            <span class="fn">glVertex2f</span>(x1,y1);
+            <span class="kw">if</span>(x1==x2) <span class="kw">break</span>;
+        }
+    }
+    <span class="kw">else</span> <span class="bc">// slope≥1: y বরাবর</span>
+    {
+        p = <span class="nu">2</span>*dx - dy;
+        <span class="kw">while</span>(<span class="nu">1</span>)
+        {
+            y1 += y_change;
+            <span class="kw">if</span>(p&lt;<span class="nu">0</span>) p += <span class="nu">2</span>*dx;
+            <span class="kw">else</span> { x1+=x_change; p+=<span class="nu">2</span>*dx-<span class="nu">2</span>*dy; }
+            <span class="fn">glVertex2f</span>(x1,y1);
+            <span class="kw">if</span>(y1==y2) <span class="kw">break</span>;
+        }
+    }
+    <span class="fn">glEnd</span>();
+}
+
+<span class="ty">void</span> <span class="fn">display</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClear</span>(GL_COLOR_BUFFER_BIT);
+    <span class="fn">glColor3f</span>(<span class="nu">1</span>,<span class="nu">1</span>,<span class="nu">1</span>);
+    <span class="fn">Bresenham_General</span>(<span class="nu">260</span>,<span class="nu">240</span>,<span class="nu">140</span>,<span class="nu">140</span>);
+    <span class="fn">glutSwapBuffers</span>();
+}
+
+<span class="ty">void</span> <span class="fn">init</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClearColor</span>(<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>);
+    <span class="fn">glMatrixMode</span>(GL_PROJECTION);
+    <span class="fn">glLoadIdentity</span>();
+    <span class="fn">glOrtho</span>(<span class="nu">0</span>,<span class="nu">300</span>,<span class="nu">0</span>,<span class="nu">300</span>,<span class="nu">-100</span>,<span class="nu">1</span>);
+}
+
+<span class="ty">int</span> <span class="fn">main</span>(<span class="ty">int</span> argc,<span class="ty">char</span>** argv)
+{
+    <span class="fn">glutInit</span>(&amp;argc,argv);
+    <span class="fn">glutInitDisplayMode</span>(GLUT_DOUBLE|GLUT_RGB);
+    <span class="fn">glutInitWindowSize</span>(<span class="nu">500</span>,<span class="nu">500</span>);
+    <span class="fn">glutCreateWindow</span>(<span class="st">"Bresenham"</span>);
+    <span class="fn">init</span>();
+    <span class="fn">glutDisplayFunc</span>(display);
+    <span class="fn">glutMainLoop</span>();
+    <span class="kw">return</span> <span class="nu">0</span>;
+}</code></pre></div>
+<div class="note-box success"><span>✅</span><div><b>DDA vs Bresenham:</b> DDA = float+round() (ধীর) | Bresenham = integer +,- (ফাস্ট) | General = যেকোনো direction</div></div>
+</div></section><div class="section-divider"></div>
+<section class="section" id="midpoint"><div class="section-header animate-on-scroll">
+<div class="section-tag">⭕ Topic 03</div><h2>Midpoint Circle Algorithm</h2>
+<p>Decision parameter দিয়ে সার্কেল আঁকা — 8-way symmetry</p></div>
+<div class="content-block animate-on-scroll"><h3>📖 Theory / তত্ত্ব</h3><div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span><p><b>Midpoint Circle</b> 8-way symmetry ব্যবহার করে — এক অষ্টাংশ হিসাব করলে বাকি ৭টি অটোমেটিক।</p><ul><li>শুরু: x=0, y=r, p=1-r</li><li>p &lt; 0 → p = p + 2x + 3</li><li>p ≥ 0 → p = p + 2(x-y) + 5, y--</li><li>প্রতি ধাপে ৮টি প্রতিসম বিন্দু আঁকো</li></ul></div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span><p><b>Midpoint Circle</b> uses 8-way symmetry — compute one octant, mirror to get all 8.</p><ul><li>Start: x=0, y=r, p=1-r</li><li>p &lt; 0 → p = p + 2x + 3</li><li>p ≥ 0 → p = p + 2(x-y) + 5, y--</li><li>Plot 8 symmetric points each step</li></ul></div></div>
+<div class="formula">p₀ = 1-r | p&lt;0: p+=2x+3 | p≥0: p+=2(x-y)+5, y--</div></div>
+<div class="content-block animate-on-scroll"><h3>💻 Code: Midpoint Circle</h3>
+<div class="code-container"><div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="file-name">📄 midpoint_circle.c</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre class="code-block"><code><span class="pp">#include</span> <span class="st">&lt;GL/gl.h&gt;</span>
+<span class="pp">#include</span> <span class="st">&lt;GL/glut.h&gt;</span>
+
+<span class="bc">// ৮টি প্রতিসম বিন্দু আঁকে</span>
+<span class="ty">void</span> <span class="fn">plot8</span>(<span class="ty">float</span> cx,<span class="ty">float</span> cy,<span class="ty">float</span> x,<span class="ty">float</span> y)
+{
+    <span class="fn">glVertex2f</span>(cx+x,cy+y); <span class="fn">glVertex2f</span>(cx-x,cy+y);
+    <span class="fn">glVertex2f</span>(cx+x,cy-y); <span class="fn">glVertex2f</span>(cx-x,cy-y);
+    <span class="fn">glVertex2f</span>(cx+y,cy+x); <span class="fn">glVertex2f</span>(cx-y,cy+x);
+    <span class="fn">glVertex2f</span>(cx+y,cy-x); <span class="fn">glVertex2f</span>(cx-y,cy-x);
+}
+
+<span class="ty">void</span> <span class="fn">MidpointCircle</span>(<span class="ty">float</span> cx,<span class="ty">float</span> cy,<span class="ty">float</span> r)
+{
+    <span class="ty">float</span> x=<span class="nu">0</span>, y=r;
+    <span class="ty">float</span> p=<span class="nu">1</span>-r;  <span class="bc">// প্রাথমিক decision parameter</span>
+    <span class="fn">glColor3f</span>(<span class="nu">0</span>,<span class="nu">1</span>,<span class="nu">0</span>); <span class="bc">// সবুজ</span>
+    <span class="fn">glBegin</span>(GL_POINTS);
+    <span class="fn">plot8</span>(cx,cy,x,y);
+    <span class="kw">while</span>(x &lt; y)
+    {
+        x++;
+        <span class="kw">if</span>(p &lt; <span class="nu">0</span>) p = p + <span class="nu">2</span>*x + <span class="nu">1</span>;
+        <span class="kw">else</span> { y--; p = p + <span class="nu">2</span>*x - <span class="nu">2</span>*y + <span class="nu">1</span>; }
+        <span class="fn">plot8</span>(cx,cy,x,y);
+    }
+    <span class="fn">glEnd</span>();
+}
+
+<span class="ty">void</span> <span class="fn">display</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClear</span>(GL_COLOR_BUFFER_BIT);
+    <span class="fn">MidpointCircle</span>(<span class="nu">150</span>,<span class="nu">150</span>,<span class="nu">100</span>);
+    <span class="fn">glutSwapBuffers</span>();
+}
+
+<span class="ty">void</span> <span class="fn">init</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClearColor</span>(<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>);
+    <span class="fn">glMatrixMode</span>(GL_PROJECTION);
+    <span class="fn">glLoadIdentity</span>();
+    <span class="fn">glOrtho</span>(<span class="nu">0</span>,<span class="nu">300</span>,<span class="nu">0</span>,<span class="nu">300</span>,<span class="nu">-100</span>,<span class="nu">1</span>);
+}
+
+<span class="ty">int</span> <span class="fn">main</span>(<span class="ty">int</span> argc,<span class="ty">char</span>** argv)
+{
+    <span class="fn">glutInit</span>(&amp;argc,argv);
+    <span class="fn">glutInitDisplayMode</span>(GLUT_DOUBLE|GLUT_RGB);
+    <span class="fn">glutInitWindowSize</span>(<span class="nu">500</span>,<span class="nu">500</span>);
+    <span class="fn">glutCreateWindow</span>(<span class="st">"Midpoint Circle"</span>);
+    <span class="fn">init</span>();
+    <span class="fn">glutDisplayFunc</span>(display);
+    <span class="fn">glutMainLoop</span>();
+    <span class="kw">return</span> <span class="nu">0</span>;
+}</code></pre></div>
+</div></section><div class="section-divider"></div>
+<section class="section" id="transformation"><div class="section-header animate-on-scroll">
+<div class="section-tag">🔄 Topic 04</div><h2>2D Transformation</h2>
+<p>Translation, Rotation, Scaling — OpenGL built-in ফাংশন দিয়ে</p></div>
+<div class="content-block animate-on-scroll"><h3>📖 Theory / তত্ত্ব</h3><div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span><p><b>2D Transformation</b> দিয়ে অবজেক্ট মুভ, ঘোরানো, সাইজ বদলানো যায়:</p><ul><li><b>Translation:</b> <code class="inline">glTranslatef(tx,ty,0)</code> — সরাও</li><li><b>Rotation:</b> <code class="inline">glRotatef(angle,0,0,1)</code> — z-axis এ ঘোরাও</li><li><b>Scaling:</b> <code class="inline">glScalef(sx,sy,1)</code> — সাইজ বদলাও</li></ul><p><b>গুরুত্বপূর্ণ:</b> <code class="inline">glPushMatrix()</code> ও <code class="inline">glPopMatrix()</code> দিয়ে transformation আলাদা রাখো।</p></div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span><p><b>2D Transformation</b> moves, rotates, scales objects:</p><ul><li><b>Translation:</b> <code class="inline">glTranslatef(tx,ty,0)</code></li><li><b>Rotation:</b> <code class="inline">glRotatef(angle,0,0,1)</code></li><li><b>Scaling:</b> <code class="inline">glScalef(sx,sy,1)</code></li></ul><p><b>Important:</b> Use <code class="inline">glPushMatrix()</code> / <code class="inline">glPopMatrix()</code> to isolate transforms.</p></div></div></div>
+<div class="content-block animate-on-scroll"><h3>💻 Code: Keyboard Control + Rotation</h3>
+<div class="bilingual"><div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span><p>Arrow/WASD দিয়ে নীল বর্গ সরাও। L=ঘোরাও, K=থামাও।</p></div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span><p>Move blue square with Arrow/WASD. L=rotate, K=stop.</p></div></div>
+<div class="code-container"><div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="file-name">📄 transform_keyboard.c</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre class="code-block"><code><span class="pp">#include</span> <span class="st">&lt;GL/gl.h&gt;</span>
+<span class="pp">#include</span> <span class="st">&lt;GL/glut.h&gt;</span>
+
+<span class="ty">float</span> px=<span class="nu">-8</span>, py=<span class="nu">2</span>, speed=<span class="nu">0.5</span>, angle=<span class="nu">1</span>;
+
+<span class="ty">void</span> <span class="fn">display</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClear</span>(GL_COLOR_BUFFER_BIT);
+    <span class="bc">// নীল বর্গ (keyboard দিয়ে মুভ)</span>
+    <span class="fn">glColor3f</span>(<span class="nu">.25</span>,<span class="nu">.25</span>,<span class="nu">1.0</span>);
+    <span class="fn">glBegin</span>(GL_POLYGON);
+        <span class="fn">glVertex2f</span>(px,py); <span class="fn">glVertex2f</span>(px+<span class="nu">4</span>,py);
+        <span class="fn">glVertex2f</span>(px+<span class="nu">4</span>,py-<span class="nu">4</span>); <span class="fn">glVertex2f</span>(px,py-<span class="nu">4</span>);
+    <span class="fn">glEnd</span>();
+    <span class="bc">// লাল বর্গ (ঘুরতে থাকে)</span>
+    <span class="fn">glPushMatrix</span>();            <span class="bc">// ম্যাট্রিক্স সেভ</span>
+    <span class="fn">glRotatef</span>(angle,<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">1</span>);  <span class="bc">// z-axis এ ঘোরাও</span>
+    <span class="fn">glColor3f</span>(<span class="nu">1</span>,<span class="nu">0</span>,<span class="nu">0</span>);
+    <span class="fn">glRectf</span>(<span class="nu">-2</span>,<span class="nu">-2</span>,<span class="nu">2</span>,<span class="nu">2</span>);
+    <span class="fn">glPopMatrix</span>();           <span class="bc">// ম্যাট্রিক্স রিস্টোর</span>
+    <span class="fn">glutSwapBuffers</span>();
+}
+
+<span class="ty">void</span> <span class="fn">RotateLeft</span>(){ angle+=<span class="nu">10</span>; <span class="fn">glutPostRedisplay</span>(); }
+
+<span class="bc">// Arrow keys</span>
+<span class="ty">void</span> <span class="fn">specialKeys</span>(<span class="ty">int</span> key,<span class="ty">int</span> x,<span class="ty">int</span> y)
+{
+    <span class="kw">switch</span>(key){
+        <span class="kw">case</span> GLUT_KEY_RIGHT: px+=speed; <span class="kw">break</span>;
+        <span class="kw">case</span> GLUT_KEY_LEFT:  px-=speed; <span class="kw">break</span>;
+        <span class="kw">case</span> GLUT_KEY_UP:    py+=speed; <span class="kw">break</span>;
+        <span class="kw">case</span> GLUT_KEY_DOWN:  py-=speed; <span class="kw">break</span>;
+    }
+    <span class="fn">glutPostRedisplay</span>();
+}
+
+<span class="bc">// WASD + L/K</span>
+<span class="ty">void</span> <span class="fn">keyboard</span>(<span class="ty">unsigned char</span> key,<span class="ty">int</span> x,<span class="ty">int</span> y)
+{
+    <span class="kw">switch</span>(key){
+        <span class="kw">case</span> <span class="st">'w'</span>: py+=speed; <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="st">'s'</span>: py-=speed; <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="st">'a'</span>: px-=speed; <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="st">'d'</span>: px+=speed; <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="st">'l'</span>: <span class="fn">glutIdleFunc</span>(RotateLeft); <span class="kw">break</span>; <span class="bc">// ঘোরাও</span>
+        <span class="kw">case</span> <span class="st">'k'</span>: <span class="fn">glutIdleFunc</span>(NULL); <span class="kw">break</span>;       <span class="bc">// থামাও</span>
+    }
+    <span class="fn">glutPostRedisplay</span>();
+}
+
+<span class="ty">void</span> <span class="fn">init</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClearColor</span>(<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>);
+    <span class="fn">glMatrixMode</span>(GL_PROJECTION);
+    <span class="fn">glLoadIdentity</span>();
+    <span class="fn">glOrtho</span>(<span class="nu">-10</span>,<span class="nu">10</span>,<span class="nu">-10</span>,<span class="nu">10</span>,<span class="nu">-100</span>,<span class="nu">1</span>);
+}
+
+<span class="ty">int</span> <span class="fn">main</span>(<span class="ty">int</span> argc,<span class="ty">char</span>** argv)
+{
+    <span class="fn">glutInit</span>(&amp;argc,argv);
+    <span class="fn">glutInitDisplayMode</span>(GLUT_DOUBLE|GLUT_RGB);
+    <span class="fn">glutInitWindowSize</span>(<span class="nu">500</span>,<span class="nu">500</span>);
+    <span class="fn">glutCreateWindow</span>(<span class="st">"2D Transform"</span>);
+    <span class="fn">init</span>();
+    <span class="fn">glutDisplayFunc</span>(display);
+    <span class="fn">glutKeyboardFunc</span>(keyboard);
+    <span class="fn">glutSpecialFunc</span>(specialKeys);
+    <span class="fn">glutMainLoop</span>();
+    <span class="kw">return</span> <span class="nu">0</span>;
+}</code></pre></div>
+</div></section><div class="section-divider"></div>
+<section class="section" id="animation"><div class="section-header animate-on-scroll">
+<div class="section-tag">🎬 Topic 05</div><h2>Animation</h2>
+<p>Timer function দিয়ে অটো অ্যানিমেশন — বাউন্সিং অবজেক্ট</p></div>
+<div class="content-block animate-on-scroll"><h3>📖 Theory / তত্ত্ব</h3><div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span><p><b>Animation</b> এর মূল কৌশল:</p><ul><li><code class="inline">glutTimerFunc(ms, func, val)</code> — প্রতি ms এ func কল</li><li>func এ position আপডেট করো</li><li><code class="inline">glutPostRedisplay()</code> দিয়ে রিড্র</li><li>আবার <code class="inline">glutTimerFunc</code> কল (recursive)</li><li>বাউন্স: সীমানায় speed = -speed</li></ul></div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span><p><b>Animation</b> key technique:</p><ul><li><code class="inline">glutTimerFunc(ms, func, val)</code> — calls func every ms</li><li>Update position inside func</li><li><code class="inline">glutPostRedisplay()</code> to redraw</li><li>Call <code class="inline">glutTimerFunc</code> again (recursive)</li><li>Bounce: at boundary, speed = -speed</li></ul></div></div></div>
+<div class="content-block animate-on-scroll"><h3>💻 Code: Bouncing Animation</h3>
+<div class="code-container"><div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="file-name">📄 animation_bounce.c</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre class="code-block"><code><span class="pp">#include</span> <span class="st">&lt;GL/gl.h&gt;</span>
+<span class="pp">#include</span> <span class="st">&lt;GL/glut.h&gt;</span>
+
+<span class="ty">float</span> p = <span class="nu">-8</span>;       <span class="bc">// x পজিশন</span>
+<span class="ty">float</span> speed = <span class="nu">0.1</span>;  <span class="bc">// গতি</span>
+
+<span class="ty">void</span> <span class="fn">display</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClear</span>(GL_COLOR_BUFFER_BIT);
+    <span class="fn">glColor3f</span>(<span class="nu">.25</span>,<span class="nu">.25</span>,<span class="nu">1.0</span>);
+    <span class="fn">glBegin</span>(GL_POLYGON);
+        <span class="fn">glVertex2f</span>(p,<span class="nu">2</span>); <span class="fn">glVertex2f</span>(p+<span class="nu">4</span>,<span class="nu">2</span>);
+        <span class="fn">glVertex2f</span>(p+<span class="nu">4</span>,<span class="nu">-2</span>); <span class="fn">glVertex2f</span>(p,<span class="nu">-2</span>);
+    <span class="fn">glEnd</span>();
+    <span class="fn">glutSwapBuffers</span>();
+}
+
+<span class="ty">void</span> <span class="fn">update</span>()
+{
+    p = p + speed;              <span class="bc">// এগোও</span>
+    <span class="kw">if</span>(p >= <span class="nu">6</span> || p <= <span class="nu">-10</span>)    <span class="bc">// সীমানা?</span>
+        speed = -speed;         <span class="bc">// বাউন্স!</span>
+    <span class="fn">glutPostRedisplay</span>();
+}
+
+<span class="ty">void</span> <span class="fn">myTimer</span>(<span class="ty">int</span> val)
+{
+    <span class="fn">update</span>();
+    <span class="fn">glutTimerFunc</span>(<span class="nu">100</span>, myTimer, <span class="nu">0</span>); <span class="bc">// আবার কল!</span>
+}
+
+<span class="ty">void</span> <span class="fn">init</span>(<span class="ty">void</span>)
+{
+    <span class="fn">glClearColor</span>(<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>);
+    <span class="fn">glMatrixMode</span>(GL_PROJECTION);
+    <span class="fn">glLoadIdentity</span>();
+    <span class="fn">glOrtho</span>(<span class="nu">-10</span>,<span class="nu">10</span>,<span class="nu">-10</span>,<span class="nu">10</span>,<span class="nu">-100</span>,<span class="nu">1</span>);
+}
+
+<span class="ty">int</span> <span class="fn">main</span>(<span class="ty">int</span> argc,<span class="ty">char</span>** argv)
+{
+    <span class="fn">glutInit</span>(&amp;argc,argv);
+    <span class="fn">glutInitDisplayMode</span>(GLUT_DOUBLE|GLUT_RGB);
+    <span class="fn">glutInitWindowSize</span>(<span class="nu">500</span>,<span class="nu">500</span>);
+    <span class="fn">glutCreateWindow</span>(<span class="st">"Animation"</span>);
+    <span class="fn">init</span>();
+    <span class="fn">glutDisplayFunc</span>(display);
+    <span class="fn">glutTimerFunc</span>(<span class="nu">100</span>, myTimer, <span class="nu">0</span>); <span class="bc">// টাইমার শুরু!</span>
+    <span class="fn">glutMainLoop</span>();
+    <span class="kw">return</span> <span class="nu">0</span>;
+}</code></pre></div>
+<div class="note-box info"><span>💡</span><div><b>Pattern:</b> Timer → update() → position change → glutPostRedisplay() → glutTimerFunc() আবার → infinite loop</div></div>
+</div></section><div class="section-divider"></div>
+<section class="section" id="shapes"><div class="section-header animate-on-scroll">
+<div class="section-tag">🏠 Topic 06</div><h2>Shapes &amp; 3D VR Room</h2>
+<p>বিভিন্ন শেপ এবং 3D পার্সপেক্টিভ ভিউ</p></div>
+<div class="content-block animate-on-scroll"><h3>📖 Theory / তত্ত্ব</h3><div class="bilingual">
+<div class="lang-box bangla"><span class="lang-tag">🇧🇩 বাংলা</span><p><b>3D ভিউ</b> এর জন্য:</p><ul><li><code class="inline">gluPerspective(fov,ratio,near,far)</code> — 3D পার্সপেক্টিভ</li><li><code class="inline">gluLookAt(ex,ey,ez,cx,cy,cz,ux,uy,uz)</code> — ক্যামেরা</li><li><code class="inline">glEnable(GL_DEPTH_TEST)</code> — depth buffer</li><li><code class="inline">glutSolidCube(1)</code> — 3D কিউব</li></ul><p>WASD দিয়ে ক্যামেরা মুভ, A/D দিয়ে তাকানোর দিক।</p></div>
+<div class="lang-box english"><span class="lang-tag">🇬🇧 English</span><p><b>3D View</b> requires:</p><ul><li><code class="inline">gluPerspective(fov,ratio,near,far)</code></li><li><code class="inline">gluLookAt(ex,ey,ez,cx,cy,cz,ux,uy,uz)</code></li><li><code class="inline">glEnable(GL_DEPTH_TEST)</code></li><li><code class="inline">glutSolidCube(1)</code></li></ul><p>WASD moves camera, A/D changes look direction.</p></div></div></div>
+<div class="content-block animate-on-scroll"><h3>💻 Code: 3D VR Room</h3>
+<div class="code-container"><div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="file-name">📄 vr_room.c</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre class="code-block"><code><span class="pp">#include</span> <span class="st">&lt;GL/glut.h&gt;</span>
+<span class="pp">#include</span> <span class="st">&lt;math.h&gt;</span>
+
+<span class="ty">float</span> angle=<span class="nu">0</span>, lx=<span class="nu">0</span>, lz=<span class="nu">-1</span>; <span class="bc">// ক্যামেরা দিক</span>
+<span class="ty">float</span> x=<span class="nu">0</span>, z=<span class="nu">5</span>;              <span class="bc">// ক্যামেরা পজিশন</span>
+
+<span class="ty">void</span> <span class="fn">drawRoom</span>()
+{
+    <span class="fn">glColor3f</span>(<span class="nu">0.6</span>,<span class="nu">0.6</span>,<span class="nu">0.6</span>);  <span class="bc">// মেঝে</span>
+    <span class="fn">glBegin</span>(GL_QUADS);
+        <span class="fn">glVertex3f</span>(<span class="nu">-10</span>,<span class="nu">0</span>,<span class="nu">-10</span>); <span class="fn">glVertex3f</span>(<span class="nu">-10</span>,<span class="nu">0</span>,<span class="nu">10</span>);
+        <span class="fn">glVertex3f</span>(<span class="nu">10</span>,<span class="nu">0</span>,<span class="nu">10</span>);   <span class="fn">glVertex3f</span>(<span class="nu">10</span>,<span class="nu">0</span>,<span class="nu">-10</span>);
+    <span class="fn">glEnd</span>();
+    <span class="fn">glColor3f</span>(<span class="nu">0.8</span>,<span class="nu">0.7</span>,<span class="nu">0.5</span>);  <span class="bc">// দেয়াল</span>
+    <span class="fn">glBegin</span>(GL_QUADS);
+        <span class="fn">glVertex3f</span>(<span class="nu">-10</span>,<span class="nu">0</span>,<span class="nu">-10</span>); <span class="fn">glVertex3f</span>(<span class="nu">-10</span>,<span class="nu">8</span>,<span class="nu">-10</span>);
+        <span class="fn">glVertex3f</span>(<span class="nu">10</span>,<span class="nu">8</span>,<span class="nu">-10</span>);  <span class="fn">glVertex3f</span>(<span class="nu">10</span>,<span class="nu">0</span>,<span class="nu">-10</span>);
+    <span class="fn">glEnd</span>();
+}
+
+<span class="ty">void</span> <span class="fn">drawTable</span>()
+{
+    <span class="fn">glPushMatrix</span>();
+    <span class="fn">glTranslatef</span>(<span class="nu">0</span>,<span class="nu">1</span>,<span class="nu">-3</span>);
+    <span class="fn">glColor3f</span>(<span class="nu">0.5</span>,<span class="nu">0.2</span>,<span class="nu">0.1</span>);
+    <span class="fn">glPushMatrix</span>();
+    <span class="fn">glScalef</span>(<span class="nu">2</span>,<span class="nu">0.2</span>,<span class="nu">1</span>);
+    <span class="fn">glutSolidCube</span>(<span class="nu">1</span>);
+    <span class="fn">glPopMatrix</span>();
+    <span class="ty">float</span> leg[<span class="nu">4</span>][<span class="nu">2</span>]={{<span class="nu">.8</span>,<span class="nu">.4</span>},{<span class="nu">-.8</span>,<span class="nu">.4</span>},{<span class="nu">.8</span>,<span class="nu">-.4</span>},{<span class="nu">-.8</span>,<span class="nu">-.4</span>}};
+    <span class="kw">for</span>(<span class="ty">int</span> i=<span class="nu">0</span>;i&lt;<span class="nu">4</span>;i++)
+    {
+        <span class="fn">glPushMatrix</span>();
+        <span class="fn">glTranslatef</span>(leg[i][<span class="nu">0</span>],<span class="nu">-0.6</span>,leg[i][<span class="nu">1</span>]);
+        <span class="fn">glScalef</span>(<span class="nu">0.1</span>,<span class="nu">1.2</span>,<span class="nu">0.1</span>);
+        <span class="fn">glutSolidCube</span>(<span class="nu">1</span>);
+        <span class="fn">glPopMatrix</span>();
+    }
+    <span class="fn">glPopMatrix</span>();
+}
+
+<span class="ty">void</span> <span class="fn">display</span>()
+{
+    <span class="fn">glClear</span>(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    <span class="fn">glLoadIdentity</span>();
+    <span class="fn">gluLookAt</span>(x,<span class="nu">2</span>,z, x+lx,<span class="nu">2</span>,z+lz, <span class="nu">0</span>,<span class="nu">1</span>,<span class="nu">0</span>);
+    <span class="fn">drawRoom</span>(); <span class="fn">drawTable</span>();
+    <span class="fn">glutSwapBuffers</span>();
+}
+
+<span class="ty">void</span> <span class="fn">reshape</span>(<span class="ty">int</span> w,<span class="ty">int</span> h)
+{
+    <span class="kw">if</span>(h==<span class="nu">0</span>) h=<span class="nu">1</span>;
+    <span class="fn">glMatrixMode</span>(GL_PROJECTION);
+    <span class="fn">glLoadIdentity</span>();
+    <span class="fn">gluPerspective</span>(<span class="nu">45</span>,(<span class="ty">float</span>)w/h,<span class="nu">0.1</span>,<span class="nu">100</span>);
+    <span class="fn">glMatrixMode</span>(GL_MODELVIEW);
+}
+
+<span class="ty">void</span> <span class="fn">keyboard</span>(<span class="ty">unsigned char</span> key,<span class="ty">int</span> xx,<span class="ty">int</span> yy)
+{
+    <span class="ty">float</span> f=<span class="nu">0.3</span>;
+    <span class="kw">switch</span>(key){
+        <span class="kw">case</span> <span class="st">'w'</span>: x+=lx*f; z+=lz*f; <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="st">'s'</span>: x-=lx*f; z-=lz*f; <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="st">'a'</span>: angle-=<span class="nu">.05</span>; lx=<span class="fn">sin</span>(angle); lz=-<span class="fn">cos</span>(angle); <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="st">'d'</span>: angle+=<span class="nu">.05</span>; lx=<span class="fn">sin</span>(angle); lz=-<span class="fn">cos</span>(angle); <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="nu">27</span>: <span class="fn">exit</span>(<span class="nu">0</span>);
+    }
+    <span class="fn">glutPostRedisplay</span>();
+}
+
+<span class="ty">void</span> <span class="fn">init</span>()
+{
+    <span class="fn">glEnable</span>(GL_DEPTH_TEST);
+    <span class="fn">glClearColor</span>(<span class="nu">0.5</span>,<span class="nu">0.8</span>,<span class="nu">1.0</span>,<span class="nu">1.0</span>);
+}
+
+<span class="ty">int</span> <span class="fn">main</span>(<span class="ty">int</span> argc,<span class="ty">char</span>** argv)
+{
+    <span class="fn">glutInit</span>(&amp;argc,argv);
+    <span class="fn">glutInitDisplayMode</span>(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
+    <span class="fn">glutInitWindowSize</span>(<span class="nu">800</span>,<span class="nu">600</span>);
+    <span class="fn">glutCreateWindow</span>(<span class="st">"VR Room"</span>);
+    <span class="fn">init</span>();
+    <span class="fn">glutDisplayFunc</span>(display);
+    <span class="fn">glutReshapeFunc</span>(reshape);
+    <span class="fn">glutKeyboardFunc</span>(keyboard);
+    <span class="fn">glutMainLoop</span>();
+    <span class="kw">return</span> <span class="nu">0</span>;
+}</code></pre></div>
+<div class="note-box info"><span>💡</span><div><b>3D Controls:</b> W=সামনে, S=পেছনে, A=বামে তাকাও, D=ডানে তাকাও, ESC=বন্ধ</div></div>
+</div></section><div class="section-divider"></div>
+<section class="section" id="contributors"><div class="section-header animate-on-scroll">
+<div class="section-tag">👥 Team</div><h2>Contributors / অবদানকারী</h2>
+<p>যাদের কোড ও পরিশ্রমে এই সাইট তৈরি</p></div><div class="contributors-grid">
+<div class="contributor-card animate-on-scroll"><div class="contributor-avatar">S</div><h4>Shoumik Bala Somu</h4><p>Project Lead & Developer</p></div>
+<div class="contributor-card animate-on-scroll"><div class="contributor-avatar">A</div><h4>Abdullah Al Amin</h4><p>Code Contributor</p></div>
+<div class="contributor-card animate-on-scroll"><div class="contributor-avatar">A</div><h4>Afrin Maharin Shama</h4><p>3D VR Room Code</p></div>
+<div class="contributor-card animate-on-scroll"><div class="contributor-avatar">N</div><h4>Nusrat Jahan Nishi</h4><p>Animation & Transform Code</p></div>
+</div></section>
+<footer class="footer"><p>🎨 CG LAB Learn — Computer Graphics Lab Practice Platform</p>
+<p style="margin-top:8px;font-size:.8rem">Made with ❤️ by DIU Students | 2026</p>
+<div class="footer-links"><a href="https://github.com/ShoumikBalaSomu/CG-LAB-Learn" target="_blank">⭐ GitHub</a><a href="#home">🏠 Home</a><a href="#topics">📚 Topics</a></div></footer>
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+(function(){var b=document.getElementById("bgAnim");for(var i=0;i<15;i++){var p=document.createElement("div");p.className="particle";var s=Math.random()*80+20;p.style.width=s+"px";p.style.height=s+"px";p.style.left=Math.random()*100+"%";p.style.animationDuration=(Math.random()*20+15)+"s";p.style.animationDelay=(Math.random()*10)+"s";b.appendChild(p);}})();
+window.addEventListener("scroll",function(){var s=window.scrollY;document.getElementById("navbar").classList.toggle("scrolled",s>50);document.getElementById("backToTop").classList.toggle("visible",s>400);var h=document.documentElement.scrollHeight-window.innerHeight;document.getElementById("progressBar").style.width=(s/h*100)+"%";document.querySelectorAll(".section,.hero").forEach(function(sec){var top=sec.offsetTop-100,bot=top+sec.offsetHeight;var id=sec.getAttribute("id");if(s>=top&&s<bot){document.querySelectorAll(".nav-links a").forEach(function(a){a.classList.toggle("active",a.getAttribute("href")==="#"+id);});}});});
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add("visible");obs.unobserve(e.target);}});},{threshold:0.1});document.querySelectorAll(".animate-on-scroll").forEach(function(el){obs.observe(el);});
+function copyCode(btn){var code=btn.closest(".code-container").querySelector("code");navigator.clipboard.writeText(code.textContent).then(function(){btn.textContent="✅ Copied!";btn.classList.add("copied");setTimeout(function(){btn.textContent="📋 Copy";btn.classList.remove("copied");},2000);});}
+</script></body></html>
