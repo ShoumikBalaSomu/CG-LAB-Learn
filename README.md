@@ -50,10 +50,6 @@ A comprehensive learning resource for Computer Graphics lab practice using **Ope
 
 Visit: **https://shoumikbalasomu.github.io/CG-LAB-Learn/**
 
-## Author
-
-**Shoumik Bala Somu** - [GitHub](https://github.com/ShoumikBalaSomu)
-
 ## License
 
 MIT License - see [LICENSE](LICENSE)
